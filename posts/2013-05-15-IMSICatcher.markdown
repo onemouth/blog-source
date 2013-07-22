@@ -12,7 +12,7 @@ title: IMSI Catcher, GNU Radio, 還有USRP
 > 
 > ...
 > 
-> For example, if all you want to do is determine which devices area in an area, you simply present yourself as a valid tower -- and see which phones connect to you (by sending their IMSI values). This is the approach taken by [IMSI-catchers](http://en.wikipedia.org/wiki/IMSI-catcher) like Stingray.
+> For example, if all you want to do is determine which devices are in an area, you simply present yourself as a valid tower -- and see which phones connect to you (by sending their IMSI values). This is the approach taken by [IMSI-catchers](http://en.wikipedia.org/wiki/IMSI-catcher) like Stingray.
 
 也就是說，在GSM的架構下，手機不會去要求認證基地台的身份，因此我們可以輕易的架設假的基地台，收到一大堆手機傳來的資訊。雖然現在3G普及了，但是當3G網路塞車的時候，我們的手機仍然會改用GSM來通訊。（我現在還在用2G手機...）
 
