@@ -5,6 +5,16 @@ import           Hakyll
 
 
 --------------------------------------------------------------------------------
+
+feedConfiguration :: FeedConfiguration
+feedConfiguration = FeedConfiguration
+    { feedTitle       = "Put some ink into the inkpot - feed"
+    , feedDescription = "Put some ink into the inkpot"
+    , feedAuthorName  = "Li-Ting"
+    , feedAuthorEmail = "lt.tsai@hopebaytech.com"
+    , feedRoot        = "http://ink-pot.co"
+    }
+
 main :: IO ()
 main = hakyll $ do
     match "images/*" $ do
