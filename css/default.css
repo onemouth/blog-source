@@ -1,16 +1,32 @@
 body {
+    text-shadow: 0px 0px 1px rgba(0,0,0,0); 
     color: black;
-    font-size: 18px;
+    font-size: 20px;
     margin: 0px auto 0px auto;
     width: 960px;
     font-family:wt011
+}
+
+.jf-loading body { 
+    opacity: 0;
+    visibility: hidden;
+}
+
+.jf-active body { 
+    opacity: 1;
+    visibility: visible;
+}
+
+.jf-active body { 
+    opacity: 1;
+    visibility: visible;
 }
 
 div#header {
     border-bottom: 2px solid black;
     margin-bottom: 30px;
     padding: 12px 0px 12px 0px;
-    font-family:WCL-06
+    font-family:hanamin
 }
 
 div#logo a {

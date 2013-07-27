@@ -2,8 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend)
 import           Hakyll
-
-
+import           Text.Pandoc
 --------------------------------------------------------------------------------
 
 feedConfiguration :: FeedConfiguration
@@ -13,6 +12,11 @@ feedConfiguration = FeedConfiguration
     , feedAuthorName  = "Li-Ting"
     , feedAuthorEmail = "lt.tsai@hopebaytech.com"
     , feedRoot        = "http://ink-pot.co"
+    }
+
+pandocOptions :: WriterOptions
+pandocOptions = defaultHakyllWriterOptions
+    { writerHTMLMathMethod = MathJax ""
     }
 
 main :: IO ()
@@ -33,7 +37,7 @@ main = hakyll $ do
 
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ pandocCompilerWith defaultHakyllReaderOptions pandocOptions 
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
             >>= relativizeUrls
