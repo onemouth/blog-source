@@ -8,4 +8,3 @@ title: About
 <img src="http://stackoverflow.com/users/flair/1290244.png?theme=dark" width="208" height="58" alt="profile for onemouth at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for onemouth at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
 </a>
 
-<iframe src="http://githubbadge.appspot.com/badge/onemouth" style="border: 0;height: 142px;width: 200px;overflow: hidden;" frameBorder=0></iframe>
