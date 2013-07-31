@@ -1,3 +1,8 @@
+code {
+    font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+    background-color: #eeeeee;
+}
+
 body {
     text-shadow: 0px 0px 0px rgba(0,0,0,0); 
     color: black;
