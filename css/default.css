@@ -6,7 +6,15 @@ code {
 p {
     clear: both;
     margin-bottom: 1em;
+    line-height: 30px 
 }
+
+li {
+    clear: both;
+    margin-bottom: 1em;
+    line-height: 30px 
+}
+
 
 body {
     text-shadow: 0px 0px 0px rgba(0,0,0,0); 
