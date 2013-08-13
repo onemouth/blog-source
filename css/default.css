@@ -22,7 +22,8 @@ body {
     font-size: 20px;
     margin: 0px auto 0px auto;
     width: 960px;
-    font-family:wt011
+    font-family:wt011;
+    background-color: #FDFFFA
 }
 
 .jf-loading body { 
