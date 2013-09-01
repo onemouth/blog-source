@@ -1,6 +1,7 @@
 ---
 title: 有趣的Sieve of Eratosthenes (1)
 ---
+
 這幾篇主要會根據這篇[paper](http://www.cs.tufts.edu/~nr/cs257/archive/melissa-oneill/Sieve-JFP.pdf)，還有一些我自己的延伸~
 
 [Sieve of Eratosthenes](http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes), 是一個可以用來列出質數的演算法。(以下簡稱sieve algorithm，或篩法)
