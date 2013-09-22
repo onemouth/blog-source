@@ -60,10 +60,9 @@ main = hakyll $ do
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
-        let feedCtx = postCtx `mappend` bodyField "description"
-        posts <- fmap (take 10) . recentFirst =<< 
-            loadAllSnapshots "posts/*" "content"
-        renderAtom feedConfiguration feedCtx posts
+            let feedCtx = postCtx `mappend` bodyField "description"
+            posts <- fmap (take 10) . recentFirst =<< loadAllSnapshots "posts/*" "content"
+            renderAtom feedConfiguration feedCtx posts
 
 
     match "index.html" $ do

@@ -6,3 +6,7 @@ _cache/
 _site/
 site
 *.org
+dist/
+cabal-dev
+Setup.hs
+*.cabal
