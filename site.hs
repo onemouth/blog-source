@@ -21,6 +21,9 @@ pandocOptions = defaultHakyllWriterOptions
 
 main :: IO ()
 main = hakyll $ do
+    
+    tags <- buildTags "posts/*" (fromCapture "tags/*.html")
+
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler

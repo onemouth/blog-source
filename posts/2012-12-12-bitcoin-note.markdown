@@ -1,5 +1,6 @@
 ---
 title: Bitcoin 筆記和心得
+tags: bitcoin
 ---
 
 Bitcoin是一種虛擬貨幣，有著十分有趣的原理，我也嘗試想要理解它，這篇[blog](http://blog.codingnow.com/2011/05/bitcoin.html)就解釋的很好。之後我去了Bitcoin的[官網](http://bitcoin.org/en/)，裡面有最一開始Satoshi Nakamoto寫的[paper](http://bitcoin.org/bitcoin.pdf)，這篇blog就是我閱讀後的筆記和心得。
