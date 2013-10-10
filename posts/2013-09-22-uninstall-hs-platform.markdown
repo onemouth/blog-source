@@ -1,5 +1,6 @@
 ---
 title: 移除haskell platform
+tags: haskell
 ---
 <p>
 終於受不了我macbook上的cabal hell了。

@@ -1,5 +1,6 @@
 ---
 title:  第一次使用 git cherry-pick
+tags: git
 ---
 
 最近工作上把相近的專案分成好幾個 repository 來維護，有時候A專案改了，B專案也需要改，這時候`git cherry-pick`似乎可以派上用場。

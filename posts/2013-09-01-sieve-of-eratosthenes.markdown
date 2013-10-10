@@ -1,5 +1,6 @@
 ---
 title: 有趣的Sieve of Eratosthenes (2)
+tags: haskell, python
 ---
 
 我們想要的是，既能保有laziness，不需要先給出上限N，又可以保有原來sieve algorithm的效率，能不能做到呢？當然可以！

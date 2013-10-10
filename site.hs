@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
+import           Control.Applicative ((<$>))
+import           Data.Monoid (mappend, mconcat)
 import           Hakyll
 import           Text.Pandoc
 --------------------------------------------------------------------------------
@@ -23,6 +24,8 @@ main :: IO ()
 main = hakyll $ do
     
     tags <- buildTags "posts/*" (fromCapture "tags/*.html")
+    
+    let postCtx = postCtxBeforeTags tags
 
     match "images/*" $ do
         route   idRoute
@@ -60,6 +63,9 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
                 >>= relativizeUrls
 
+
+
+
     create ["atom.xml"] $ do
         route idRoute
         compile $ do
@@ -86,7 +92,15 @@ main = hakyll $ do
 
 
 --------------------------------------------------------------------------------
-postCtx :: Context String
-postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
-    defaultContext
+--postCtx :: Context String
+--postCtx =
+--    dateField "date" "%B %e, %Y" `mappend`
+--    defaultContext
+
+postCtxBeforeTags :: Tags -> Context String
+postCtxBeforeTags tags = mconcat
+    [ dateField "date" "%B %e, %Y"
+    , tagsField "tags" tags
+    , defaultContext
+    ]
+
