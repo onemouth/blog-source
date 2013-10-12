@@ -1,5 +1,6 @@
 ---
 title: 筆記：如何利用OpenSSL製作憑證
+tags: crypto, auth, openssl
 ---
 
 當我們需要利用ssl來確保連線安全的時候，會需要利用OpenSSL提供的工具來製作憑證，最近研究了好久，參考各大blog，終於整理好一份製作憑證的recipe。

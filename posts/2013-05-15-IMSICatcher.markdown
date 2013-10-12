@@ -1,5 +1,6 @@
 ---
 title: IMSI Catcher, GNU Radio, 還有USRP
+tags: phone, auth
 ---
 
 起源是因為昨天看了這篇[網誌](http://blog.cryptographyengineering.com/2013/05/a-few-thoughts-on-cellular-encryption.html)。

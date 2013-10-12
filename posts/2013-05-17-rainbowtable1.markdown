@@ -1,5 +1,6 @@
 ---
 title: Rainbow Table (1)
+tags: hash, crypto
 ---
 
 當初到底是哪篇文章誤導我，說rainbow table就只是個大table的！

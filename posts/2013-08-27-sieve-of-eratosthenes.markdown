@@ -1,5 +1,6 @@
 ---
 title: 有趣的Sieve of Eratosthenes (1)
+tags: haskell, python, algorithms
 ---
 
 這幾篇主要會根據這篇[paper](http://www.cs.tufts.edu/~nr/cs257/archive/melissa-oneill/Sieve-JFP.pdf)，還有一些我自己的延伸~

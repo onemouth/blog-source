@@ -1,5 +1,6 @@
 ---
 title: 質數小筆記
+tags: math
 ---
 
 關於[這本書](http://www.books.com.tw/exep/prod/booksfile.php?item=0010515714)第一章的筆記~
