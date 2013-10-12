@@ -93,7 +93,8 @@ main = hakyll $ do
             posts <- fmap (take 5) . recentFirst =<< loadAll "posts/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
-                    field "tags" (\_ -> renderTagList tags)  `mappend`
+                    --field "tags" (\_ -> renderTagList tags)  `mappend`
+                    field "tags" (\_ -> renderTagCloud 100 300 tags)  `mappend`
                     constField "title" "Home"                `mappend`
                     defaultContext
 
