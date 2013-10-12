@@ -1,0 +1,30 @@
+---
+title: 開始用 gitit 做個人筆記站！
+tags: wiki, git, haskell, markdown
+---
+
+這一兩個禮拜著迷於用 [gitit](http://gitit.net/) 來整理筆記，覺得真的好好用，上班時也一直在寫XD
+
+![](../images/gitit.png "gitit example")
+
+那天偶然看到介紹，便試著把它架起來看看，結果一試成主顧。簡單的說， gitit = wiki + markdown + git，我發現這三個組合真是太威了，用 markdown 來編輯 wiki 頁面真是輕鬆愉快，再加上 preview 功能，讓我可以很快速地線上編輯頁面。用 git 來管理檔案，要備份到 github上，或是要還原都很容易。
+
+這是 gitit 的編輯畫面，左邊是 markdown 小抄，下方是 preview畫面。
+
+![](../images/gitit_edit.png "gitit editing")
+
+之前我看到好的文章，都會把它擷取到 evernote 裡面，但是 evernote 的編輯功能我覺得不好用，因此那些文章一直都沒好好整理，就只是一直放著。但是現在我有了 gitit，便可以把我要的資訊整理消化過後，再編輯成wiki頁面了！
+
+目前我架在 Amazon EC2上，個人使用而已，應該不會被收錢吧？假如真的被收了，再考慮搬到 Linode 或 DigitalOcean 好了。
+
+P.S: 目前用的版本是 0.9 on Ubuntu 12.04，貌似不支援MathJax，先用MathML擋一下。有空再來考慮升級。
+
+
+ 
+
+
+
+
+
+
+
