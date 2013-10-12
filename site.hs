@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import           Control.Applicative ((<$>))
-import           Data.Monoid (mappend, mconcat)
+import           Data.Monoid ((<>), mappend, mconcat)
 import           Hakyll
 import           Text.Pandoc
 --------------------------------------------------------------------------------
@@ -64,6 +64,19 @@ main = hakyll $ do
                 >>= relativizeUrls
 
 
+    tagsRules tags $ \tag pattern -> do
+        let title = "tagged " ++ tag
+
+        route idRoute
+        compile $ do
+            posts <- recentFirst =<< loadAll pattern
+            let ctx = constField "title" title <>
+                      listField "posts" (postCtx) (return posts) <>
+                      defaultContext 
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/archive.html" ctx
+                >>= loadAndApplyTemplate "templates/default.html" ctx
+                >>= relativizeUrls
 
 
     create ["atom.xml"] $ do
