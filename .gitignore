@@ -10,3 +10,5 @@ dist/
 cabal-dev
 Setup.hs
 *.cabal
+cabal.sandbox.config
+.cabal-sandbox
