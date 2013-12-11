@@ -12,3 +12,4 @@ Setup.hs
 *.cabal
 cabal.sandbox.config
 .cabal-sandbox
+.DS_Store
