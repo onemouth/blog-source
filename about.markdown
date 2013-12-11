@@ -10,6 +10,12 @@ title: About
 <a href="http://twitter.com/#!/onemouth" target="_blank">
 <img src="images/twitter_icon.png" alt="Twitter">
 </a>
+<a href="https://github.com/onemouth" target="_blank">
+<img src="images/github_icon.png" alt="Github">
+</a>
+<a href="http://hackage.haskell.org/user/onemouth" target="_blank">
+<img src="images/haskell_icon.png" alt="Hackage">
+</a>
 
 
 
