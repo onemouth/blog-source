@@ -12,7 +12,7 @@ feedConfiguration = FeedConfiguration
     , feedDescription = "Put some ink into the inkpot"
     , feedAuthorName  = "Li-Ting"
     , feedAuthorEmail = "lt.tsai@hopebaytech.com"
-    , feedRoot        = "http://ink-pot.co"
+    , feedRoot        = "http://blog.ink-pot.co"
     }
 
 pandocOptions :: WriterOptions
