@@ -88,7 +88,7 @@ OBJ_FILES=$(notdir $(CPP_FILES:.cpp=.o))
         ${COMPILER}  -fPIC -c  ${INCLUDE}  $< 
 
 sign_ext.so: $(OBJ_FILES)
-                ${COMPILER} -shared -Wl,--export-dynamic ${OBJ_FILES} -lboost_python -o sign_ext.so
+        ${COMPILER} -shared -Wl,--export-dynamic ${OBJ_FILES} -lboost_python -o sign_ext.so
 
 
 ~~~
