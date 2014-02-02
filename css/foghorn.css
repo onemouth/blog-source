@@ -77,7 +77,7 @@ html, body {
         background:#fefefe;
 	}
 body {
-	font: 1.2em "Vollkorn", Palatino, Times;
+	font: 1.2em Palatino, Times;
 	color: #333;
 	line-height: 1.4;
 	text-align: justify;
