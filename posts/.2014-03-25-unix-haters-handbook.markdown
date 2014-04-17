@@ -1,0 +1,11 @@
+---
+title: Unix-Hater's Handbook
+tags: unix
+---
+
+最近看到 [Unix-Hater's Handbook](http://homes.cs.washington.edu/~weise/unix-haters.html), 覺得很有趣, 花了一點時間把它翻了一遍。
+
+事情的起源是 MIT 的一位研究生, 發現自己鍾愛的 [LispM](http://en.wikipedia.org/wiki/Lisp_machine)將被 Unix 主機所取代, 於是他創立了一個 newsgroup, 邀請像他一樣對 Unix 不滿的人, 一起來分享彼此對 Unix 的怨恨。有一些人加入了這個newgroup, 包括一樣喜歡 LispM 的人, 緬懷其他舊系統的人, Apple 或 Microsoft 的粉絲等等。這本書將這個 newgroup 的文章統合起來, 編輯成一本合集。
+
+後來
+

@@ -1,0 +1,29 @@
+---
+title: PC-BSD 
+tags: freebsd, desktop
+---
+
+原來在工作上習慣用的是 Ubuntu。
+
+Ubuntu 實在也是不錯的系統, based on Debian, 套件工具好用,
+支援硬體多, VirtualBox 和 Vmware都有提供額外的支援。
+
+不過 distribution 何其多, 總是會想換一下, 更何況, Unity實在不好用,
+要嘛換成 [Xmonad](http://xmonad.org/), 要嘛開機就開個 terminal 佔住整個螢幕, 圖個清靜。
+
+再來就是, Ubuntu 又 [evil](http://allanmcrae.com/2010/03/ubuntu-is-an-evil-dictatorship/) 又需要 [fix](https://fixubuntu.com/), 只好尋覓下一個distribution了。
+
+不過開始找就發現, 習慣養成了就很難改變, 就像 Windows 一樣, 雖然覺得不好用, 但用那麼久了,
+哪能說拋下就拋下。
+
+本來想重回大學時期用的[Arch](https://www.archlinux.org/)懷抱, 但一調查發現, 哇, 不得了, 離開幾年, 人事全非。 Arch 原本就是以 rolling release 著名, 總是在不斷的更新, 每次下 *pacman -Syu* 都會有驚喜, 我那時候就是更新更新, kdemod就爛了, 然後kdemod又不更新了, 年紀輕輕, 孤立無援, 就作罷了。
+
+然後這次發現, Arch 把 rc.conf 拿掉了！ rc.conf 可是吸引我用 Arch 的原因之一, 大幅簡化了 init 的設定。 Arch 已經轉向到 [systemd](http://freedesktop.org/wiki/Software/systemd/)了, 因為懶得折騰, 就放棄了, 不過 systemd 是未來 Linux distributin 的趨勢, 將來還得碰的。 然後又想到 Rolling Release 適合嘗鮮但好像不適合我這把東西用爛就懶得修好的人, 就決定再往下個目標前進。
+
+跑去試了 [NixOS](https://nixos.org/nixos/), 強調 functional 特性, 不論是升級系統或是安裝軟體, 都可輕鬆 rollback, 也不用怕相依性問題。 但缺點是系統架構和其他系統差太多, 要手動裝一些他沒提供的軟體會很痛苦, 絕大部份安裝script預設的環境變數都不能用。 
+
+突然想到有段日子整天就在那 *cd /usr/ports*, 然後 *make install clean*, 裝個東西編譯個兩三天, 把硬碟都塞爆, 不亦樂乎的日子。 於是開始找尋 based on FreeBSD 的 desktop distribution, 後來決定就是 [PC-BSD](http://www.pcbsd.org/) 了。
+
+在 VirtialBox 裝起來還蠻順利的, KDE 4.10 UI感覺和之前差不多, 一樣漂亮 ,但是變得蠻穩定的, 缺點就是容易分心, 常會工作到一半, 想去玩玩KDE。 套件管理也簡單, *pbi*, *pkg*, *ports* 三個願望一次滿足。 而且安裝時就幫你弄好了 ZFS! 雖然目前只用到 ZFS的 snapshot功能, 但也感覺到ZFS的強大了。
+
+總之, 目前對 PC-BSD 還蠻滿意的, 不過這一些 distribution 當然是各有好處, 都可裝來玩玩感受不同的設計風格。 
