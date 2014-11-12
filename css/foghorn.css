@@ -1,22 +1,23 @@
 @import url(http://fonts.googleapis.com/css?family=Vollkorn:400,400italic,700,700italic&subset=latin);
 
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode, table.sourceCode pre 
-   { margin: 0; padding: 0; border: 0; vertical-align: baseline; border: none; }
+   { margin: 0; padding: 8px; border: 0; vertical-align: baseline; border: none; }
 td.lineNumbers { border-right: 1px solid #AAAAAA; text-align: right; color: #AAAAAA; padding-right: 5px; padding-left: 5px; }
 td.sourceCode { padding-left: 5px; }
-pre.sourceCode span.kw { color: #007020; font-weight: bold; }
-pre.sourceCode span.dt { color: #902000; }
-pre.sourceCode span.dv { color: #40a070; }
-pre.sourceCode span.bn { color: #40a070; }
-pre.sourceCode span.fl { color: #40a070; }
-pre.sourceCode span.ch { color: #4070a0; }
-pre.sourceCode span.st { color: #4070a0; }
-pre.sourceCode span.co { color: #60a0b0; font-style: italic; }
-pre.sourceCode span.ot { color: #007020; }
-pre.sourceCode span.al { color: red; font-weight: bold; }
-pre.sourceCode span.fu { color: #06287e; }
-pre.sourceCode span.re { } 
-pre.sourceCode span.er { color: red; font-weight: bold; }
+
+code.sourceCode span.kw { color: #007020; font-weight: bold; }
+code.sourceCode span.dt { color: #902000; }
+code.sourceCode span.dv { color: #40a070; }
+code.sourceCode span.bn { color: #40a070; }
+code.sourceCode span.fl { color: #40a070; }
+code.sourceCode span.ch { color: #4070a0; }
+code.sourceCode span.st { color: #4070a0; }
+code.sourceCode span.co { color: #60a0b0; font-style: italic; }
+code.sourceCode span.ot { color: #007020; }
+code.sourceCode span.al { color: red; font-weight: bold; }
+code.sourceCode span.fu { color: #06287e; }
+code.sourceCode span.re { } 
+code.sourceCode span.er { color: red; font-weight: bold; }
 
 
 
@@ -144,9 +145,10 @@ blockquote {
 	}
 code {
 	font-family: "Consolas", "Menlo", "Monaco", monospace, serif;
-	font-size: .9em;
+	font-size: .8em;
 	background: white;
 	}
+
 a {
 	color: #2484c1;
 	text-decoration: none;

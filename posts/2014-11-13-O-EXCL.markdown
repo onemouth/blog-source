@@ -1,0 +1,50 @@
+---
+title: 用 O_EXCL 防止 race condition 
+tags: programming, security
+---
+
+程式在開檔案做寫入或讀取的時候, 我們必須很小心,
+這個路徑有可能被攻擊者控制, 而造成嚴重的後果。
+
+~~~{ .c .numberLines }
+int main(int argc, char* argv[])
+{
+    FILE * f;
+    if (!access(MY_TMP_FILE, F_OK)) {
+        printf external link("File exists!\n");
+        return EXIT_FAILURE;
+    }
+    /* race condition! */
+    /* At this point the attacker creates a symlink from /tmp/file.tmp to /etc/passwd */
+    tmpFile = fopen(MY_TMP_FILE, "w");
+ 
+    if (tmpFile == NULL) {
+        return EXIT_FAILURE;
+    }
+ 
+    fputs("Some text...\n", tmpFile);
+ 
+    fclose(tmpFile);
+    /* You successfully overwrote /etc/passwd (at least if you ran this as root) */
+ 
+    return EXIT_SUCCESS;
+}
+~~~
+
+非 atomic 的操作造成攻擊者可乘之機。
+加入 `O_EXCL`， 當檔案存在的時候, 創造檔案會失敗, return -1
+
+~~~{ .c }
+/* 檔案存在時, 仍然開檔成功 */
+open(MY_TMP_FILE, O_WRONLY|O_CREAT, FILE_MODE);
+
+/* 檔案存在時, return -1 */
+open(MY_TMP_FILE, O_WRONLY|O_CREAT|O_EXCL, FILE_MODE); 
+~~~
+
+
+### Reference
+
+[Common vulnerabilities guide for C programmers](https://security.web.cern.ch/security/recommendations/en/codetools/c.shtml)
+
+
