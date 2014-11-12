@@ -83,14 +83,14 @@ main = hakyll $ do
         route idRoute
         compile $ do
             let feedCtx = postCtx `mappend` bodyField "description"
-            posts <- fmap (take 10) . recentFirst =<< loadAllSnapshots "posts/*" "content"
+            posts <- fmap (take 15) . recentFirst =<< loadAllSnapshots "posts/*" "content"
             renderAtom feedConfiguration feedCtx posts
 
 
     match "index.html" $ do
         route idRoute
         compile $ do
-            posts <- fmap (take 10) . recentFirst =<< loadAll "posts/*"
+            posts <- fmap (take 15) . recentFirst =<< loadAll "posts/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     --field "tags" (\_ -> renderTagList tags)  `mappend`
