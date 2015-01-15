@@ -27,13 +27,13 @@ bool sign_your_string(string & result, const string & input ){
         return false;
     }   
     else{
-        result = "I enndorse you.";
+        result = "I endorse you.";
         return true;
     }   
 }
 ~~~
 
-這個 function 會根據使用者的 input, 來決定要不要給予簽章; 若是決定要簽章, 會return true並把簽章的結果放在第一個參數。
+這個 function 會根據使用者的 input, 來決定要不要給予簽章; 若是決定要簽章, 會 return true 並把簽章的結果放在第一個參數。
 若是不要, 則會 return false
 
 
@@ -103,7 +103,7 @@ Python使用起來和一般的module沒有兩樣
 >>> from sign_ext import sign
 
 >>> sign("Hello World!")
-(True, 'I enndorse you.')
+(True, 'I endorse you.')
 
 sign("from_bad_guy")
 >>> (False, '')
