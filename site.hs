@@ -5,7 +5,9 @@ import Data.Monoid (mappend)
 import Hakyll
   ( Configuration (previewPort),
     Context,
+    FeedConfiguration (FeedConfiguration, feedAuthorEmail, feedAuthorName, feedDescription, feedRoot, feedTitle),
     applyAsTemplate,
+    bodyField,
     compile,
     compressCssCompiler,
     constField,
@@ -21,16 +23,20 @@ import Hakyll
     idRoute,
     listField,
     loadAll,
+    loadAllSnapshots,
     loadAndApplyTemplate,
     makeItem,
     match,
     pandocCompiler,
     recentFirst,
     relativizeUrls,
+    renderAtom,
     route,
+    saveSnapshot,
     setExtension,
     templateBodyCompiler,
   )
+import Hakyll.Web.Feed (FeedConfiguration)
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -55,6 +61,7 @@ main = hakyllWith config $ do
     compile $
       pandocCompiler
         >>= loadAndApplyTemplate "templates/post.html" postCtx
+        >>= saveSnapshot "content"
         >>= loadAndApplyTemplate "templates/default.html" postCtx
         >>= relativizeUrls
 
@@ -71,6 +78,12 @@ main = hakyllWith config $ do
         >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
         >>= loadAndApplyTemplate "templates/default.html" archiveCtx
         >>= relativizeUrls
+
+  create ["atom.xml"] $ do
+    route idRoute
+    compile $ do
+      posts <- fmap (take 15) . recentFirst =<< loadAllSnapshots "posts/*" "content"
+      renderAtom feedConfiguration feedCtx posts
 
   match "index.html" $ do
     route idRoute
@@ -93,8 +106,21 @@ postCtx =
   dateField "date" "%B %e, %Y"
     `mappend` defaultContext
 
+feedCtx :: Context String
+feedCtx = postCtx <> bodyField "description"
+
 config :: Configuration
 config =
   defaultConfiguration
     { previewPort = 5000
+    }
+
+feedConfiguration :: FeedConfiguration
+feedConfiguration =
+  FeedConfiguration
+    { feedTitle = "Put some ink into the inkpot",
+      feedDescription = "Put some ink into the inkpot - a personal blog",
+      feedAuthorName = "LT Tsai",
+      feedAuthorEmail = "and.liting@gmail.com",
+      feedRoot = "https://onemouth.github.io"
     }

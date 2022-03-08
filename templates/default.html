@@ -5,7 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Hakyll Blog - $title$</title>
+    <title>Put some ink into the inkpot - $title$</title>
+    $if(tags)$
+    <meta name="keywords" content="$tags$">
+    $endif$
+    $if(summary)$
+    <meta name="description" content="$summary$">
+    $endif$
     <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
 </head>
