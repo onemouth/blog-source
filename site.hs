@@ -3,7 +3,8 @@
 
 import Data.Monoid (mappend)
 import Hakyll
-  ( Context,
+  ( Configuration (previewPort),
+    Context,
     applyAsTemplate,
     compile,
     compressCssCompiler,
@@ -11,10 +12,12 @@ import Hakyll
     copyFileCompiler,
     create,
     dateField,
+    defaultConfiguration,
     defaultContext,
     fromList,
     getResourceBody,
     hakyll,
+    hakyllWith,
     idRoute,
     listField,
     loadAll,
@@ -31,7 +34,7 @@ import Hakyll
 
 --------------------------------------------------------------------------------
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith config $ do
   match "images/*" $ do
     route idRoute
     compile copyFileCompiler
@@ -89,3 +92,9 @@ postCtx :: Context String
 postCtx =
   dateField "date" "%B %e, %Y"
     `mappend` defaultContext
+
+config :: Configuration
+config =
+  defaultConfiguration
+    { previewPort = 5000
+    }

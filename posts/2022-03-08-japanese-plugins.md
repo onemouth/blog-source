@@ -1,6 +1,6 @@
 ---
-title: Tu Quoque
-author: Julius
+title: 三個學日文必備的瀏覽器套件
+author: LT
 ---
 
 Vestibulum leo turpis, dignissim quis ultrices sit amet, iaculis ac ligula.
