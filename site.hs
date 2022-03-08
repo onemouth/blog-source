@@ -47,6 +47,7 @@ import Hakyll.Web.Feed (FeedConfiguration)
 import Text.Pandoc
 import Text.Pandoc.App (Opt (optSelfContained))
 import Text.Pandoc.Writers as PandocWriter
+import qualified Text.Pandoc.Writers.HTML as PandocWriter
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -75,12 +76,15 @@ main = hakyllWith config $ do
         >>= loadAndApplyTemplate "templates/default.html" postCtx
         >>= relativizeUrls
 
-  match "slides/*" $ do
-    route $ setExtension "html"
-    compile $
-      do getResourceBody
-        >>= readPandoc
-        >>= Main.writeDZSlides
+  match "slides/*" $
+    do
+      route $ setExtension "html"
+      compile $
+        do getResourceBody
+          >>= readPandoc
+          >>= Main.writeRevealJS
+          >>= loadAndApplyTemplate "templates/revealjs.html" postCtx
+          >>= relativizeUrls
 
   create ["archive.html"] $ do
     route idRoute
@@ -148,8 +152,8 @@ slidesWriterOptions =
     { writerHTMLMathMethod = MathJax ""
     }
 
-writeDZSlides :: Item Pandoc -> Compiler (Item String)
-writeDZSlides = traverse $ \pandoc ->
-  case runPure (PandocWriter.writeDZSlides slidesWriterOptions pandoc) of
+writeRevealJS :: Item Pandoc -> Compiler (Item String)
+writeRevealJS = traverse $ \pandoc ->
+  case runPure (PandocWriter.writeRevealJs slidesWriterOptions pandoc) of
     Left err -> fail $ show err
     Right x -> return (T.unpack x)
