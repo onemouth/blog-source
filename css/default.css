@@ -43,6 +43,7 @@ article .header {
   font-size: 1.4rem;
   font-style: italic;
   color: #555;
+  padding: 0 0 1.4rem 0;
 }
 
 .logo a {

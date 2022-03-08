@@ -5,7 +5,7 @@ import Data.Monoid (mappend)
 import qualified Data.Text as T
 import Hakyll
   ( Compiler,
-    Configuration (previewPort),
+    Configuration (deployCommand, previewPort),
     Context,
     FeedConfiguration (FeedConfiguration, feedAuthorEmail, feedAuthorName, feedDescription, feedRoot, feedTitle),
     Item,
@@ -133,7 +133,7 @@ feedCtx = postCtx <> bodyField "description"
 config :: Configuration
 config =
   defaultConfiguration
-    { previewPort = 5000
+    { deployCommand = "cp -r _site/* ../onemouth.github.io/"
     }
 
 feedConfiguration :: FeedConfiguration
