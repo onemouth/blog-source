@@ -2,10 +2,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import Data.Monoid (mappend)
+import qualified Data.Text as T
 import Hakyll
-  ( Configuration (previewPort),
+  ( Compiler,
+    Configuration (previewPort),
     Context,
     FeedConfiguration (FeedConfiguration, feedAuthorEmail, feedAuthorName, feedDescription, feedRoot, feedTitle),
+    Item,
     applyAsTemplate,
     bodyField,
     compile,
@@ -16,6 +19,8 @@ import Hakyll
     dateField,
     defaultConfiguration,
     defaultContext,
+    defaultHakyllReaderOptions,
+    defaultHakyllWriterOptions,
     fromList,
     getResourceBody,
     hakyll,
@@ -28,6 +33,8 @@ import Hakyll
     makeItem,
     match,
     pandocCompiler,
+    pandocCompilerWith,
+    readPandoc,
     recentFirst,
     relativizeUrls,
     renderAtom,
@@ -37,6 +44,9 @@ import Hakyll
     templateBodyCompiler,
   )
 import Hakyll.Web.Feed (FeedConfiguration)
+import Text.Pandoc
+import Text.Pandoc.App (Opt (optSelfContained))
+import Text.Pandoc.Writers as PandocWriter
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -64,6 +74,13 @@ main = hakyllWith config $ do
         >>= saveSnapshot "content"
         >>= loadAndApplyTemplate "templates/default.html" postCtx
         >>= relativizeUrls
+
+  match "slides/*" $ do
+    route $ setExtension "html"
+    compile $
+      do getResourceBody
+        >>= readPandoc
+        >>= Main.writeDZSlides
 
   create ["archive.html"] $ do
     route idRoute
@@ -124,3 +141,15 @@ feedConfiguration =
       feedAuthorEmail = "and.liting@gmail.com",
       feedRoot = "https://onemouth.github.io"
     }
+
+slidesWriterOptions :: WriterOptions
+slidesWriterOptions =
+  defaultHakyllWriterOptions
+    { writerHTMLMathMethod = MathJax ""
+    }
+
+writeDZSlides :: Item Pandoc -> Compiler (Item String)
+writeDZSlides = traverse $ \pandoc ->
+  case runPure (PandocWriter.writeDZSlides slidesWriterOptions pandoc) of
+    Left err -> fail $ show err
+    Right x -> return (T.unpack x)
