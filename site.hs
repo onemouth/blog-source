@@ -82,7 +82,7 @@ main = hakyllWith config $ do
       compile $
         do getResourceBody
           >>= readPandoc
-          >>= Main.writeRevealJS
+          >>= writeRevealJS
           >>= loadAndApplyTemplate "templates/revealjs.html" postCtx
           >>= relativizeUrls
 
@@ -100,6 +100,7 @@ main = hakyllWith config $ do
         >>= loadAndApplyTemplate "templates/default.html" archiveCtx
         >>= relativizeUrls
 
+  -- create feeds
   create ["atom.xml"] $ do
     route idRoute
     compile $ do
