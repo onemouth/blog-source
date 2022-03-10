@@ -34,6 +34,7 @@ import Hakyll
     match,
     pandocCompiler,
     pandocCompilerWith,
+    pandocCompilerWithTransform,
     readPandoc,
     recentFirst,
     relativizeUrls,
@@ -46,6 +47,7 @@ import Hakyll
 import Hakyll.Web.Feed (FeedConfiguration)
 import Text.Pandoc
 import Text.Pandoc.App (Opt (optSelfContained))
+import Text.Pandoc.Shared
 import Text.Pandoc.Writers as PandocWriter
 import qualified Text.Pandoc.Writers.HTML as PandocWriter
 
@@ -70,7 +72,7 @@ main = hakyllWith config $ do
   match "posts/*" $ do
     route $ setExtension "html"
     compile $
-      pandocCompiler
+      pandocCompilerWithTransform def def eastAsianLineBreakFilter
         >>= loadAndApplyTemplate "templates/post.html" postCtx
         >>= saveSnapshot "content"
         >>= loadAndApplyTemplate "templates/default.html" postCtx
