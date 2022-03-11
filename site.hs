@@ -87,7 +87,7 @@ main = hakyllWith config $ do
       let writerSettings = case toc of
             Nothing -> defaultHakyllWriterOptions
             Just s -> tocWriterOptions
-      pandocCompilerWithTransform def writerSettings eastAsianLineBreakFilter
+      pandocCompilerWithTransform pandocReaderOptions writerSettings eastAsianLineBreakFilter
         >>= loadAndApplyTemplate "templates/post.html" postCtx
         >>= saveSnapshot "content"
         >>= loadAndApplyTemplate "templates/default.html" postCtx
@@ -151,7 +151,7 @@ feedCtx = postCtx <> bodyField "description"
 config :: Configuration
 config =
   defaultConfiguration
-    { deployCommand = "cp -r _site/* ../onemouth.github.io/"
+    { deployCommand = "cp -r _site/. ../onemouth.github.io"
     }
 
 feedConfiguration :: FeedConfiguration
@@ -194,3 +194,15 @@ tocTemplate =
         "</div>",
         "$body$"
       ]
+
+pandocReaderOptions :: ReaderOptions
+pandocReaderOptions =
+  defaultHakyllReaderOptions
+    { readerExtensions = myPandocExtensions
+    }
+
+myPandocExtensions :: Extensions
+myPandocExtensions =
+  extensionsFromList
+    [ Ext_auto_identifiers
+    ]
