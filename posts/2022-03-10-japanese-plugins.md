@@ -3,6 +3,7 @@ title: 三個學日文必備的瀏覽器擴充套件
 author: LT
 summary: 3 plugins that everyone should know whey studying Japanease
 tags: japanease, firefox, plugins, yomichan
+toc: true
 ---
 
 在學習日文的過程中，也慢慢地使用一些擴充套件來增進學習的效果，所以想介紹三個我覺得是必備的擴充套件。

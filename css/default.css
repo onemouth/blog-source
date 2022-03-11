@@ -52,6 +52,32 @@ article .header {
   text-decoration: none;
 }
 
+.toc {
+  position: fixed;
+  left: 10rem;
+  top: 10rem;
+  max-width: 15%;
+}
+
+.header-section-number {
+  color:hsla(0, 0%, 0%, 0.247);
+  font-family:"Merriweather",serif;
+}
+
+
+.toc-section-number {
+  color:hsla(0, 0%, 0%, 0.623);
+  font-family:"Merriweather",serif;
+}
+
+.toc ul {
+  list-style: none;
+}
+
+.active ul {
+  font-weight: bold;
+}
+
 @media (max-width: 319px) {
   body {
     width: 90%;
@@ -78,6 +104,10 @@ article .header {
   nav a {
     display: block;
     line-height: 1.6;
+  }
+
+  .toc {
+    display: none;
   }
 }
 
