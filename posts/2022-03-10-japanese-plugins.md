@@ -14,7 +14,7 @@ tags: japanease, firefox, plugins, yomichan
 
 其中Yomichan是最重要的，它是我們主要用來查詢日文的工具，後面兩個則可以起到輔助的作用。
 
-## Yomichan
+# Yomichan
 
 [Yomichan](https://foosoft.net/projects/yomichan/)是一個可以幫助我們在看日文網頁的時候，查詢單字的擴充套件，只要選取網頁上的字，再按下Shift鍵，就可以顯示這個日文單字的意思，十分方便。
 
@@ -36,7 +36,7 @@ JMDict是一個免費的日英字典，幾乎絕大部分的字都可以找到�
 
 另外除了上述資源外，也可以匯入其它的自製字典檔，有興趣的人可以到這個[網站](https://learnjapanese.moe/)找尋其他資源。
 
-## Absolute Enable Right Click & Copy
+# Absolute Enable Right Click & Copy
 
 有些網頁會禁止我們選取上面的文字，例如歌詞網站或是一些影音串流平台。不能選取的話，我們就不能利用Yomichan來幫忙閱讀了，這時候，就是這個擴充套件出場的時候了。
 
@@ -44,7 +44,7 @@ JMDict是一個免費的日英字典，幾乎絕大部分的字都可以找到�
 
 ![](/images/copyText.png)
 
-## Google Search - Geolocation & Language Change
+# Google Search - Geolocation & Language Change
 
 不知道大家會不會跟我有一樣的困擾——覺得Google越來越難用，現在即使是搜尋英文單字或日文漢字，也總是一堆中文的內容農場網頁排在前面，實在蠻困擾的，想要找個在地的結果，卻幾乎找不到。
 
@@ -54,7 +54,7 @@ JMDict是一個免費的日英字典，幾乎絕大部分的字都可以找到�
 
 安裝完後，在Google的搜尋頁面，會多出一個Location的按鈕，只要點下去，就可以選擇要轉換的地區和語言了，是不是很方便！
 
-## 小結
+# 小結
 
 這是我最近覺得非介紹不可的擴充功能，有其它好用的擴充功能，也請推薦！
 
