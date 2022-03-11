@@ -1,7 +1,9 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 
+import Data.Functor.Identity (runIdentity)
 import Data.Monoid (mappend)
+import Data.Text (Text)
 import qualified Data.Text as T
 import Hakyll
   ( Compiler,
@@ -16,6 +18,7 @@ import Hakyll
     constField,
     copyFileCompiler,
     create,
+    customRoute,
     dateField,
     defaultConfiguration,
     defaultContext,
@@ -43,7 +46,10 @@ import Hakyll
     saveSnapshot,
     setExtension,
     templateBodyCompiler,
+    toFilePath,
   )
+import Hakyll.Core.Compiler (getUnderlying)
+import Hakyll.Core.Metadata (getMetadataField)
 import Hakyll.Web.Feed (FeedConfiguration)
 import Text.Pandoc
 import Text.Pandoc.App (Opt (optSelfContained))
@@ -56,6 +62,10 @@ main :: IO ()
 main = hakyllWith config $ do
   match "images/*" $ do
     route idRoute
+    compile copyFileCompiler
+
+  match "nojekyll" $ do
+    route $ customRoute $ (++) "." . toFilePath
     compile copyFileCompiler
 
   match "css/*" $ do
@@ -71,8 +81,13 @@ main = hakyllWith config $ do
 
   match "posts/*" $ do
     route $ setExtension "html"
-    compile $
-      pandocCompilerWithTransform def def eastAsianLineBreakFilter
+    compile $ do
+      underlying <- getUnderlying
+      toc <- getMetadataField underlying "toc"
+      let writerSettings = case toc of
+            Nothing -> defaultHakyllWriterOptions
+            Just s -> tocWriterOptions
+      pandocCompilerWithTransform def writerSettings eastAsianLineBreakFilter
         >>= loadAndApplyTemplate "templates/post.html" postCtx
         >>= saveSnapshot "content"
         >>= loadAndApplyTemplate "templates/default.html" postCtx
@@ -160,3 +175,22 @@ writeRevealJS = traverse $ \pandoc ->
   case runPure (PandocWriter.writeRevealJs slidesWriterOptions pandoc) of
     Left err -> fail $ show err
     Right x -> return (T.unpack x)
+
+tocWriterOptions :: WriterOptions
+tocWriterOptions =
+  defaultHakyllWriterOptions
+    { writerNumberSections = True,
+      writerTableOfContents = True,
+      writerTOCDepth = 2,
+      writerTemplate = Just tocTemplate
+    }
+
+tocTemplate :: Template Text
+tocTemplate =
+  either error id . runIdentity . compileTemplate "" $
+    T.unlines
+      [ "<div class=\"toc\"><div class=\"header\">Table of Contents</div>",
+        "$toc$",
+        "</div>",
+        "$body$"
+      ]
