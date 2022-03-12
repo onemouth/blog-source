@@ -198,7 +198,7 @@ tocTemplate =
 pandocReaderOptions :: ReaderOptions
 pandocReaderOptions =
   defaultHakyllReaderOptions
-    { readerExtensions = myPandocExtensions
+    { readerExtensions = myPandocExtensions <> readerExtensions defaultHakyllReaderOptions
     }
 
 myPandocExtensions :: Extensions
