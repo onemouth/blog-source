@@ -139,4 +139,7 @@ article .header {
     float: left;
     font-size: 1.8rem;
   }
+  .toc {
+    display:block;
+  }
 }
