@@ -42,31 +42,3 @@ table th {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-@media screen and (max-width: 600px) {
-  table {
-    border: 0;
-  }
-  table thead {
-    display: none;
-  }
-  table tr {
-    border-bottom: 2px solid #ddd;
-    display: block;
-    margin-bottom: 10px;
-  }
-  table td {
-    border-bottom: 1px dotted #ccc;
-    display: block;
-    font-size: 13px;
-    text-align: right;
-  }
-  table td:last-child {
-    border-bottom: 0;
-  }
-  table td:before {
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-}

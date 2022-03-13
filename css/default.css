@@ -78,7 +78,7 @@ article .header {
   font-weight: bold;
 }
 
-@media (max-width: 319px) {
+@media (min-width: 320px) {
   body {
     width: 90%;
     margin: 0;
@@ -105,38 +105,8 @@ article .header {
     display: block;
     line-height: 1.6;
   }
-
   .toc {
     display: none;
-  }
-}
-
-@media (min-width: 320px) {
-  body {
-    width: 90%;
-    margin: 0;
-    padding: 0 5%;
-  }
-  header {
-    margin: 4.2rem 0;
-  }
-  nav {
-    margin: 0 auto 3rem;
-    text-align: center;
-  }
-  footer {
-    text-align: center;
-  }
-  .logo {
-    text-align: center;
-    margin: 1rem auto 3rem;
-  }
-  .logo a {
-    font-size: 2.4rem;
-  }
-  nav a {
-    display: inline;
-    margin: 0 0.6rem;
   }
 }
 
