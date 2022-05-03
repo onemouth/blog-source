@@ -15,7 +15,9 @@ tags: icloud, email
 
 剛好最近手上有個網域，我也一直想用綁個自己網域的email帳號，而不要再用`@gmail.com`，因為用自己的網域，感覺比較專業(?)
 
-Gmail只有企業版才提供自訂網域的功能，其他像[ProtonMail](https://protonmail.com/support/knowledge-base/paid-plans/)雖然在付費版也有提供自訂網域，但每個月還要再多付約100元台幣訂閱，想了想，還會用iCloud Plus的就好，畢竟加量不加價！
+當然也可以考慮自己架，收信似乎不難，但是寄信非常容易被當成垃圾郵件丟掉，要設定好[SPF](https://en.wikipedia.org/wiki/Sender_Policy_Framework)，[DKIM](https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail)和[DMARC](https://en.wikipedia.org/wiki/DMARC)之類東西的樣子...所以網路上建議寄信的話再轉給Amazon SES處理，想想還是蠻複雜的。
+
+雲端服務的話，Gmail只有企業版才提供自訂網域的功能，其他像[ProtonMail](https://protonmail.com/support/knowledge-base/paid-plans/)雖然在付費版也有提供自訂網域，但每個月還要再多付約100元台幣訂閱，想了想，還會用iCloud Plus的就好，畢竟加量不加價！
 
 我的email： lt at ltt.pw
 
