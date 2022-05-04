@@ -160,7 +160,7 @@ feedConfiguration =
     { feedTitle = "Put some ink into the inkpot",
       feedDescription = "Put some ink into the inkpot - a personal blog",
       feedAuthorName = "LT Tsai",
-      feedAuthorEmail = "and.liting@gmail.com",
+      feedAuthorEmail = "lt@ltt.pw",
       feedRoot = "https://onemouth.github.io"
     }
 
