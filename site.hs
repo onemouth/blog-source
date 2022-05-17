@@ -99,7 +99,7 @@ main = hakyllWith config $ do
       compile $
         do getResourceBody
           >>= readPandoc
-          >>= writeRevealJS
+          >>= writePandocToRevealJs
           >>= loadAndApplyTemplate "templates/revealjs.html" postCtx
           >>= relativizeUrls
 
@@ -170,8 +170,8 @@ slidesWriterOptions =
     { writerHTMLMathMethod = MathJax ""
     }
 
-writeRevealJS :: Item Pandoc -> Compiler (Item String)
-writeRevealJS = traverse $ \pandoc ->
+writePandocToRevealJs :: Item Pandoc -> Compiler (Item String)
+writePandocToRevealJs = traverse $ \pandoc ->
   case runPure (PandocWriter.writeRevealJs slidesWriterOptions pandoc) of
     Left err -> fail $ show err
     Right x -> return (T.unpack x)

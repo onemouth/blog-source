@@ -2,7 +2,7 @@
 title: 如何在Hakyll中設定Atom/RSS Feed
 author: LT
 summary: how to produce an atom/rss feed by Hakyll
-tags: icloud, email
+tags: hakyll
 ---
 
 首先這是產生Atom Feed 的function：
