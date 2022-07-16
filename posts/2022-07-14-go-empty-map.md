@@ -51,7 +51,7 @@ func main() {
 
 對nil slice可以用`len`取長度，也可以做`append`操作。
 
-也可以對nil channel做receive value的動作。(雖然這樣會永久block住)
+也可以對nil channel做receive value或send value的動作。(雖然這樣會永久block住)
 
 
 ## Reference
