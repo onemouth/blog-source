@@ -5,7 +5,7 @@ a.sourceLine:empty { height: 1.2em; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
-pre.sourceCode {background-color: inherit}
+pre.sourceCode {background-color: #f9f5d7;}
 @media screen {
 div.sourceCode { overflow: auto; }
 }
@@ -60,3 +60,5 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+code {background-color: #f9f5d7;}
