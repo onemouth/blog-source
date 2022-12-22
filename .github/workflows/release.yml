@@ -1,0 +1,15 @@
+on:
+  release:
+    types: [published]
+
+jobs:
+  create_release_pr:
+    name: Create a PR for release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: echo GitHub Envs
+        run: |
+          echo "Tag name from github.ref_name: ${{ github.ref_name }}"
+          echo "Event name: ${{ github.event_name }}"
+
