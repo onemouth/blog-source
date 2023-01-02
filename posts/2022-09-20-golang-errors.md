@@ -113,7 +113,7 @@ func testErr() error {
 這個例子的重點是我們的struct定義了 `Unwrap()` 函式，利用這個函式，`erros.Is` 和 `errors.As` 才能正常運作，不只是嘗試match `badValueError{value: v, err: err}`這個eror，
 還會不斷的往下尋找是否有其他能對應的error。
 
-另一個我們可以定義的是`Is(target error) bool` 這個函式，他可以讓 `errors.Is` 直接呼叫，表示我們定義的這個error，其實跟另外某個error是相等的。
+另一個我們可以定義的是`Is(target error) bool` 這個函式，他可以讓 `errors.Is` 使用，表示我們定義的這個error，其實跟另外某個error是相等的。
 
 
 # 結語

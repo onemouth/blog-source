@@ -85,7 +85,7 @@ main = hakyllWith config $ do
       underlying <- getUnderlying
       toc <- getMetadataField underlying "toc"
       let writerSettings = case toc of
-            Nothing -> defaultHakyllWriterOptions
+            Nothing -> defaultHakyllWriterOptions {writerHTMLMathMethod = MathJax ""}
             Just s -> tocWriterOptions
       pandocCompilerWithTransform pandocReaderOptions writerSettings eastAsianLineBreakFilter
         >>= loadAndApplyTemplate "templates/post.html" postCtx
@@ -182,7 +182,8 @@ tocWriterOptions =
     { writerNumberSections = True,
       writerTableOfContents = True,
       writerTOCDepth = 2,
-      writerTemplate = Just tocTemplate
+      writerTemplate = Just tocTemplate,
+      writerHTMLMathMethod = MathJax ""
     }
 
 tocTemplate :: Template Text
