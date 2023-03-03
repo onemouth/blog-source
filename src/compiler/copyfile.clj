@@ -4,5 +4,5 @@
 
 (defn run [dest content]
   (io/make-parents dest)
-  (spit (io/file dest) content :make-parents true)
+  (spit (io/file dest) content)
   dest)
