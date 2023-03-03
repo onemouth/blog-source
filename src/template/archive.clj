@@ -1,5 +1,6 @@
-(ns template.archive)
+(ns template.archive
+  (:require [template.post-list :as post-list]))
 
 (defn template []
   [:div [:h2 "Articles"]
-   "\n$partial(\"templates/post-list.html\")$\n"])
+   (post-list/template)])

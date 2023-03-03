@@ -1,3 +1,5 @@
-<div><h2>Articles</h2>
-$partial("templates/post-list.html")$
-</div>
+<div><h2>Articles</h2><ul>
+$for(posts)$
+<li><a href="$url$">$title$</a> - $date$</li>
+$endfor$
+</ul></div>
