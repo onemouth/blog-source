@@ -29,6 +29,16 @@
           (copyfile/run  content)
           (prn-updated-msg)))))
 
+(defn build-css []
+  (doseq [path (list-folder "css" "*.css")]
+    (let [content (slurp path)]
+      (-> path
+          (output-path identity)
+          (copyfile/run  content)
+          (prn-updated-msg)))))
+
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
+; bb action
 (defn build []
-  (println "build images")
-  (build-images))
+  (build-images)
+  (build-css))

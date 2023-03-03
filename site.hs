@@ -65,9 +65,9 @@ main = hakyllWith config $ do
     route $ customRoute $ (++) "." . toFilePath
     compile copyFileCompiler
 
-  match "css/*" $ do
-    route idRoute
-    compile compressCssCompiler
+  --match "css/*" $ do
+  --  route idRoute
+  --  compile compressCssCompiler
 
   match "posts/*" $ do
     route $ setExtension "html"
