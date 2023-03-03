@@ -1,1 +1,4 @@
-{:paths ["src"]}
+{:paths ["src"]
+ :tasks {gen-template {:doc "generate http templates from hiccup"
+                       :requires ([template.core :as template])
+                       :task (template/gen)}}}
