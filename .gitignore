@@ -25,3 +25,7 @@ _cache/
 _site/
 *.lock
 .DS_Store
+
+node_modules/
+.lsp/.cache
+.clj-kondo/.cache
