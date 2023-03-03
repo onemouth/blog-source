@@ -60,9 +60,6 @@ import qualified Text.Pandoc.Writers.HTML as PandocWriter
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyllWith config $ do
-  match "images/*" $ do
-    route idRoute
-    compile copyFileCompiler
 
   match "nojekyll" $ do
     route $ customRoute $ (++) "." . toFilePath
