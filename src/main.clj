@@ -1,9 +1,5 @@
-#!/usr/bin/env bb
+(ns main)
 
 
-(defn -main [& args]
-  (println args))
-
-
-(when (= *file* (System/getProperty "babashka.file"))
-  (apply -main *command-line-args*))
+(defn build []
+  (println "hello"))

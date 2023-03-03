@@ -1,4 +1,10 @@
 {:paths ["src"]
  :tasks {gen-template {:doc "generate http templates from hiccup"
                        :requires ([template.core :as template])
-                       :task (template/gen)}}}
+                       :task (template/gen)}
+         build {:doc "build site"
+                :requires ([main]
+                           [babashka.process :refer [sh]])
+                :task (do
+                        (println (:out (sh "stack run rebuild")))
+                        (main/build))}}}
