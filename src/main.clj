@@ -2,7 +2,8 @@
   (:require :require
             [babashka.fs :as fs]
             [clojure.java.io :as io]
-            [compiler.copyfile :as copyfile]))
+            [compiler.copyfile :as copyfile]
+            [template.core :as template]))
 
 (def ^{:private true} config {})
 
@@ -37,8 +38,16 @@
           (copyfile/run  content)
           (prn-updated-msg)))))
 
+(defn build-nojekyll []
+  (-> ".nojekyll"
+      (output-path identity)
+      (copyfile/run "")
+      (prn-updated-msg)))
+
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 ; bb action
 (defn build []
   (build-images)
-  (build-css))
+  (build-css)
+  (build-nojekyll)
+  (template/gen))

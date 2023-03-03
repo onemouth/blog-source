@@ -61,10 +61,6 @@ import qualified Text.Pandoc.Writers.HTML as PandocWriter
 main :: IO ()
 main = hakyllWith config $ do
 
-  match "nojekyll" $ do
-    route $ customRoute $ (++) "." . toFilePath
-    compile copyFileCompiler
-
   --match "css/*" $ do
   --  route idRoute
   --  compile compressCssCompiler
