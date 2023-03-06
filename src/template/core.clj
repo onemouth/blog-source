@@ -27,7 +27,7 @@
       (str)))
 
 (defn post-template []
-  (-> (post/template)
+  (-> (post/template-s)
       (html)
       (str)))
 

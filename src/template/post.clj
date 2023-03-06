@@ -1,4 +1,5 @@
-(ns template.post)
+(ns template.post
+  (:require [template.default :as default]))
 
 (defn template []
   [:div
@@ -27,3 +28,6 @@
     [:script {:type "text/javascript"
               :src "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"
               :async true}]]])
+
+(defn template-s []
+  (default/template :embed (template)))

@@ -76,7 +76,7 @@ main = hakyllWith config $ do
       pandocCompilerWithTransform pandocReaderOptions writerSettings eastAsianLineBreakFilter
         >>= loadAndApplyTemplate "templates/post.html" postCtx
         >>= saveSnapshot "content"
-        >>= loadAndApplyTemplate "templates/default.html" postCtx
+       -- >>= loadAndApplyTemplate "templates/default.html" postCtx
         >>= relativizeUrls
 
   match "slides/*" $
