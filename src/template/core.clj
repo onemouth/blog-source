@@ -5,7 +5,7 @@
             [template.post :as post]
             [template.post-list :as post-list]
             [babashka.fs :as fs]
-            [hiccup.core :as hiccup :refer [html]]))
+            [hiccup2.core :as hiccup :refer [html]]))
 
 (defn- add-doctype [src]
   (str "<!doctype html>\n" src))
@@ -13,23 +13,28 @@
 (defn- default-template []
   (-> (default/template)
       (html)
+      (str)
       (add-doctype)))
 
 (defn archive-template []
   (-> (archive/template)
-      (html)))
+      (html)
+      (str)))
 
 (defn post-list-template []
   (-> (post-list/template)
-      (html)))
+      (html)
+      (str)))
 
 (defn post-template []
   (-> (post/template)
-      (html)))
+      (html)
+      (str)))
 
 (defn revealjs-template []
   (-> (revealjs/template)
-      (html)))
+      (html)
+      (str)))
 
 (defn- output-template [path template]
   (fs/write-lines path [template]))
