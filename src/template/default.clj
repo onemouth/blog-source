@@ -1,7 +1,7 @@
 (ns template.default)
 
 
-(defn template [& {:keys [embed]}]
+(defn template [& {:keys [embed title]}]
   [:html {:lang "en"}
    [:head
     [:meta {:charset "utf-8"}]
@@ -14,7 +14,7 @@
     "$if(summary)$\n"
     [:meta {:name "description" :content "$summary$"}]
     "\n$endif$\n"
-    [:title "Put some ink into the inkpot - " "$title$"]
+    [:title "Put some ink into the inkpot - " (if title title "$title$")]
     [:link {:rel "stylesheet" :href "https://unpkg.com/sakura.css/css/sakura.css" :type "text/css"}]
     [:link {:rel "stylesheet" :href "/css/default.css"}]
     [:link {:rel "stylesheet" :href "/css/table.css"}]

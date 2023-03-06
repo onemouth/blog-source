@@ -1,11 +1,11 @@
 (ns template.core
-  (:require [template.default :as default]
+  (:require [babashka.fs :as fs]
+            [hiccup2.core :as hiccup :refer [html]]
             [template.archive :as archive]
-            [template.revealjs :as revealjs]
+            [template.default :as default]
+            [template.index :as index]
             [template.post :as post]
-            [template.post-list :as post-list]
-            [babashka.fs :as fs]
-            [hiccup2.core :as hiccup :refer [html]]))
+            [template.revealjs :as revealjs]))
 
 (defn- add-doctype [src]
   (str "<!doctype html>\n" src))
@@ -21,13 +21,13 @@
       (html)
       (str)))
 
-(defn post-list-template []
-  (-> (post-list/template)
+(defn post-template []
+  (-> (post/template-s)
       (html)
       (str)))
 
-(defn post-template []
-  (-> (post/template-s)
+(defn index-template []
+  (-> (index/template-s)
       (html)
       (str)))
 
@@ -43,8 +43,8 @@
 ;bb task
 (defn gen []
   (let [path-template-pair [["templates/default.html" default-template]
-                            ["templates/post-list.html" post-list-template]
                             ["templates/post.html" post-template]
+                            ["index.html" index-template]
                             ["templates/revealjs.html" revealjs-template]
                             ["templates/archive.html" archive-template]]]
     (doseq [[path template] path-template-pair]
