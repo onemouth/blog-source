@@ -17,7 +17,7 @@
       (add-doctype)))
 
 (defn archive-template []
-  (-> (archive/template)
+  (-> (archive/template-s)
       (html)
       (str)))
 

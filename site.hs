@@ -60,7 +60,6 @@ import qualified Text.Pandoc.Writers.HTML as PandocWriter
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyllWith config $ do
-
   --match "css/*" $ do
   --  route idRoute
   --  compile compressCssCompiler
@@ -76,7 +75,7 @@ main = hakyllWith config $ do
       pandocCompilerWithTransform pandocReaderOptions writerSettings eastAsianLineBreakFilter
         >>= loadAndApplyTemplate "templates/post.html" postCtx
         >>= saveSnapshot "content"
-       -- >>= loadAndApplyTemplate "templates/default.html" postCtx
+        -- >>= loadAndApplyTemplate "templates/default.html" postCtx
         >>= relativizeUrls
 
   match "slides/*" $
@@ -100,7 +99,7 @@ main = hakyllWith config $ do
 
       makeItem ""
         >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-        >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+        -- >>= loadAndApplyTemplate "templates/default.html" archiveCtx
         >>= relativizeUrls
 
   -- create feeds
