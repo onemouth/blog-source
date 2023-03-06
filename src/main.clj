@@ -23,24 +23,23 @@
 
 (defn build-images []
   (doseq [path (list-folder "images" "*")]
-    (let [content (slurp path)]
-      (-> path
-          (output-path identity)
-          (copyfile/run  content)
-          (prn-updated-msg)))))
+    (-> path
+        (output-path identity)
+        (copyfile/run-cp path)
+        (prn-updated-msg))))
 
 (defn build-css []
   (doseq [path (list-folder "css" "*.css")]
     (let [content (slurp path)]
       (-> path
           (output-path identity)
-          (copyfile/run  content)
+          (copyfile/run-content  content)
           (prn-updated-msg)))))
 
 (defn build-nojekyll []
   (-> ".nojekyll"
       (output-path identity)
-      (copyfile/run "")
+      (copyfile/run-content "")
       (prn-updated-msg)))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
