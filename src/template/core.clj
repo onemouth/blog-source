@@ -27,7 +27,7 @@
       (str)))
 
 (defn- output-template [path template]
-  (fs/write-lines path [template]))
+  (fs/write-lines path ["<!DOCTYPE html>" template]))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 ;bb task
