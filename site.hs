@@ -75,7 +75,6 @@ main = hakyllWith config $ do
       pandocCompilerWithTransform pandocReaderOptions writerSettings eastAsianLineBreakFilter
         >>= loadAndApplyTemplate "templates/post.html" postCtx
         >>= saveSnapshot "content"
-        -- >>= loadAndApplyTemplate "templates/default.html" postCtx
         >>= relativizeUrls
 
   match "slides/*" $
@@ -99,7 +98,6 @@ main = hakyllWith config $ do
 
       makeItem ""
         >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-        -- >>= loadAndApplyTemplate "templates/default.html" archiveCtx
         >>= relativizeUrls
 
   -- create feeds
@@ -119,7 +117,6 @@ main = hakyllWith config $ do
 
       getResourceBody
         >>= applyAsTemplate indexCtx
-        -- >>= loadAndApplyTemplate "templates/default.html" indexCtx
         >>= relativizeUrls
 
   match "templates/*" $ compile templateBodyCompiler
