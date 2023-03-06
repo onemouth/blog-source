@@ -2,8 +2,7 @@
   (:require :require
             [babashka.fs :as fs]
             [clojure.java.io :as io]
-            [compiler.copyfile :as copyfile]
-            [template.core :as template]))
+            [compiler.copyfile :as copyfile]))
 
 (def ^{:private true} config {})
 
@@ -49,5 +48,4 @@
 (defn build []
   (build-images)
   (build-css)
-  (build-nojekyll)
-  (template/gen))
+  (build-nojekyll))

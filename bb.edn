@@ -4,7 +4,9 @@
                        :task (template/gen)}
          build {:doc "build site"
                 :requires ([main]
+                           [template.core :as template]
                            [babashka.process :refer [sh]])
                 :task (do
+                        (template/gen)
                         (println (:out (sh "stack run rebuild")))
                         (main/build))}}}
