@@ -1,7 +1,17 @@
 {:paths ["src"]
- :tasks {gen-template {:doc "generate http templates from hiccup"
+ :deps {org.babashka/http-server {:mvn/version "0.1.11"}
+        org.babashka/cli {:mvn/version "0.2.23"}}
+ :tasks {:requires ([babashka.cli :as cli])
+         :init (def cli-opts (cli/parse-opts *command-line-args* {:coerce {:port :int}}))
+
+         gen-template {:doc "generate http templates from hiccup"
                        :requires ([template.core :as template])
                        :task (template/gen)}
+         serve {:doc "Serve static assets"
+                :requires ([babashka.http-server :as server])
+                :task (server/exec (merge {:port 8000
+                                           :dir "_site"}
+                                          cli-opts))}
          build {:doc "build site"
                 :requires ([main]
                            [template.core :as template]
