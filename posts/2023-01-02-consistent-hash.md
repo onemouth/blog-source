@@ -3,7 +3,8 @@ title: Consistent Hashing (和其他類似演算法)
 author: LT
 summary: an overview of consistent hashing
 tags: distributed_system, cache
-toc: true
+enable:
+  toc: true
 ---
 
 _主要從之前在17 Live的內部分享過的投影片整理出內容。_

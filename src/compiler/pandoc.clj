@@ -42,6 +42,19 @@
         date (path-date path)]
     (if date (assoc header-map :date date) header-map)))
 
-; TODO: toc ;date
-(defn run-html [path]
-  (sh "pandoc" "--mathjax" "-t" "html" "-f" "markdown+east_asian_line_breaks" path))
+; TODO: toc
+(defn run-post-html [dest
+                     path
+                     {:keys [date]}]
+  (io/make-parents dest)
+  (let [basic-cmd ["pandoc"
+                   "--mathjax"
+                   "-t" "html"
+                   "--template=templates/post.html"
+                   "-f" "markdown+east_asian_line_breaks"
+                   path
+                   "-o" (str dest)
+                   "-M" (str "date=" date)]]
+    (prn (string/join " " basic-cmd))
+    (apply sh basic-cmd))
+  dest)

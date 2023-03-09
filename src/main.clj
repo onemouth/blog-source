@@ -3,7 +3,8 @@
             [babashka.fs :as fs]
             [clojure.java.io :as io]
             [compiler.copyfile :as copyfile]
-            [compiler.pandoc :as pandoc]))
+            [compiler.pandoc :as pandoc]
+            [clojure.string :as string]))
 
 (def ^{:private true} config {})
 
@@ -50,7 +51,12 @@
         posts (for [f files] [f (pandoc/parse-meta f)])
         sorted-posts (sort-by (comp :date second) posts)]
     (swap! state assoc :posts sorted-posts)
-    (prn @state)))
+    (prn sorted-posts)
+    (doseq [[path meta] sorted-posts]
+      (-> path
+          (output-path #(string/replace %1 ".md" ".html"))
+          (pandoc/run-post-html path meta)
+          (prn-updated-msg)))))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 ; bb action
