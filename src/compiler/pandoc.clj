@@ -39,12 +39,12 @@
 
 (defn parse-meta [path]
   (let [header-map (yaml-header->map path)
-        date (path-date path)]
-    (if date (assoc header-map :date date) header-map)))
+        date (path-date path)
+        header-map (if date (assoc header-map :date date) header-map)]
+    (assoc header-map :path path)))
 
 (defn run-post-html [dest
-                     path
-                     {:keys [date enable]}]
+                     {:keys [path date enable]}]
   (io/make-parents dest)
   (let [toc-enable (:toc enable)
         template-file (if toc-enable "templates/post-toc.html" "templates/post.html")

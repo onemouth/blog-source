@@ -2,9 +2,10 @@
   (:require :require
             [babashka.fs :as fs]
             [clojure.java.io :as io]
+            [clojure.string :as string]
             [compiler.copyfile :as copyfile]
             [compiler.pandoc :as pandoc]
-            [clojure.string :as string]))
+            [template.core :as template]))
 
 (def ^{:private true} config {})
 
@@ -48,14 +49,22 @@
 
 (defn build-posts []
   (let [files (list-folder "posts" "*.md")
-        posts (for [f files] [f (pandoc/parse-meta f)])
-        sorted-posts (sort-by (comp :date second) posts)]
+        posts (for [f files] (pandoc/parse-meta f))
+        sorted-posts (sort-by :date posts)]
     (swap! state assoc :posts sorted-posts)
-    (doseq [[path meta] sorted-posts]
-      (-> path
+    (doseq [meta sorted-posts]
+      (-> (:path meta)
           (output-path #(string/replace %1 ".md" ".html"))
-          (pandoc/run-post-html path meta)
+          (pandoc/run-post-html meta)
           (prn-updated-msg)))))
+
+(defn build-archive-html []
+  (let [posts (:posts @state)]
+    (prn posts)
+    (-> "archive.html"
+        (output-path identity)
+       ;(copyfile/run-content (template/archive-template posts))
+        (prn-updated-msg))))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 ; bb action
@@ -63,4 +72,5 @@
   (build-images)
   (build-css)
   (build-posts)
+  ;(build-archive-html)
   (build-nojekyll))
