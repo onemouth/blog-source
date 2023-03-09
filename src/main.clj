@@ -51,7 +51,6 @@
         posts (for [f files] [f (pandoc/parse-meta f)])
         sorted-posts (sort-by (comp :date second) posts)]
     (swap! state assoc :posts sorted-posts)
-    (prn sorted-posts)
     (doseq [[path meta] sorted-posts]
       (-> path
           (output-path #(string/replace %1 ".md" ".html"))

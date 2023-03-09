@@ -12,7 +12,12 @@
       (str)))
 
 (defn post-template []
-  (-> (post/template-s)
+  (-> (post/template-s false)
+      (html)
+      (str)))
+
+(defn post-toc-template []
+  (-> (post/template-s true)
       (html)
       (str)))
 
@@ -33,6 +38,7 @@
 ;bb task
 (defn gen []
   (let [path-template-pair [["templates/post.html" post-template]
+                            ["templates/post-toc.html" post-toc-template]
                             ["index.html" index-template]
                             ["templates/revealjs.html" revealjs-template]
                             ["templates/archive.html" archive-template]]]

@@ -3,7 +3,8 @@ title: 設計 Golang 的 error
 author: LT
 summary: how to design error in golang
 tags: golang, error_handling
-toc: true
+enable:
+  toc: true
 ---
 
 在 Go 裡面，主要用來處理 error 的方法，是利用在 Go 1.13 時新引入的這兩個函式：[errors.Is](https://pkg.go.dev/errors#Is) 和 [errors.As](https://pkg.go.dev/errors#As)。在本文，想要探討如何設計好的error type，才能和 Go 標準庫提供的這兩個函數配合的天衣無縫。

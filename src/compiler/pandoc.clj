@@ -42,19 +42,25 @@
         date (path-date path)]
     (if date (assoc header-map :date date) header-map)))
 
-; TODO: toc
 (defn run-post-html [dest
                      path
-                     {:keys [date]}]
+                     {:keys [date enable]}]
   (io/make-parents dest)
-  (let [basic-cmd ["pandoc"
-                   "--mathjax"
-                   "-t" "html"
-                   "--template=templates/post.html"
-                   "-f" "markdown+east_asian_line_breaks"
-                   path
-                   "-o" (str dest)
-                   "-M" (str "date=" date)]]
-    (prn (string/join " " basic-cmd))
-    (apply sh basic-cmd))
+  (let [toc-enable (:toc enable)
+        template-file (if toc-enable "templates/post-toc.html" "templates/post.html")
+        template-cmd [(str "--template=" template-file)]
+        basic-cmd (concat ["pandoc"
+                           "-s"
+                           "--mathjax"
+                           "-t" "html"
+                           "-f" "markdown+east_asian_line_breaks"
+                           path
+                           "-o" (str dest)
+                           "-M" (str "date=" date)] template-cmd)
+        toc-args ["--toc"
+                  "--number-sections"
+                  "--toc-depth=2"]
+        cmd (if toc-enable (concat basic-cmd toc-args) basic-cmd)]
+    (println (string/join " " cmd))
+    (apply sh cmd))
   dest)
