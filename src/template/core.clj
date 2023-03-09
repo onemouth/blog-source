@@ -3,8 +3,7 @@
             [hiccup2.core :as hiccup :refer [html]]
             [template.archive :as archive]
             [template.index :as index]
-            [template.post :as post]
-            [template.revealjs :as revealjs]))
+            [template.post :as post]))
 
 (defn archive-template []
   (-> (archive/template-s)
@@ -26,11 +25,6 @@
       (html)
       (str)))
 
-(defn revealjs-template []
-  (-> (revealjs/template)
-      (html)
-      (str)))
-
 (defn- output-template [path template]
   (fs/write-lines path ["<!DOCTYPE html>" template]))
 
@@ -40,7 +34,6 @@
   (let [path-template-pair [["templates/post.html" post-template]
                             ["templates/post-toc.html" post-toc-template]
                             ["index.html" index-template]
-                            ["templates/revealjs.html" revealjs-template]
                             ["templates/archive.html" archive-template]]]
     (doseq [[path template] path-template-pair]
       (println (str "generate " path))

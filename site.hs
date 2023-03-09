@@ -77,16 +77,6 @@ main = hakyllWith config $ do
         >>= saveSnapshot "content"
         >>= relativizeUrls
 
-  match "slides/*" $
-    do
-      route $ setExtension "html"
-      compile $
-        do getResourceBody
-          >>= readPandoc
-          >>= writePandocToRevealJs
-          >>= loadAndApplyTemplate "templates/revealjs.html" postCtx
-          >>= relativizeUrls
-
   create ["archive.html"] $ do
     route idRoute
     compile $ do

@@ -12,6 +12,10 @@
                 :task (server/exec (merge {:port 8000
                                            :dir "_site"}
                                           cli-opts))}
+         deploy {:doc "deploy site"
+                 :requires ([babashka.process :refer [sh]])
+                 :task (sh ["cp -r _site/. ../onemouth.github.io"])}
+
          build {:doc "build site"
                 :requires ([main]
                            [template.core :as template]
