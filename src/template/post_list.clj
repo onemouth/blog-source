@@ -4,5 +4,5 @@
   [:ul
    "\n$for(posts)$\n"
    [:li
-    [:a {:href "$url$"} "$title$"] " - $date$"]
+    [:a {:href "$posts.url$"} "$posts.title$"] " - $posts.date$"]
    "\n$endfor$\n"])

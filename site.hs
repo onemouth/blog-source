@@ -77,18 +77,18 @@ main = hakyllWith config $ do
         >>= saveSnapshot "content"
         >>= relativizeUrls
 
-  create ["archive.html"] $ do
-    route idRoute
-    compile $ do
-      posts <- recentFirst =<< loadAll "posts/*"
-      let archiveCtx =
-            listField "posts" postCtx (return posts)
-              `mappend` constField "title" "Archives"
-              `mappend` defaultContext
+  -- create ["archive.html"] $ do
+  --   route idRoute
+  --   compile $ do
+  --     posts <- recentFirst =<< loadAll "posts/*"
+  --     let archiveCtx =
+  --           listField "posts" postCtx (return posts)
+  --             `mappend` constField "title" "Archives"
+  --             `mappend` defaultContext
 
-      makeItem ""
-        >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-        >>= relativizeUrls
+  --     makeItem ""
+  --       >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+  --       >>= relativizeUrls
 
   -- create feeds
   create ["atom.xml"] $ do

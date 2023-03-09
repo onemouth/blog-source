@@ -1,11 +1,11 @@
 (ns main
   (:require :require
             [babashka.fs :as fs]
+            [clj-yaml.core :as yaml]
             [clojure.java.io :as io]
             [clojure.string :as string]
             [compiler.copyfile :as copyfile]
-            [compiler.pandoc :as pandoc]
-            [template.core :as template]))
+            [compiler.pandoc :as pandoc]))
 
 (def ^{:private true} config {})
 
@@ -14,14 +14,20 @@
 (defn output-dir []
   (:output-dir config "_site"))
 
+(defn cache-dir []
+  (:cacche-dir config "_cache"))
+
 (defn list-folder
   ([root pattern]
    (map str (fs/glob root pattern)))
   ([root pattern opts]
    (map str (fs/glob root pattern opts))))
 
-(defn output-path [path f]
-  (io/file (output-dir) (f path)))
+(defn cache-path [path]
+  (io/file (cache-dir) path))
+
+(defn output-path [path trans]
+  (io/file (output-dir) (trans path)))
 
 (defn prn-updated-msg [path]
   (println (str "updated " path)))
@@ -47,11 +53,18 @@
       (copyfile/run-content "")
       (prn-updated-msg)))
 
+(defn store-posts-meta [posts]
+  (swap! state assoc :posts posts)
+  (-> "posts.yaml"
+      (cache-path)
+      (copyfile/run-content (yaml/generate-string {:posts posts}))
+      (prn-updated-msg)))
+
 (defn build-posts []
   (let [files (list-folder "posts" "*.md")
         posts (for [f files] (pandoc/parse-meta f))
-        sorted-posts (sort-by :date posts)]
-    (swap! state assoc :posts sorted-posts)
+        sorted-posts (reverse (sort-by :date posts))]
+    (store-posts-meta sorted-posts)
     (doseq [meta sorted-posts]
       (-> (:path meta)
           (output-path #(string/replace %1 ".md" ".html"))
@@ -59,12 +72,10 @@
           (prn-updated-msg)))))
 
 (defn build-archive-html []
-  (let [posts (:posts @state)]
-    (prn posts)
-    (-> "archive.html"
-        (output-path identity)
-       ;(copyfile/run-content (template/archive-template posts))
-        (prn-updated-msg))))
+  (-> "archive.html"
+      (output-path identity)
+      (pandoc/run-with-posts-meta "Archives" "templates/archive.html" "_cache/posts.yaml")
+      (prn-updated-msg)))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 ; bb action
@@ -72,5 +83,5 @@
   (build-images)
   (build-css)
   (build-posts)
-  ;(build-archive-html)
+  (build-archive-html)
   (build-nojekyll))

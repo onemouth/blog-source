@@ -35,13 +35,16 @@
 (defn- path-date [path]
   (re-find #"\d{4}-\d{2}-\d{2}" path))
 
+(defn- path->url [path]
+  (str "/" (string/replace path "md" "html")))
+
 ;(yaml-header->edn "posts/2022-03-10-japanese-plugins.md")
 
 (defn parse-meta [path]
   (let [header-map (yaml-header->map path)
         date (path-date path)
         header-map (if date (assoc header-map :date date) header-map)]
-    (assoc header-map :path path)))
+    (assoc header-map :path path :url (path->url path))))
 
 (defn run-post-html [dest
                      {:keys [path date enable]}]
@@ -64,3 +67,13 @@
     (println (string/join " " cmd))
     (apply sh cmd))
   dest)
+
+(defn run-with-posts-meta [dest title template-file meta-path]
+  (let [cmd (concat ["pandoc"
+                     "-M" (str "title=" title)
+                     (str "--metadata-file=" meta-path)
+                     (str "--template=" template-file)
+                     "-o" (str dest)])]
+    (println (string/join " " cmd))
+    (apply sh {:in ""} cmd)
+    dest))
