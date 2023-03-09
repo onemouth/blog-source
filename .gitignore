@@ -29,3 +29,5 @@ _site/
 node_modules/
 .lsp/.cache
 .clj-kondo/.cache
+
+.calva

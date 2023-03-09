@@ -2,9 +2,12 @@
   (:require :require
             [babashka.fs :as fs]
             [clojure.java.io :as io]
-            [compiler.copyfile :as copyfile]))
+            [compiler.copyfile :as copyfile]
+            [compiler.pandoc :as pandoc]))
 
 (def ^{:private true} config {})
+
+(def ^{:private true} state (atom {}))
 
 (defn output-dir []
   (:output-dir config "_site"))
@@ -42,9 +45,17 @@
       (copyfile/run-content "")
       (prn-updated-msg)))
 
+(defn build-posts []
+  (let [files (list-folder "posts" "*.md")
+        posts (for [f files] [f (pandoc/parse-meta f)])
+        sorted-posts (sort-by (comp :date second) posts)]
+    (swap! state assoc :posts sorted-posts)
+    (prn @state)))
+
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 ; bb action
 (defn build []
   (build-images)
   (build-css)
+  (build-posts)
   (build-nojekyll))
