@@ -55,9 +55,13 @@
 
 (defn store-posts-meta [posts]
   (swap! state assoc :posts posts)
-  (-> "posts.yaml"
+  (-> "allposts.yaml"
       (cache-path)
       (copyfile/run-content (yaml/generate-string {:posts posts}))
+      (prn-updated-msg))
+  (-> "recentposts.yaml"
+      (cache-path)
+      (copyfile/run-content (yaml/generate-string {:posts (take 5 posts)}))
       (prn-updated-msg)))
 
 (defn build-posts []
@@ -74,7 +78,13 @@
 (defn build-archive-html []
   (-> "archive.html"
       (output-path identity)
-      (pandoc/run-with-posts-meta "Archives" "templates/archive.html" "_cache/posts.yaml")
+      (pandoc/run-with-posts-meta "Archives" "templates/archive.html" "_cache/allposts.yaml")
+      (prn-updated-msg)))
+
+(defn build-index-html []
+  (-> "index.html"
+      (output-path identity)
+      (pandoc/run-with-posts-meta "Home" "templates/index.html" "_cache/recentposts.yaml")
       (prn-updated-msg)))
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
@@ -84,4 +94,5 @@
   (build-css)
   (build-posts)
   (build-archive-html)
+  (build-index-html)
   (build-nojekyll))

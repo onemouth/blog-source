@@ -97,18 +97,6 @@ main = hakyllWith config $ do
       posts <- fmap (take 15) . recentFirst =<< loadAllSnapshots "posts/*" "content"
       renderAtom feedConfiguration feedCtx posts
 
-  match "index.html" $ do
-    route idRoute
-    compile $ do
-      posts <- recentFirst =<< loadAll "posts/*"
-      let indexCtx =
-            listField "posts" postCtx (return (take 5 posts))
-              `mappend` defaultContext
-
-      getResourceBody
-        >>= applyAsTemplate indexCtx
-        >>= relativizeUrls
-
   match "templates/*" $ compile templateBodyCompiler
 
 --------------------------------------------------------------------------------

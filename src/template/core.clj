@@ -33,7 +33,7 @@
 (defn gen []
   (let [path-template-pair [["templates/post.html" post-template]
                             ["templates/post-toc.html" post-toc-template]
-                            ["index.html" index-template]
+                            ["templates/index.html" index-template]
                             ["templates/archive.html" archive-template]]]
     (doseq [[path template] path-template-pair]
       (println (str "generate " path))
