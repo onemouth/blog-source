@@ -1,6 +1,7 @@
 {:paths ["src"]
  :deps {org.babashka/http-server {:mvn/version "0.1.11"}
-        org.babashka/cli {:mvn/version "0.2.23"}}
+        org.babashka/cli {:mvn/version "0.2.23"}
+        tick/tick {:mvn/version "0.6.0"}}
  :tasks {:requires ([babashka.cli :as cli])
          :init (def cli-opts (cli/parse-opts *command-line-args* {:coerce {:port :int}}))
 

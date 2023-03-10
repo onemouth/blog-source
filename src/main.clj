@@ -3,6 +3,7 @@
             [babashka.fs :as fs]
             [clj-yaml.core :as yaml]
             [clojure.java.io :as io]
+            [tick.core :as t]
             [clojure.string :as string]
             [compiler.copyfile :as copyfile]
             [compiler.pandoc :as pandoc]))
@@ -67,7 +68,7 @@
 (defn build-posts []
   (let [files (list-folder "posts" "*.md")
         posts (for [f files] (pandoc/parse-meta f))
-        sorted-posts (reverse (sort-by :date posts))]
+        sorted-posts (sort-by :date-obj t/> posts)]
     (store-posts-meta sorted-posts)
     (doseq [meta sorted-posts]
       (-> (:path meta)

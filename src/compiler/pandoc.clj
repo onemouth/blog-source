@@ -1,6 +1,7 @@
 (ns compiler.pandoc
   (:require [babashka.process :refer [sh]]
             [clojure.java.io :as io]
+            [tick.core :as t]
             [clj-yaml.core :as yaml]
             [clojure.string :as string]))
 
@@ -42,8 +43,9 @@
 
 (defn parse-meta [path]
   (let [header-map (yaml-header->map path)
-        date (path-date path)
-        header-map (if date (assoc header-map :date date) header-map)]
+        date-obj (t/date (path-date path))
+        date (t/format "MMM dd, yyyy" date-obj)
+        header-map (if date (assoc header-map :date date :date-obj date-obj) header-map)]
     (assoc header-map :path path :url (path->url path))))
 
 (defn run-post-html [dest
