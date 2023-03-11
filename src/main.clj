@@ -1,12 +1,12 @@
 (ns main
-  (:require :require
-            [babashka.fs :as fs]
+  (:require [babashka.fs :as fs]
             [clj-yaml.core :as yaml]
             [clojure.java.io :as io]
             [tick.core :as t]
             [clojure.string :as string]
             [compiler.copyfile :as copyfile]
-            [compiler.pandoc :as pandoc]))
+            [compiler.pandoc :as pandoc]
+            [template.rss :as rss]))
 
 (def ^{:private true} config {})
 
@@ -16,7 +16,7 @@
   (:output-dir config "_site"))
 
 (defn cache-dir []
-  (:cacche-dir config "_cache"))
+  (:cache-dir config "_cache"))
 
 (defn list-folder
   ([root pattern]
@@ -24,10 +24,10 @@
   ([root pattern opts]
    (map str (fs/glob root pattern opts))))
 
-(defn cache-path [path]
+(defn cache-file [path]
   (io/file (cache-dir) path))
 
-(defn output-path [path trans]
+(defn output-file [path trans]
   (io/file (output-dir) (trans path)))
 
 (defn prn-updated-msg [path]
@@ -36,7 +36,7 @@
 (defn build-images []
   (doseq [path (list-folder "images" "*")]
     (-> path
-        (output-path identity)
+        (output-file identity)
         (copyfile/run-cp path)
         (prn-updated-msg))))
 
@@ -44,24 +44,24 @@
   (doseq [path (list-folder "css" "*.css")]
     (let [content (slurp path)]
       (-> path
-          (output-path identity)
+          (output-file identity)
           (copyfile/run-content  content)
           (prn-updated-msg)))))
 
 (defn build-nojekyll []
   (-> ".nojekyll"
-      (output-path identity)
+      (output-file identity)
       (copyfile/run-content "")
       (prn-updated-msg)))
 
 (defn store-posts-meta [posts]
   (swap! state assoc :posts posts)
   (-> "allposts.yaml"
-      (cache-path)
+      (cache-file)
       (copyfile/run-content (yaml/generate-string {:posts posts}))
       (prn-updated-msg))
   (-> "recentposts.yaml"
-      (cache-path)
+      (cache-file)
       (copyfile/run-content (yaml/generate-string {:posts (take 5 posts)}))
       (prn-updated-msg)))
 
@@ -72,21 +72,52 @@
     (store-posts-meta sorted-posts)
     (doseq [meta sorted-posts]
       (-> (:path meta)
-          (output-path #(string/replace %1 ".md" ".html"))
+          (output-file #(string/replace %1 ".md" ".html"))
           (pandoc/run-post-html meta)
           (prn-updated-msg)))))
 
-(defn build-archive-html []
+(defn- build-archive-html []
   (-> "archive.html"
-      (output-path identity)
+      (output-file identity)
       (pandoc/run-with-posts-meta "Archives" "templates/archive.html" "_cache/allposts.yaml")
       (prn-updated-msg)))
 
-(defn build-index-html []
+(defn- build-index-html []
   (-> "index.html"
-      (output-path identity)
+      (output-file identity)
       (pandoc/run-with-posts-meta "Home" "templates/index.html" "_cache/recentposts.yaml")
       (prn-updated-msg)))
+
+(def ^{:private true} rss-config
+  {:title "Put some ink into the inkpot"
+   :author-name "LT Tsai"
+   :timezone "+08:00"
+   :root "https://onemouth.github.io"})
+
+(defn- get-entries []
+  (for [post (:posts @state)]
+    (let  [title (:title post)
+           feed-root (:root rss-config)
+           post-id (string/join "/" [feed-root (:path post)])
+           timezone (:timezone rss-config)
+           published (format "%sT12:00:00%s" (:date-obj post) timezone)
+           updated published
+           content ""]
+      (rss/atom-entry title post-id published updated content))))
+
+(defn- build-rss []
+  (let [feed-title (:title rss-config)
+        author-name (:author-name rss-config)
+        feed-root (:root rss-config)
+        now-str (t/instant)
+        entries (get-entries)
+        xml-content (-> (rss/atom-template-xml feed-title author-name feed-root now-str entries rss-config)
+                        (str))]
+    (-> "atomtest.xml"
+        (output-file identity)
+        (copyfile/run-content xml-content)
+        (prn-updated-msg))))
+
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 ; bb action
@@ -96,4 +127,5 @@
   (build-posts)
   (build-archive-html)
   (build-index-html)
+  (build-rss)
   (build-nojekyll))
