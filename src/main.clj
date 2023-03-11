@@ -1,5 +1,6 @@
 (ns main
   (:require [babashka.fs :as fs]
+            [babashka.process :refer [sh]]
             [clj-yaml.core :as yaml]
             [clojure.java.io :as io]
             [tick.core :as t]
@@ -31,7 +32,8 @@
   (io/file (output-dir) (trans path)))
 
 (defn prn-updated-msg [path]
-  (println (str "updated " path)))
+  (println (str "updated " path))
+  path)
 
 (defn build-images []
   (doseq [path (list-folder "images" "*")]
@@ -65,16 +67,20 @@
       (copyfile/run-content (yaml/generate-string {:posts (take 5 posts)}))
       (prn-updated-msg)))
 
+(defn- assoc-dest-meta [dest idx]
+  (swap! state assoc-in [:posts idx :dest] dest))
+
 (defn build-posts []
   (let [files (list-folder "posts" "*.md")
         posts (for [f files] (pandoc/parse-meta f))
-        sorted-posts (sort-by :date-obj t/> posts)]
+        sorted-posts (vec (sort-by :date-obj t/> posts))]
     (store-posts-meta sorted-posts)
-    (doseq [meta sorted-posts]
+    (doseq [[idx meta] (map-indexed vector sorted-posts)]
       (-> (:path meta)
           (output-file #(string/replace %1 ".md" ".html"))
           (pandoc/run-post-html meta)
-          (prn-updated-msg)))))
+          (prn-updated-msg)
+          (assoc-dest-meta idx)))))
 
 (defn- build-archive-html []
   (-> "archive.html"
@@ -98,11 +104,13 @@
   (for [post (:posts @state)]
     (let  [title (:title post)
            feed-root (:root rss-config)
-           post-id (string/join "/" [feed-root (:path post)])
+           path (:path post)
+           post-id (string/join "/" [feed-root path])
            timezone (:timezone rss-config)
            published (format "%sT12:00:00%s" (:date-obj post) timezone)
            updated published
-           content ""]
+           build-html-path (:dest post)
+           content (:out (sh "htmlq" "-f" build-html-path "main"))]
       (rss/atom-entry title post-id published updated content))))
 
 (defn- build-rss []
@@ -113,7 +121,7 @@
         entries (get-entries)
         xml-content (-> (rss/atom-template-xml feed-title author-name feed-root now-str entries rss-config)
                         (str))]
-    (-> "atomtest.xml"
+    (-> "atom.xml"
         (output-file identity)
         (copyfile/run-content xml-content)
         (prn-updated-msg))))

@@ -20,6 +20,7 @@
   (format "<![CDATA[%s]]>" content))
 
 (defn atom-entry [title path published updated content]
+  ;(println content)
   (let [file-id (str path "/atom.xml")]
     [:entry
      [:title title]
