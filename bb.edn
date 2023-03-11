@@ -22,6 +22,7 @@
                            [template.core :as template]
                            [babashka.process :refer [sh]])
                 :task (do
+                        (sh "rm -r _site")
+                        (sh "rm -r _cache")
                         (template/gen)
-                        (println (:out (sh "stack run rebuild")))
                         (main/build))}}}
