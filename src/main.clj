@@ -105,13 +105,13 @@
     (let  [title (:title post)
            feed-root (:root rss-config)
            path (:path post)
-           post-id (string/join "/" [feed-root path])
+           url (string/join "/" [feed-root (string/replace path ".md" ".html")])
            timezone (:timezone rss-config)
            published (format "%sT12:00:00%s" (:date-obj post) timezone)
            updated published
            build-html-path (:dest post)
            content (:out (sh "htmlq" "-f" build-html-path "--remove-nodes" "head,nav"))]
-      (rss/atom-entry title post-id published updated content))))
+      (rss/atom-entry title url published updated content))))
 
 (defn- build-rss []
   (let [feed-title (:title rss-config)

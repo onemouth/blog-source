@@ -19,14 +19,13 @@
 (defn- cdata [content]
   (format "<![CDATA[%s]]>" content))
 
-(defn atom-entry [title path published updated content]
+(defn atom-entry [title url published updated content]
   ;(println content)
-  (let [file-id (str path "/atom.xml")]
-    [:entry
-     [:title title]
-     [:link {:href file-id}]
-     [:id file-id]
-     [:published published]
-     [:updated updated]
-     [:summary {:type "html"} (cdata content)]]))
+  [:entry
+   [:title title]
+   [:link {:href url}]
+   [:id url]
+   [:published published]
+   [:updated updated]
+   [:summary {:type "html"} (cdata content)]])
 
