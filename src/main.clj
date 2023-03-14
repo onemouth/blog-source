@@ -100,6 +100,10 @@
    :timezone "+08:00"
    :root "https://onemouth.github.io"})
 
+(defn- rss-content [html-path]
+  (let [content (:out (sh "htmlq" "-f" html-path "main"))]
+    content))
+
 (defn- get-entries []
   (for [post (:posts @state)]
     (let  [title (:title post)
@@ -109,8 +113,7 @@
            timezone (:timezone rss-config)
            published (format "%sT12:00:00%s" (:date-obj post) timezone)
            updated published
-           build-html-path (:dest post)
-           content (:out (sh "htmlq" "-f" build-html-path "--remove-nodes" "head,nav"))]
+           content (rss-content (:dest post))]
       (rss/atom-entry title url published updated content))))
 
 (defn- build-rss []

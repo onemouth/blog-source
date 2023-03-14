@@ -2,7 +2,7 @@
   (:require [hiccup2.core :as hiccup :refer [html]]))
 
 (defn atom-template-xml [title author-name root updated entries {:keys [author-email]}]
-  (html {:mode :xml}
+  (html {:mode :xml :escape-strings? false}
         (let [file-id (str root "/atom.xml")]
           [:feed {:xmlns "http://www.w3.org/2005/Atom"}
            [:title title]
