@@ -110,7 +110,7 @@
            published (format "%sT12:00:00%s" (:date-obj post) timezone)
            updated published
            build-html-path (:dest post)
-           content (:out (sh "htmlq" "-f" build-html-path "main"))]
+           content (:out (sh "htmlq" "-f" build-html-path "--remove-nodes" "head,nav"))]
       (rss/atom-entry title post-id published updated content))))
 
 (defn- build-rss []
