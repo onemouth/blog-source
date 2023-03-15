@@ -56,6 +56,13 @@
       (copyfile/run-content "")
       (prn-updated-msg)))
 
+(defn build-into-html []
+  (let [content (slurp "templates/intro.html")]
+    (-> "intro.html"
+        (output-file identity)
+        (copyfile/run-content content)
+        (prn-updated-msg))))
+
 (defn store-posts-meta [posts]
   (swap! state assoc :posts posts)
   (-> "allposts.yaml"
@@ -139,4 +146,5 @@
   (build-archive-html)
   (build-index-html)
   (build-rss)
+  (build-into-html)
   (build-nojekyll))
