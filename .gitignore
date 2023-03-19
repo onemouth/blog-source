@@ -33,3 +33,5 @@ node_modules/
 .calva
 
 example/
+
+css/output.css
