@@ -31,3 +31,7 @@ node_modules/
 .clj-kondo/.cache
 
 .calva
+
+example/
+
+css/output.css
