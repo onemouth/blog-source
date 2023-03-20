@@ -17,8 +17,16 @@ What I love most about Hakyll is how straightforward it is. Essentially, all you
 
 However, there were still two aspects that I found difficult to work with. The first was my own unfamiliarity with the Haskell programming language, which meant that I had to spend a lot of time researching how to implement the features I wanted.
 
-The other issue was that, compared to using the Pandoc Library, I preferred to use the Pandoc command-line interface (CLI). Pandoc is already a complex software, with a user manual of about 150 pages, and the functionality provided by the CLI alone is already quite complex. If I were to use the library instead, I would also have to deal with the complexity of Pandoc's internal implementation and the Haskell programming language. So, for me, using only the CLI to convert formats is much simpler.
+The other issue was that, compared to directly using the Pandoc Library, I preferred to use the [Pandoc command-line interface (CLI)](https://pandoc.org/#). Pandoc is already a complex software, with a user manual of about 150 pages, and the functionality provided by the CLI alone is already quite complex. If I were to use the library instead, I would also have to deal with the complexity of Pandoc's internal implementation and the Haskell programming language. So, for me, using only the CLI to convert formats is much simpler.
 
 
-# Babashka + Pandoc
+# Babashka 
 
+In fact, several years ago when I began learning Clojure, I had the idea that a powerful dynamic language like Clojure would be great as a script language, capable of replacing Python or Bash for some quick tasks. However, in practice, because Clojure is a dialect running on the JVM, its startup speed is quite slow, making it not very suitable for writing CLI tools.
+
+Until recently, I discovered [Babashka](https://babashka.org), also known as "Fast native Clojure scripting runtime". From the introduction on the official website, Babashka is designed to replace Bash scripts with a new designed runtime. It uses GraalVM native image technology, which makes its startup speed comparable to that of Python 3. When I found out about Babashka, I thought that using it along with other Clojure libraries would be a good way to quickly implement most of the functionality of Hakyll.
+
+
+# Conclustion
+
+也許可以這麼說，if you use a static site generate, you will finailly write one yourself. Finally I made my own one.
