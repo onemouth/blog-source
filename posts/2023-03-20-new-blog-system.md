@@ -1,7 +1,7 @@
 ---
-title: Write myself a static side generator
+title: Write myself a static site generator
 author: LT
-summary: Write myself a static side generator
+summary: Write myself a static site generator
 tags: blog,babashka,pandoc
 enable:
   toc: true
