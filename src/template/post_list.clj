@@ -1,7 +1,7 @@
 (ns template.post-list)
 
 (defn template []
-  [:ul {:class "list-disc list-inside"}
+  [:ul {:class "list-disc list-inside pl-3 mb-10"}
    "\n$for(posts)$\n"
    [:li
     [:a {:href "$posts.url$"} "$posts.title$"] " - $posts.date$"]

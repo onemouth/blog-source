@@ -26,7 +26,7 @@ In fact, several years ago when I began learning Clojure, I had the idea that a 
 
 Until recently, I discovered [Babashka](https://babashka.org), also known as "Fast native Clojure scripting runtime". From the introduction on the official website, Babashka is designed to replace Bash scripts with a new designed runtime. It uses GraalVM native image technology, which makes its startup speed comparable to that of Python 3. When I found out about Babashka, I thought that using it along with other Clojure libraries would be a good way to quickly implement most of the functionality of Hakyll.
 
-My plan is to replace the HTML templates in Hakyll with [Hicuup](https://github.com/weavejester/hiccup). I will also use the [process library](https://github.com/babashka/process) built into Babashka to call the Pandoc program. Additionally, I will use Babashka's [task runner](https://book.babashka.org/#tasks) to implement features such as `build` and `serve`
+My plan is to replace the HTML templates in Hakyll with [Hicuup](https://github.com/weavejester/hiccup). I will also use the [process library](https://github.com/babashka/process) built into Babashka to call the Pandoc program. Additionally, I will use Babashka's [task runner](https://book.babashka.org/#tasks) to implement features such as `build` and `serve`.
 
 The whole process was much easier than I expected and very interesting. Currently, I have removed the use of Hakyll completely from the source code. Of course, I haven't fully implemented all of Hakyll's features, but for now it meets my needs. Since I built it myself, I have a better understanding of the entire website building process and have more control over it than before.
 

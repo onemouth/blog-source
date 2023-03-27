@@ -18,7 +18,6 @@
     ;atom.xml
     [:link {:href "atom.xml" :type "application/atom+xml" :rel "alternate" :title "Put some ink into the inkpot"}]
     [:link {:rel "stylesheet" :href "/css/output.css"}]
-    [:link {:rel "stylesheet" :href "https://unpkg.com/sakura.css/css/sakura.css" :type "text/css"}]
     [:link {:rel "stylesheet" :href "/css/default.css"}]
     [:link {:rel "stylesheet" :href "/css/table.css"}]
     [:link {:rel "stylesheet" :href "/css/hightlight.css"}]]
