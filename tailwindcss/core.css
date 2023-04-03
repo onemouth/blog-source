@@ -4,6 +4,10 @@
 
 @layer base {
 
+    article .toc ul {
+        @apply list-none list-inside pl-3 mb-10 
+    }
+
     article {
        @apply mb-16
     }
@@ -20,8 +24,16 @@
         @apply text-3xl font-bold mt-12 mb-6
     }
 
+    article h2 {
+        @apply text-2xl font-bold mt-4 mb-4
+    }
+
+    article h3 {
+        @apply text-1xl font-bold mt-2 mb-2
+    }
+
     article ul {
-       @apply list-inside pl-3 mb-10
+       @apply list-disc list-inside pl-3 mb-10 mt-1
     }
 
     article .header {
