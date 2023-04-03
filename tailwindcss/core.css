@@ -7,11 +7,13 @@
         @apply max-w-full mb-8
     }
 
-    li {
-        @apply mb-1
+    article a {
+       @apply text-blue-700 
     }
 
-    h2 {
-        @apply text-2xl font-bold mt-12 mb-6
+    a {
+        @apply hover:text-rose-600 hover:border-b-2 hover:border-gray-700 visited:text-teal-800
     }
+
+
 }
