@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: #000;
 }
 
@@ -31,26 +31,7 @@ footer {
   color: #555;
 }
 
-h1 {
-  font-size: 2.4rem;
-}
 
-h2 {
-  font-size: 2rem;
-}
-
-article .header {
-  font-size: 1.4rem;
-  font-style: italic;
-  color: #555;
-  padding: 0 0 1.4rem 0;
-}
-
-.logo a {
-  font-weight: bold;
-  color: #000;
-  text-decoration: none;
-}
 
 .toc {
   position: fixed;
@@ -60,23 +41,16 @@ article .header {
 }
 
 .header-section-number {
-  color:hsla(0, 0%, 0%, 0.247);
-  font-family:"Merriweather",serif;
+  color: hsla(0, 0%, 0%, 0.247);
+  font-family: "Merriweather", serif;
 }
 
 
 .toc-section-number {
-  color:hsla(0, 0%, 0%, 0.623);
-  font-family:"Merriweather",serif;
+  color: hsla(0, 0%, 0%, 0.623);
+  font-family: "Merriweather", serif;
 }
 
-.toc ul {
-  list-style: none;
-}
-
-.active ul {
-  font-weight: bold;
-}
 
 @media (min-width: 320px) {
   body {
@@ -84,27 +58,34 @@ article .header {
     margin: 0;
     padding: 0 5%;
   }
+
   header {
     margin: 4.2rem 0;
   }
+
   nav {
     margin: 0 auto 3rem;
     text-align: center;
   }
+
   footer {
     text-align: center;
   }
+
   .logo {
     text-align: center;
     margin: 1rem auto 3rem;
   }
+
   .logo a {
     font-size: 2.4rem;
   }
+
   nav a {
     display: block;
     line-height: 1.6;
   }
+
   .toc {
     display: none;
   }
@@ -116,30 +97,37 @@ article .header {
     margin: 0 auto;
     padding: 0;
   }
+
   header {
     margin: 0 0 3rem;
     padding: 1.2rem 0;
   }
+
   nav {
     margin: 0;
     text-align: right;
   }
+
   nav a {
     margin: 0 0 0 1.2rem;
     display: inline;
   }
+
   footer {
     text-align: right;
   }
+
   .logo {
     margin: 0;
     text-align: left;
   }
+
   .logo a {
     float: left;
     font-size: 1.8rem;
   }
+
   .toc {
-    display:block;
+    display: block;
   }
 }

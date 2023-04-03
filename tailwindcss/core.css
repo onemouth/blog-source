@@ -3,12 +3,29 @@
 @tailwind utilities;
 
 @layer base {
+
+    article {
+       @apply mb-16
+    }
+
     article img {
         @apply max-w-full mb-8
     }
 
     article a {
        @apply text-blue-700 
+    }
+
+    article h1 {
+        @apply text-3xl font-bold mt-12 mb-6
+    }
+
+    article ul {
+       @apply list-inside pl-3 mb-10
+    }
+
+    article .header {
+        @apply text-base italic text-gray-500 pb-4
     }
 
     a {
