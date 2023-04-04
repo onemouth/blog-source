@@ -51,6 +51,13 @@
     a {
         @apply hover:text-rose-600 hover:border-b-2 hover:border-gray-700 visited:text-teal-800
     }
+    .header-section-number {
+        @apply text-gray-500 font-serif;
+    }
+
+    .toc-section-number {
+        @apply text-gray-700 font-serif;
+    }
 
 
 }

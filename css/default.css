@@ -1,56 +1,9 @@
-html {
-  font-size: 62.5%;
-}
-
-body {
-  font-size: 1.5rem;
-  color: #000;
-}
-
-header {
-  border-bottom: 0.2rem solid #000;
-}
-
-nav {
-  text-align: right;
-}
-
-nav a {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: black;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-footer {
-  margin-top: 3rem;
-  padding: 1.2rem 0;
-  border-top: 0.2rem solid #000;
-  font-size: 1.2rem;
-  color: #555;
-}
-
-
-
 .toc {
   position: fixed;
-  left: 10rem;
-  top: 10rem;
+  left: 10vw;
+  top: 10vw;
   max-width: 15%;
 }
-
-.header-section-number {
-  color: hsla(0, 0%, 0%, 0.247);
-  font-family: "Merriweather", serif;
-}
-
-
-.toc-section-number {
-  color: hsla(0, 0%, 0%, 0.623);
-  font-family: "Merriweather", serif;
-}
-
 
 @media (min-width: 320px) {
   body {
@@ -93,7 +46,7 @@ footer {
 
 @media (min-width: 640px) {
   body {
-    width: 60rem;
+    width: 45vw;
     margin: 0 auto;
     padding: 0;
   }
