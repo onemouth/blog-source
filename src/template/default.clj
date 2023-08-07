@@ -27,7 +27,6 @@
      [:div.logo
       [:a {:href "/"} "Put some ink into the inkpot"]]
      [:nav {:class "text-right"}
-      [:a {:href "/" :class (nav-a)} "Home"]
       [:a {:href "/archive.html" :class (nav-a)} "Archive"]
       [:a {:href "/atom.xml" :class (nav-a)} "RSS"]]]
     [:main
