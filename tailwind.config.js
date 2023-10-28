@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   content: [
     "./src/template/*.clj"
@@ -8,7 +11,11 @@ module.exports = {
     ".toc-section-number"
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'sans': ["HunInn", ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
   plugins: [],
 }

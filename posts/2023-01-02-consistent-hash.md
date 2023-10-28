@@ -71,7 +71,7 @@ func (m *Map) Add(nodes ...string) {
 }
 ```
 
-不管是新增或刪除node，我們都會重新呼叫這個`Add`function，來建立virtual node與server之間的對應。
+不管是新增或刪除node，我們都會重新呼叫這個`Add` function，來建立virtual node與server之間的對應。
 在這個function 中有兩個重要的變數：
 
 -  `m.circle`: 從小到大排序好的 virtual nodes
