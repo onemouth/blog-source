@@ -5,7 +5,7 @@
             [clojure.java.io :as io]
             [tick.core :as t]
             [clojure.string :as string]
-            [compiler.copyfile :as copyfile]
+            [compiler.cp :as cp]
             [compiler.pandoc :as pandoc]
             [template.rss :as rss]))
 
@@ -39,7 +39,7 @@
   (doseq [path (list-folder "images" "*")]
     (-> path
         (output-file identity)
-        (copyfile/run-cp path)
+        (cp/copy-file path)
         (prn-updated-msg))))
 
 (defn build-css []
@@ -47,31 +47,31 @@
     (let [content (slurp path)]
       (-> path
           (output-file identity)
-          (copyfile/run-content  content)
+          (cp/copy-content  content)
           (prn-updated-msg)))))
 
 (defn build-nojekyll []
   (-> ".nojekyll"
       (output-file identity)
-      (copyfile/run-content "")
+      (cp/copy-content "")
       (prn-updated-msg)))
 
 (defn build-into-html []
   (let [content (slurp "templates/intro.html")]
     (-> "intro.html"
         (output-file identity)
-        (copyfile/run-content content)
+        (cp/copy-content content)
         (prn-updated-msg))))
 
 (defn store-posts-meta [posts]
   (swap! state assoc :posts posts)
   (-> "allposts.yaml"
       (cache-file)
-      (copyfile/run-content (yaml/generate-string {:posts posts}))
+      (cp/copy-content (yaml/generate-string {:posts posts}))
       (prn-updated-msg))
   (-> "recentposts.yaml"
       (cache-file)
-      (copyfile/run-content (yaml/generate-string {:posts (take 10 posts)}))
+      (cp/copy-content (yaml/generate-string {:posts (take 10 posts)}))
       (prn-updated-msg)))
 
 (defn- assoc-dest-meta [dest idx]
@@ -133,7 +133,7 @@
                         (str))]
     (-> "atom.xml"
         (output-file identity)
-        (copyfile/run-content xml-content)
+        (cp/copy-content xml-content)
         (prn-updated-msg))))
 
 
