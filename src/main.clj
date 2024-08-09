@@ -71,7 +71,7 @@
       (prn-updated-msg))
   (-> "recentposts.yaml"
       (cache-file)
-      (copyfile/run-content (yaml/generate-string {:posts (take 5 posts)}))
+      (copyfile/run-content (yaml/generate-string {:posts (take 10 posts)}))
       (prn-updated-msg)))
 
 (defn- assoc-dest-meta [dest idx]
