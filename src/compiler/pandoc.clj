@@ -56,6 +56,7 @@
         template-cmd [(str "--template=" template-file)]
         basic-cmd (concat ["pandoc"
                            "-s"
+                           "-L" "lua/image_relative_url.lua"
                            "--mathjax"
                            "-t" "html"
                            "-f" "markdown+east_asian_line_breaks"
