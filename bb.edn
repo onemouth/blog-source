@@ -27,4 +27,4 @@
                         (sh "rm -r _site")
                         (sh "rm -r _cache")
                         (template/gen)
-                        (main/build))}}}
+                        (main/build-v2))}}}

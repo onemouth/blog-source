@@ -77,18 +77,6 @@
 (defn- assoc-dest-meta [dest idx]
   (swap! state assoc-in [:posts idx :dest] dest))
 
-(defn build-posts []
-  (let [files (list-folder "posts" "*.md")
-        posts (for [f files] (pandoc/parse-meta f))
-        sorted-posts (vec (sort-by :date-obj t/> posts))]
-    (store-posts-meta sorted-posts)
-    (doseq [[idx meta] (map-indexed vector sorted-posts)]
-      (-> (:path meta)
-          (output-file #(string/replace %1 ".md" ".html"))
-          (pandoc/run-post-html meta)
-          (prn-updated-msg)
-          (assoc-dest-meta idx)))))
-
 (defn- build-archive-html []
   (-> "archive.html"
       (output-file identity)
@@ -137,9 +125,104 @@
         (prn-updated-msg))))
 
 
+(defmulti process (juxt
+                   :action
+                   #(contains? %1 :folder)
+                   #(contains? %1 :file)))
+
+(defmethod process [:copy true false] [{:keys [folder route]}]
+  (doseq [path (list-folder (get folder 0) (get folder 1))]
+    (-> path
+        (output-file route)
+        (cp/copy-file path)
+        (prn-updated-msg))))
+
+(defmethod process [:create-file false true] [{:keys [file route content]}]
+  (-> file
+      (output-file route)
+      (cp/copy-content content)
+      (prn-updated-msg)))
+
+(defn- assoc-dest-meta-by-idx [dest idx context]
+  (swap! context assoc-in [:posts idx :dest] dest))
+
+(defn- run-pandoc-post
+  [dest template-file toc-enabled-template-file toc-args basic-args {:keys [path date enable]}]
+  (io/make-parents dest)
+  (let [toc-enable (:toc enable)
+        template (if toc-enable toc-enabled-template-file template-file)
+        base-cmd (concat
+                  ["pandoc"]
+                  basic-args
+                  [path
+                   "-o" (str dest)
+                   "-M" (str "date=" date)
+                   "--template" template])
+        cmd (if toc-enable (concat base-cmd toc-args) base-cmd)]
+    (println (string/join " " cmd))
+    (apply sh cmd))
+  dest)
+
+(defmethod process
+  [:pandoc-posts true false]
+  [{:keys [folder route template-file toc-enabled-template-file toc-args basic-args context]}]
+  (let [posts (list-folder (get folder 0) (get folder 1))
+        sorted-posts-meta (vec
+                           (sort-by :date-obj t/> (for [f posts] (pandoc/parse-meta f))))]
+    (doseq [[idx meta] (map-indexed vector sorted-posts-meta)]
+      (-> (:path meta)
+          (output-file route)
+          (run-pandoc-post template-file toc-enabled-template-file toc-args basic-args meta)
+          (prn-updated-msg)
+          (assoc-dest-meta-by-idx idx context)))))
+
+(defn build-posts []
+  (let [files (list-folder "posts" "*.md")
+        posts (for [f files] (pandoc/parse-meta f))
+        sorted-posts (vec (sort-by :date-obj t/> posts))]
+    (store-posts-meta sorted-posts)
+    (doseq [[idx meta] (map-indexed vector sorted-posts)]
+      (-> (:path meta)
+          (output-file #(string/replace %1 ".md" ".html"))
+          (pandoc/run-post-html meta)
+          (prn-updated-msg)
+          (assoc-dest-meta idx)))))
+
+
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 ; bb action
-(defn build []
+(defn build-v2 []
+  (let [context (atom {})]
+    (process {:action :copy
+              :folder ["images", "*"]
+              :route identity})
+    (process {:action :copy
+              :folder ["css", "*.css"]
+              :route identity})
+    (process {:action :create-file
+              :file ".nojekyll"
+              :content ""
+              :route identity})
+    (process {:action :pandoc-posts
+              :folder ["posts", "*.md"]
+              :route #(string/replace %1 ".md" ".html")
+              :template-file "templates/post.html"
+              :toc-enabled-template-file "templates/post-toc.html"
+              :toc-args ["--toc" "--number-sections" "--toc-depth=2"]
+              :basic-args ["-s"
+                           "-L" "lua/image_relative_url.lua"
+                           "--mathjax"
+                           "-t" "html"
+                           "-f" "markdown+east_asian_line_breaks"]
+              :context context})
+    (build-archive-html)
+    (build-index-html)
+    (build-rss)))
+
+
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
+; bb action
+(defn build-v1 []
   (build-images)
   (build-css)
   (build-posts)
@@ -148,3 +231,4 @@
   (build-rss)
   (build-into-html)
   (build-nojekyll))
+
