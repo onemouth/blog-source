@@ -42,53 +42,6 @@
         (cp/copy-file path)
         (prn-updated-msg))))
 
-(defn build-css []
-  (doseq [path (list-folder "css" "*.css")]
-    (let [content (slurp path)]
-      (-> path
-          (output-file identity)
-          (cp/copy-content  content)
-          (prn-updated-msg)))))
-
-(defn build-nojekyll []
-  (-> ".nojekyll"
-      (output-file identity)
-      (cp/copy-content "")
-      (prn-updated-msg)))
-
-(defn build-into-html []
-  (let [content (slurp "templates/intro.html")]
-    (-> "intro.html"
-        (output-file identity)
-        (cp/copy-content content)
-        (prn-updated-msg))))
-
-(defn store-posts-meta [posts]
-  (swap! state assoc :posts posts)
-  (-> "allposts.yaml"
-      (cache-file)
-      (cp/copy-content (yaml/generate-string {:posts posts}))
-      (prn-updated-msg))
-  (-> "recentposts.yaml"
-      (cache-file)
-      (cp/copy-content (yaml/generate-string {:posts (take 10 posts)}))
-      (prn-updated-msg)))
-
-(defn- assoc-dest-meta [dest idx]
-  (swap! state assoc-in [:posts idx :dest] dest))
-
-(defn- build-archive-html []
-  (-> "archive.html"
-      (output-file identity)
-      (pandoc/run-with-posts-meta "Archives" "templates/archive.html" "_cache/allposts.yaml")
-      (prn-updated-msg)))
-
-(defn- build-index-html []
-  (-> "index.html"
-      (output-file identity)
-      (pandoc/run-with-posts-meta "Home" "templates/index.html" "_cache/recentposts.yaml")
-      (prn-updated-msg)))
-
 (def ^{:private true} rss-config
   {:title "Put some ink into the inkpot"
    :author-name "LT Tsai"
@@ -137,11 +90,23 @@
         (cp/copy-file path)
         (prn-updated-msg))))
 
-(defmethod process [:create-file false true] [{:keys [file route content]}]
-  (-> file
-      (output-file route)
-      (cp/copy-content content)
-      (prn-updated-msg)))
+(defmethod process [:create-file false true] [{:keys [file content route cache]}]
+  (let [create-file (if cache cache-file #(output-file %1 route))]
+    (-> file
+        (create-file)
+        (cp/copy-content content)
+        (prn-updated-msg))))
+
+(defmethod process [:pandoc-embed false true] [{:keys [file title template-file meta-file]}]
+  (let [dest (string/join "/" [(output-dir) file])
+        cmd  ["pandoc"
+              "-M" (str "title=" title)
+              (str "--metadata-file=" meta-file)
+              (str "--template=" template-file)
+              "-o" dest]]
+    (println (string/join " " cmd))
+    (apply sh {:in ""} cmd)
+    dest))
 
 (defn- assoc-dest-meta-by-idx [dest idx context]
   (swap! context assoc-in [:posts idx :dest] dest))
@@ -169,24 +134,13 @@
   (let [posts (list-folder (get folder 0) (get folder 1))
         sorted-posts-meta (vec
                            (sort-by :date-obj t/> (for [f posts] (pandoc/parse-meta f))))]
+    (swap! context assoc :posts sorted-posts-meta)
     (doseq [[idx meta] (map-indexed vector sorted-posts-meta)]
       (-> (:path meta)
           (output-file route)
           (run-pandoc-post template-file toc-enabled-template-file toc-args basic-args meta)
           (prn-updated-msg)
           (assoc-dest-meta-by-idx idx context)))))
-
-(defn build-posts []
-  (let [files (list-folder "posts" "*.md")
-        posts (for [f files] (pandoc/parse-meta f))
-        sorted-posts (vec (sort-by :date-obj t/> posts))]
-    (store-posts-meta sorted-posts)
-    (doseq [[idx meta] (map-indexed vector sorted-posts)]
-      (-> (:path meta)
-          (output-file #(string/replace %1 ".md" ".html"))
-          (pandoc/run-post-html meta)
-          (prn-updated-msg)
-          (assoc-dest-meta idx)))))
 
 
 #_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
@@ -215,20 +169,29 @@
                            "-t" "html"
                            "-f" "markdown+east_asian_line_breaks"]
               :context context})
-    (build-archive-html)
-    (build-index-html)
+
+    (process {:action :create-file
+              :file "allposts.yaml"
+              :cache true
+              :content (yaml/generate-string @context)})
+
+    (process {:action :create-file
+              :file "recentposts.yaml"
+              :cache true
+              :content (yaml/generate-string
+                        {:posts (take 10 (:posts @context))})})
+
+    (process {:action :pandoc-embed
+              :template-file "templates/archive.html"
+              :file "archive.html"
+              :meta-file (string/join "/" [(cache-dir) "allposts.yaml"])
+              :title "Archive"})
+    (process {:action :pandoc-embed
+              :template-file "templates/index.html"
+              :file "index.html"
+              :meta-file (string/join "/" [(cache-dir) "recentposts.yaml"])
+              :title "Home"})
     (build-rss)))
 
 
-#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
-; bb action
-(defn build-v1 []
-  (build-images)
-  (build-css)
-  (build-posts)
-  (build-archive-html)
-  (build-index-html)
-  (build-rss)
-  (build-into-html)
-  (build-nojekyll))
 
