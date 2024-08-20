@@ -11,8 +11,6 @@
 
 (def ^{:private true} config {})
 
-(def ^{:private true} state (atom {}))
-
 (defn output-dir []
   (:output-dir config "_site"))
 
@@ -35,13 +33,6 @@
   (println (str "updated " path))
   path)
 
-(defn build-images []
-  (doseq [path (list-folder "images" "*")]
-    (-> path
-        (output-file identity)
-        (cp/copy-file path)
-        (prn-updated-msg))))
-
 (def ^{:private true} rss-config
   {:title "Put some ink into the inkpot"
    :author-name "LT Tsai"
@@ -52,8 +43,8 @@
   (let [content (:out (sh "htmlq" "-f" html-path "main"))]
     content))
 
-(defn- get-entries []
-  (for [post (:posts @state)]
+(defn- get-entries [context]
+  (for [post (:posts @context)]
     (let  [title (:title post)
            feed-root (:root rss-config)
            path (:path post)
@@ -64,12 +55,12 @@
            content (rss-content (:dest post))]
       (rss/atom-entry title url published updated content))))
 
-(defn- build-rss []
+(defn- build-rss [context]
   (let [feed-title (:title rss-config)
         author-name (:author-name rss-config)
         feed-root (:root rss-config)
         now-str (t/instant)
-        entries (get-entries)
+        entries (get-entries context)
         xml-content (-> (rss/atom-template-xml feed-title author-name feed-root now-str entries rss-config)
                         (str))]
     (-> "atom.xml"
@@ -169,18 +160,15 @@
                            "-t" "html"
                            "-f" "markdown+east_asian_line_breaks"]
               :context context})
-
     (process {:action :create-file
               :file "allposts.yaml"
               :cache true
               :content (yaml/generate-string @context)})
-
     (process {:action :create-file
               :file "recentposts.yaml"
               :cache true
               :content (yaml/generate-string
                         {:posts (take 10 (:posts @context))})})
-
     (process {:action :pandoc-embed
               :template-file "templates/archive.html"
               :file "archive.html"
@@ -191,7 +179,7 @@
               :file "index.html"
               :meta-file (string/join "/" [(cache-dir) "recentposts.yaml"])
               :title "Home"})
-    (build-rss)))
+    (build-rss context)))
 
 
 

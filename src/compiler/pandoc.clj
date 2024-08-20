@@ -1,9 +1,9 @@
 (ns compiler.pandoc
-  (:require [babashka.process :refer [sh]]
-            [clojure.java.io :as io]
-            [tick.core :as t]
-            [clj-yaml.core :as yaml]
-            [clojure.string :as string]))
+  (:require
+   [clojure.java.io :as io]
+   [tick.core :as t]
+   [clj-yaml.core :as yaml]
+   [clojure.string :as string]))
 
 (defn- get-yaml-header-helper [lines]
   (loop [lines lines
@@ -47,36 +47,3 @@
         date (t/format "MMM dd, yyyy" date-obj)
         header-map (if date (assoc header-map :date date :date-obj date-obj) header-map)]
     (assoc header-map :path path :url (path->url path))))
-
-(defn run-post-html [dest
-                     {:keys [path date enable]}]
-  (io/make-parents dest)
-  (let [toc-enable (:toc enable)
-        template-file (if toc-enable "templates/post-toc.html" "templates/post.html")
-        template-cmd [(str "--template=" template-file)]
-        basic-cmd (concat ["pandoc"
-                           "-s"
-                           "-L" "lua/image_relative_url.lua"
-                           "--mathjax"
-                           "-t" "html"
-                           "-f" "markdown+east_asian_line_breaks"
-                           path
-                           "-o" (str dest)
-                           "-M" (str "date=" date)] template-cmd)
-        toc-args ["--toc"
-                  "--number-sections"
-                  "--toc-depth=2"]
-        cmd (if toc-enable (concat basic-cmd toc-args) basic-cmd)]
-    (println (string/join " " cmd))
-    (apply sh cmd))
-  dest)
-
-(defn run-with-posts-meta [dest title template-file meta-path]
-  (let [cmd (concat ["pandoc"
-                     "-M" (str "title=" title)
-                     (str "--metadata-file=" meta-path)
-                     (str "--template=" template-file)
-                     "-o" (str dest)])]
-    (println (string/join " " cmd))
-    (apply sh {:in ""} cmd)
-    dest))
