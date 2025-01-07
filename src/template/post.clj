@@ -21,7 +21,7 @@
        "$body$")]]
    [:comment
     [:script {:src "https://giscus.app/client.js"
-              :data-repo "onemouth/onemouth.github.io"
+              :data-repo "onemouth/blog-source"
               :data-repo-id "MDEwOlJlcG9zaXRvcnkyNjExMjI0MTE="
               :data-category "General"
               :data-category-id "DIC_kwDOD5Bpa84COAIg"

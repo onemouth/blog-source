@@ -39,7 +39,7 @@ renderAtom :: FeedConfiguration
      feedDescription = "Put some ink into the inkpot - a personal blog",
      feedAuthorName = "LT Tsai",
      feedAuthorEmail = "lt@ltt.pw",
-     feedRoot = "https://onemouth.github.io"
+     feedRoot = "https://lt.ichiban.day/"
    }
 ```
 

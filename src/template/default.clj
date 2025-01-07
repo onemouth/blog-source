@@ -28,7 +28,6 @@
       [:a {:href "/"} "Put some ink into the inkpot"]]
      [:nav {:class "text-right"}
       [:a {:href "/archive.html" :class (nav-a)} "Archive"]
-      [:a {:href "/logseq" :class (nav-a)} "Note"]
       [:a {:href "/atom.xml" :class (nav-a)} "RSS"]]]
     [:main
      (if embed embed "$body$")]

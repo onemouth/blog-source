@@ -37,7 +37,7 @@
   {:title "Put some ink into the inkpot"
    :author-name "LT Tsai"
    :timezone "+08:00"
-   :root "https://onemouth.github.io"})
+   :root "https://lt.ichiban.day"})
 
 (defn- rss-content [html-path]
   (let [content (:out (sh "htmlq" "-f" html-path "main"))]
