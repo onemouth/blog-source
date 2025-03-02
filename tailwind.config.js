@@ -8,7 +8,8 @@ module.exports = {
   ],
   safelist: [
     ".header-section-number",
-    ".toc-section-number"
+    ".toc-section-number",
+    "external-link"
   ],
   theme: {
     extend: {

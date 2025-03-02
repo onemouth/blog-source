@@ -156,6 +156,7 @@
               :toc-args ["--toc" "--number-sections" "--toc-depth=2"]
               :basic-args ["-s"
                            "-L" "lua/image_relative_url.lua"
+                           "-L" "lua/external_links.lua"
                            "--mathjax"
                            "-t" "html"
                            "-f" "markdown+east_asian_line_breaks"]
