@@ -10,3 +10,7 @@ function Link(el)
   end
   return el
 end 
+
+return {
+  { Link = Link }
+}
