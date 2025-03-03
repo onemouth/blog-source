@@ -17,6 +17,7 @@
   left: 10vw;
   top: 10vw;
   max-width: 15%;
+  font-size: 0.8rem;
 }
 
 @media (min-width: 320px) {
