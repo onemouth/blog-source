@@ -36,7 +36,7 @@ UTF-32 簡單暴力，因為每個Unicode code point 其實只需要21個bit就�
 
 好處是有兩個，第一個好處是code point 和 binary number 直接對應，不需要額外的複雜encoding 規則。延伸出來的第二個好處就是UTF-32是一個固定長度的編碼，所以我們要找到某個字串的第N個字，假如字串是UTF-32編碼，就可以在常數時間找到，但要注意的是，現在的Unicode編碼有像Skin tone modifier, Zero-width joiner 等修飾字符，所以這個常數時間定位，也未必能跟眼睛所見的、螢幕上顯示的字符做一對一的定位。
 
-壞處也很顯而易見，就是空間的浪費，尤其我們之前提到，常用字都在BMP，只需要2 bytes 就可以表示，UTF-32卻一律都使用了4 bytes。另外一個問題是可能需要BOM(Byte Order Mark)，來確定位元順序是little-endian 還是 big-endian。 因為空間的浪費，所以UTF-32在實務上比起UTF-16，UTF-8來說很少使用。
+壞處也很顯而易見，就是空間的浪費，尤其我們之前提到，常用字都在BMP，只需要2 bytes 就可以表示，UTF-32卻一律都使用了4 bytes。另外一個問題是可能需要BOM(Byte Order Mark)[^bom]，來確定位元順序是little-endian 還是 big-endian。因為空間的浪費，所以UTF-32在實務上比起UTF-16，UTF-8來說很少使用。
 
 另外，在有些文獻可能會提到UCF-4這個詞，簡單來說UTF-32跟UCF-4是一樣的東西，只是名稱上的差異。
 
@@ -48,7 +48,7 @@ UTF-16 用兩個byte編碼BMP，對於其他plane，則用上述提到過的Surr
 在有些地方可以看到USC-2這個詞，可以把USC-2編碼視為不支持Surrogate area的UTF-16,也就是說，USC-2 只會有2 bytes而且只能處理BMP有的字符。 
 
 ## UTF-8
-UTF-8 的特色就是相容[ASCII](https://zh.wikipedia.org/zh-tw/ASCII)，所以只需要1 byte就能表示英文字母，對於相容只支援ASCII的舊系統也相當方便。 另外，UTF-8在設計上不需要BOM。
+UTF-8[^utf8]的特色就是相容[ASCII](https://zh.wikipedia.org/zh-tw/ASCII)，所以只需要1 byte就能表示英文字母，對於相容只支援ASCII的舊系統也相當方便。 另外，UTF-8在設計上不需要BOM。
 缺點是對CJK的編碼需要3 bytes。
 
 ### 編碼規則
@@ -131,6 +131,10 @@ VS-15表示要用單色的方式顯示emoji，VS-16則表示要用彩色的方�
 
 # Reference 
 
-1. [從 Unicode 到 Emoji ](https://medium.com/@angus258963/%E5%BE%9Eunicode%E5%88%B0emoji-8cab765f55d9)
+1. [從 Unicode 到 Emoji ](https://medium.com/@angus258963/%E5%BE%9Eunicode%E5%88%B0emoji-8cab765f55d9)
+
+[^bom]: BOM (Byte Order Mark) 是一個特殊的Unicode字符（U+FEFF），通常放在文件開頭。在big-endian系統中，它會被存儲為`FE FF`，而在little-endian系統中，它會被存儲為`FF FE`。這樣系統就能通過讀取這個標記來確定後續字節的解讀順序。不過，在UTF-8中因為其設計特性，不需要使用BOM。
+
+[^utf8]: UTF-8是由Ken Thompson和Rob Pike在1992年設計的。他們在紐澤西的一家餐廳用一個下午就設計出了這個編碼方案。UTF-8最巧妙的設計在於它完全向後兼容ASCII，這意味著所有的ASCII文本自動就是有效的UTF-8文本，這大大簡化了從ASCII到Unicode的過渡。
 
 

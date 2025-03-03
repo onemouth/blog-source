@@ -17,6 +17,47 @@
   left: 10vw;
   top: 10vw;
   max-width: 15%;
+  font-size: 0.8em;
+}
+
+.footnotes {
+  float: right;
+  clear: right;
+  margin-right: -40%;
+  font-size: 0.8em;
+  color: #666;
+  max-width: 30%;
+}
+
+.footnote-ref {
+  display: none;
+}
+
+.footnotes hr {
+  display: none;
+}
+
+.footnotes .footnote-back {
+  display: none;
+}
+
+.footnotes ol {
+  list-style: none;
+  counter-reset: footnote;
+  padding-left: 0;
+}
+
+.footnotes ol li {
+  counter-increment: footnote;
+  position: relative;
+  margin-bottom: 1em;
+}
+
+.footnotes ol li::before {
+  content: "†";
+  position: absolute;
+  left: -1.3em;
+  color: #666;
 }
 
 @media (min-width: 320px) {
@@ -54,6 +95,10 @@
   }
 
   .toc {
+    display: none;
+  }
+
+  .footnotes {
     display: none;
   }
 }
@@ -95,6 +140,10 @@
   }
 
   .toc {
+    display: block;
+  }
+
+  .footnotes {
     display: block;
   }
 }

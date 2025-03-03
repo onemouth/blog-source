@@ -157,9 +157,10 @@
               :basic-args ["-s"
                            "-L" "lua/image_relative_url.lua"
                            "-L" "lua/external_links.lua"
+                           "-L" "lua/sidenotes.lua"
                            "--mathjax"
                            "-t" "html"
-                           "-f" "markdown+east_asian_line_breaks"]
+                           "-f" "markdown+east_asian_line_breaks+footnotes"]
               :context context})
     (process {:action :create-file
               :file "allposts.yaml"
