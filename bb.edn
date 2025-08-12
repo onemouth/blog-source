@@ -10,9 +10,10 @@
                        :task (template/gen)}
          serve {:doc "Serve static assets"
                 :requires ([babashka.http-server :as server])
-                :task (server/exec (merge {:port 8000
+                :task (server/exec (merge {:port 8002
                                            :dir "_site"}
                                           cli-opts))}
+
          build {:doc "build site"
                 :requires ([main]
                            [template.core :as template]

@@ -15,5 +15,8 @@ npx tailwindcss -i tailwindcss/core.css -o css/output.css
 
 - bb build: rebuild site
 - bb serve: run local http server
-- bb deploy: deploy site
+
+## deploy
+
+npx wrangler pages deploy _site
 
