@@ -6,10 +6,6 @@
   - [pandoc](https://pandoc.org): convert files from one markup format into another
   - [htmlq](https://github.com/mgdm/htmlq): like jq, but for HTML
 
-## CSS
-
-npx tailwindcss -i tailwindcss/core.css -o css/output.css
-
 
 ## Commmands
 

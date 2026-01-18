@@ -6,6 +6,120 @@
   font-size: 0.8rem;
 }
 
+/* Replacements for Tailwind classes */
+body {
+  font-size: 1rem;
+  /* text-base */
+  color: black;
+  /* text-black */
+  font-family: "HunInn", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Hyperlinks in post content */
+/* Hyperlinks in post content */
+p a,
+.external-link {
+  color: rgb(29, 78, 216);
+  /* Blue */
+  border-bottom: 3.2px solid rgb(54, 226, 129);
+  /* Green */
+}
+
+/* External Link structure */
+.external-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* External Link Icon */
+.external-link::after {
+  content: "";
+  display: block;
+  width: 1rem;
+  /* 16px */
+  height: 1rem;
+  margin-left: 0.25rem;
+  /* 4px */
+  background-color: rgb(107, 114, 128);
+  /* Gray-500 */
+
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Hover effects */
+p a:hover,
+.external-link:hover,
+nav a:hover,
+.post-list-item a:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+header {
+  border-bottom: 2px solid black;
+  /* border-b-2 border-black */
+}
+
+nav a {
+  color: black;
+  font-weight: bold;
+  font-size: 1.125rem;
+  /* text-lg */
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+footer {
+  margin-top: 3rem;
+  /* mt-12 */
+  padding-top: 0.75rem;
+  /* py-3 */
+  padding-bottom: 0.75rem;
+  border-top: 2px solid black;
+  /* border-t-2 border-black */
+  font-size: 0.875rem;
+  /* text-sm */
+  color: #6b7280;
+  /* text-gray-500 */
+}
+
+.index-header {
+  font-size: 1.875rem;
+  /* text-3xl */
+  font-weight: bold;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  /* font-serif */
+}
+
+.post-list {
+  list-style-type: disc;
+  /* list-disc */
+  list-style-position: inside;
+  /* list-inside */
+  padding-left: 0.75rem;
+  /* pl-3 */
+  margin-bottom: 2.5rem;
+  /* mb-10 */
+}
+
+.post-list-item {
+  margin-bottom: 0.75rem;
+  /* mb-3 */
+}
+
 @media (min-width: 320px) {
   body {
     width: 90%;
@@ -31,12 +145,69 @@
     margin: 1rem auto 3rem;
   }
 
-  .logo a {
-    font-size: 2.4rem;
+  /* Post Title */
+  article h1 {
+    font-size: 2.25rem;
+    /* 36px */
+    margin: 3rem 0 1.5rem;
+    /* 48px 0 24px */
+    font-weight: 700;
+  }
+
+  /* "Posted on" metadata */
+  article .header {
+    color: rgb(107, 114, 128);
+    font-style: italic;
+    padding-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  /* Lists */
+  article ul,
+  article ol {
+    margin: 0.5rem 0 2.5rem;
+    padding-left: 0.75rem;
+    /* 12px */
+  }
+
+  article li {
+    list-style-type: none;
+    /* Handled by pseudo-elements in production or specific design */
+    padding-left: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  /* List markers (approximating production look if they use dashes or specific content) */
+  article ul li::before {
+    content: "-";
+    margin-right: 0.5rem;
+    color: rgb(107, 114, 128);
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 4px solid rgb(229, 231, 235);
+    padding-left: 1rem;
+    font-style: italic;
+    color: rgb(75, 85, 99);
+    margin: 1.5rem 0;
+  }
+
+  /* Code blocks */
+  code,
+  pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    background-color: rgb(249, 245, 215);
+  }
+
+  pre {
+    padding: 1rem;
+    overflow-x: auto;
+    border-radius: 0.25rem;
   }
 
   nav a {
-    display: block;
+    display: inline;
     line-height: 1.6;
   }
 
@@ -172,6 +343,48 @@
 
   .toc {
     display: block;
+    position: fixed;
+    left: 120px;
+    top: 120px;
+    max-width: 15%;
+    font-size: 0.8rem;
+    /* 12.8px */
+    line-height: 24px;
+  }
+
+  .toc .header {
+    font-size: 1rem;
+    color: rgb(107, 114, 128);
+    margin-bottom: 0px;
+    font-weight: 400;
+  }
+
+  .toc ul {
+    list-style-type: none;
+    padding-left: 12px;
+    margin: 0;
+  }
+
+  .toc ul li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc ul li::before {
+    content: none;
+    /* Remove dash from generic article ul rule */
+  }
+
+  .toc a {
+    color: rgb(29, 78, 216);
+    /* Blue */
+    text-decoration: none;
+    display: inline;
+  }
+
+  .toc a:hover {
+    text-decoration: underline;
+    color: black;
   }
 
   .footnotes {
