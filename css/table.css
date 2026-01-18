@@ -1,12 +1,13 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
-body {
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+/* body {
   font-family: "Open Sans", sans-serif;
-}
+} */
 table {
   border: 1px solid #ccc;
   border-collapse: collapse;
   margin-bottom: 30px;
-  padding:0;
+  padding: 0;
   width: 100%;
   caption-side: bottom;
 }
@@ -22,7 +23,7 @@ table tr.header {
   font-weight: bolder;
 }
 
-table tr.odd  {
+table tr.odd {
   border: 1px solid #ddd;
   padding: 5px;
 }
@@ -33,10 +34,12 @@ table tr.even {
   padding: 5px;
 }
 
-table th, table td {
+table th,
+table td {
   padding: 10px;
   text-align: center;
 }
+
 table th {
   font-size: 14px;
   letter-spacing: 1px;
