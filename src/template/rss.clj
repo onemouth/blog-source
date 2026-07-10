@@ -19,7 +19,7 @@
 (defn- cdata [content]
   (format "<![CDATA[%s]]>" content))
 
-(defn atom-entry [title url published updated content]
+(defn atom-entry [title url published updated summary content]
   ;(println content)
   [:entry
    [:title title]
@@ -27,5 +27,6 @@
    [:id url]
    [:published published]
    [:updated updated]
-   [:summary {:type "html"} (cdata content)]])
+   (if summary [:summary {:type "text"} summary] "")
+   [:content {:type "html"} (cdata content)]])
 

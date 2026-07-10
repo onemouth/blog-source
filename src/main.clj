@@ -43,6 +43,25 @@
   (let [content (:out (sh "htmlq" "-f" html-path "main"))]
     content))
 
+;; Feed readers can't resolve relative URLs (no reliable base), so rewrite
+;; src/href in the extracted content to absolute URLs, resolved against the
+;; post's own URL. Skips values that are already absolute, protocol-relative,
+;; or in-page anchors.
+(defn- absolutize-urls [html base-url]
+  (let [base (java.net.URI. base-url)]
+    (string/replace html #"(src|href)=\"([^\"]+)\""
+                    (fn [[whole attr val]]
+                      (if (or (string/starts-with? val "#")
+                              (re-find #"^(?:[a-zA-Z][\w+.-]*:|//)" val))
+                        whole
+                        (try
+                          (format "%s=\"%s\"" attr (.resolve base val))
+                          (catch Exception e
+                            (binding [*out* *err*]
+                              (println (format "warning: could not absolutize %s=\"%s\" against %s: %s"
+                                               attr val base-url (.getMessage e))))
+                            whole)))))))
+
 (defn- get-entries [context]
   (for [post (:posts @context)]
     (let  [title (:title post)
@@ -52,8 +71,10 @@
            timezone (:timezone rss-config)
            published (format "%sT12:00:00%s" (:date-obj post) timezone)
            updated published
-           content (rss-content (:dest post))]
-      (rss/atom-entry title url published updated content))))
+           summary (:summary post)
+           content (-> (rss-content (:dest post))
+                       (absolutize-urls url))]
+      (rss/atom-entry title url published updated summary content))))
 
 (defn- build-rss [context]
   (let [feed-title (:title rss-config)
