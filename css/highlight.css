@@ -1,6 +1,6 @@
 /* Generated from Pandoc 3.10's default (pygments) highlighting CSS.
    To regenerate: pandoc --standalone --template=<tmpl-with-$highlighting-css$> sample.md
-   Local customization: cream background (#f9f5d7) on code blocks (pre.sourceCode),
+   Local customization: warm-neutral background (#f3f2ef) on code blocks (pre.sourceCode),
    re-applied below. Inline code is styled separately in default.css. */
 html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -9,7 +9,7 @@ pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; background-color: #f9f5d7; } /* local: cream background */
+pre.sourceCode { margin: 0; background-color: #f3f2ef; } /* local: warm-neutral code background */
 @media screen {
 div.sourceCode { overflow: auto; }
 }
