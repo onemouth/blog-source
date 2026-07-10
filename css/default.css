@@ -312,10 +312,11 @@ footer {
   }
 }
 
-@media (min-width: 640px) {
+@media (min-width: 960px) {
   body {
     counter-reset: sidenote-counter;
-    width: 45vw;
+    width: min(40rem, 45vw);
+    /* cap measure at ~40 CJK chars; margin-note layout needs >=960px */
     margin: 0 auto;
     padding: 0;
     position: relative;
