@@ -197,13 +197,21 @@ footer {
   code,
   pre {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    background-color: rgb(249, 245, 215);
   }
 
   pre {
     padding: 1rem;
     overflow-x: auto;
     border-radius: 0.25rem;
+    background-color: rgb(249, 245, 215);
+  }
+
+  /* Inline code: subtle neutral, not the cream block background */
+  :not(pre) > code {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 0.15em 0.35em;
+    border-radius: 0.25rem;
+    font-size: 0.9em;
   }
 
   nav a {

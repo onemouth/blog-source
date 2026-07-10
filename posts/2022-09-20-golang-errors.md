@@ -20,7 +20,7 @@ enable:
 
 這是最常見的，也在許多知名的package被廣泛使用。
 
-```go
+```{.go .numberLines}
 package example
 
 var (
@@ -42,7 +42,7 @@ sentinal error的好處是簡單，定義快速，又一目瞭然。缺點是定
 我們再利用這個 type，定義一些 const error。
 
 
-```go
+```{.go .numberLines}
 type InvalidFormatError string
 
 func (e InvalidFormatError) Error() string {
@@ -80,7 +80,7 @@ InvalidFormatError 這一類的話，就可以利用 errros.As 來做判斷。
 
 ## 定義一個 struct
 
-```go
+```{.go .numberLines}
 type myDBPkgError struct {
 	value string
 	err   error
