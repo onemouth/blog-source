@@ -21,7 +21,7 @@ There are no tests or linter tasks (clj-kondo config exists for editor use).
 
 The build pipeline (`src/main.clj`, entry point `build-v2`) is a sequence of `process` multimethod calls dispatched on `:action`:
 
-1. `:copy` — copies `images/` and `css/` into `_site/`
+1. `:copy` — copies `images/`, `css/`, and `js/` into `_site/`
 2. `:pandoc-posts` — converts each `posts/*.md` to HTML via Pandoc, sorted newest-first; collects post metadata into a shared `context` atom
 3. `:create-file` — dumps that metadata to `_cache/allposts.yaml` and `_cache/recentposts.yaml`
 4. `:pandoc-embed` — renders `archive.html` and `index.html` by feeding those YAML files to Pandoc as `--metadata-file` (the templates loop over `$posts$`)
@@ -41,6 +41,10 @@ The build pipeline (`src/main.clj`, entry point `build-v2`) is a sequence of `pr
 ### Styling
 
 Plain CSS in `css/` (`default.css`, `table.css`, `highlight.css`). Tailwind is no longer used; `default.css` contains hand-written replacements for former Tailwind classes.
+
+### Client-side JS
+
+Vanilla, dependency-free scripts live in `js/` (copied verbatim by the `:copy` step). `js/toc.js` is a scroll-spy that adds `.active` to the `.toc` link of the section currently in view; it's injected via `<script src="/js/toc.js" defer>` only on TOC posts (see the `enable-toc` branch in `src/template/post.clj`).
 
 ### RSS/site config
 
