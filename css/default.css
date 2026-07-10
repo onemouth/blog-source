@@ -209,6 +209,7 @@ footer {
   nav a {
     display: inline;
     line-height: 1.6;
+    margin: 0 0.6rem;
   }
 
   .toc {
