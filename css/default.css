@@ -373,16 +373,16 @@ article h4,
     position: fixed;
     left: 120px;
     top: 120px;
-    max-width: 15%;
-    font-size: 0.8rem;
-    /* 12.8px */
-    line-height: 24px;
+    max-width: 18%;
+    font-size: 0.95rem;
+    /* 15.2px */
+    line-height: 1.7;
   }
 
   .toc .header {
-    font-size: 1rem;
+    font-size: 1.15rem;
     color: rgb(107, 114, 128);
-    margin-bottom: 0px;
+    margin-bottom: 0.4rem;
     font-weight: 400;
   }
 
@@ -406,12 +406,23 @@ article h4,
     color: #2c4a63;
     /* blue-black ink */
     text-decoration: none;
-    display: inline;
+    display: block;
+    border-left: 2px solid transparent;
+    padding-left: 0.6rem;
+    margin-left: -0.75rem;
+    transition: color 0.15s ease, border-color 0.15s ease;
   }
 
   .toc a:hover {
     text-decoration: underline;
     color: black;
+  }
+
+  /* Scroll-spy: the section currently being read */
+  .toc a.active {
+    color: #1a1a1a;
+    border-left-color: #1a1a1a;
+    font-weight: 600;
   }
 
   .footnotes {

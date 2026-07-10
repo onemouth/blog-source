@@ -18,7 +18,9 @@
          "$toc$"]
         [:div
          "$body$"]]
-       "$body$")]]
+       "$body$")]
+    (when enable-toc
+      [:script {:src "/js/toc.js" :defer true}])]
    [:comment
     [:script {:type "text/javascript"
               :src "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"

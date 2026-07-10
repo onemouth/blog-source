@@ -165,6 +165,9 @@
     (process {:action :copy
               :folder ["css", "*.css"]
               :route identity})
+    (process {:action :copy
+              :folder ["js", "*.js"]
+              :route identity})
     (process {:action :create-file
               :file ".nojekyll"
               :content ""
