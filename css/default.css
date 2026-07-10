@@ -2,8 +2,10 @@
 body {
   font-size: 1rem;
   /* text-base */
-  color: black;
-  /* text-black */
+  line-height: 1.75;
+  /* comfortable measure for CJK body text */
+  color: #1a1a1a;
+  /* near-black: softer than #000 on white */
   font-family: "HunInn", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -140,9 +142,16 @@ footer {
   article h1 {
     font-size: 2.25rem;
     /* 36px */
+    line-height: 1.25;
+    /* tighter than body so large headings don't sprawl */
     margin: 3rem 0 1.5rem;
     /* 48px 0 24px */
     font-weight: 700;
+  }
+
+  /* Paragraph rhythm */
+  article p {
+    margin: 0 0 1.4rem;
   }
 
   /* "Posted on" metadata */
