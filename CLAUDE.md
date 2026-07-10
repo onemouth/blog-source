@@ -40,7 +40,7 @@ The build pipeline (`src/main.clj`, entry point `build-v2`) is a sequence of `pr
 
 ### Styling
 
-Plain CSS in `css/` (`default.css`, `table.css`, `hightlight.css` — note the typo'd filename is intentional/referenced as-is). Tailwind is no longer used; `default.css` contains hand-written replacements for former Tailwind classes.
+Plain CSS in `css/` (`default.css`, `table.css`, `highlight.css`). Tailwind is no longer used; `default.css` contains hand-written replacements for former Tailwind classes.
 
 ### RSS/site config
 

@@ -21,7 +21,7 @@
 
     [:link {:rel "stylesheet" :href "/css/default.css"}]
     [:link {:rel "stylesheet" :href "/css/table.css"}]
-    [:link {:rel "stylesheet" :href "/css/hightlight.css"}]]
+    [:link {:rel "stylesheet" :href "/css/highlight.css"}]]
    [:body
     [:header
      [:div.logo
