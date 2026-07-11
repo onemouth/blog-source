@@ -42,6 +42,8 @@ The build pipeline (`src/main.clj`, entry point `build-v2`) is a sequence of `pr
 
 Plain CSS in `css/` (`default.css`, `table.css`, `highlight.css`). Tailwind is no longer used; `default.css` contains hand-written replacements for former Tailwind classes.
 
+The fixed TOC panel's geometry is coupled to the text column width: `.toc` uses `right`/`max-width` calcs that repeat the column's `min(40rem, 45vw)` (as `min(20rem, 22.5vw)` half-widths). If the `body` column width changes, update those `.toc` calcs too. The TOC shows only at ≥1280px — below that it would crowd the column, so it's hidden entirely.
+
 ### Client-side JS
 
 Vanilla, dependency-free scripts live in `js/` (copied verbatim by the `:copy` step). `js/toc.js` is a scroll-spy that adds `.active` to the `.toc` link of the section currently in view; it's injected via `<script src="/js/toc.js" defer>` only on TOC posts (see the `enable-toc` branch in `src/template/post.clj`).
