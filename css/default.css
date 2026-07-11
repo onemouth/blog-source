@@ -368,13 +368,19 @@ article h4,
     font-size: 1.8rem;
   }
 
-  /* Positioned and styled here, but only revealed at >=1600px
-     (below that the fixed panel would overlap the text column) */
+  /* Anchored to the left of the text column: the right edge sits a
+     fixed 4rem gap from the article (the column is min(40rem, 45vw)
+     centered, so its left edge is 50vw - min(20rem, 22.5vw)), and
+     max-width shrinks the panel before it can spill past the
+     viewport's left edge. Revealed at >=1280px (see end of file). */
   .toc {
     position: fixed;
-    left: 120px;
     top: 120px;
-    max-width: 18%;
+    right: calc(50vw + min(20rem, 22.5vw) + 4rem);
+    box-sizing: border-box;
+    max-width: min(16rem, calc(50vw - min(20rem, 22.5vw) - 4rem - 24px));
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
     font-size: 0.95rem;
     /* 15.2px */
     line-height: 1.7;
@@ -515,8 +521,8 @@ article h4,
   }
 }
 /* TOC needs room beside the centered text column: below this width
-   the fixed panel collides with the article, so keep it hidden */
-@media (min-width: 1600px) {
+   the panel would be too narrow to be useful, so keep it hidden */
+@media (min-width: 1280px) {
   .toc {
     display: block;
   }
