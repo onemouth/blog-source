@@ -368,8 +368,9 @@ article h4,
     font-size: 1.8rem;
   }
 
+  /* Positioned and styled here, but only revealed at >=1600px
+     (below that the fixed panel would overlap the text column) */
   .toc {
-    display: block;
     position: fixed;
     left: 120px;
     top: 120px;
@@ -377,6 +378,10 @@ article h4,
     font-size: 0.95rem;
     /* 15.2px */
     line-height: 1.7;
+    /* Same cream as code blocks, so it reads as one palette */
+    background-color: #f3f2ef;
+    padding: 1rem 1.25rem;
+    border-radius: 0.25rem;
   }
 
   .toc .header {
@@ -506,6 +511,13 @@ article h4,
   }
 
   .margin-toggle:checked+.sidenote {
+    display: block;
+  }
+}
+/* TOC needs room beside the centered text column: below this width
+   the fixed panel collides with the article, so keep it hidden */
+@media (min-width: 1600px) {
+  .toc {
     display: block;
   }
 }
