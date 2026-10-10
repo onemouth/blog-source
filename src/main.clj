@@ -66,7 +66,9 @@
            url (site/absolute-url (:url post))
            timezone (:timezone site/config)
            published (format "%sT12:00:00%s" (:date-obj post) timezone)
-           updated published
+           ;; Preserve the feed's date-only -> noon/timezone convention.
+           updated (format "%sT12:00:00%s"
+                           (or (:updated-date-obj post) (:date-obj post)) timezone)
            summary (:summary post)
            content (-> (rss-content (:dest post))
                        (absolutize-urls url))]

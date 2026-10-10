@@ -35,6 +35,7 @@ For English posts, use `lang: en` and write the title and summary in English.
 | `title` | Required for a complete post | `title: "設計 Golang 的 error"` | Page title, article H1, post lists, feed title, social title, and JSON-LD headline. |
 | `summary` | Recommended for every post | A concise plain-text sentence or two | Search description, social descriptions, and Atom summary. HTML SEO metadata and JSON-LD fall back to the title if omitted; Atom does not. |
 | `lang` | Recommended explicitly | `zh-Hant` or `en` | Document language, social locale, and JSON-LD language. Defaults to `zh-Hant` when omitted. |
+| `updated_date` | Optional | `updated_date: 2026-07-12` (quoted or unquoted) | Validated modification date for sitemap `lastmod`, JSON-LD `dateModified`, Open Graph `article:modified_time`, and Atom entry `updated`. Must not precede the filename publication date. |
 | `author` | Optional | `author: LT` | Visible article byline and JSON-LD author. If omitted, no visible byline is shown; JSON-LD falls back to the configured site author. Atom uses the site-wide author. |
 | `tags` | Optional | `tags: programming, golang` | HTML keywords metadata. Currently does not generate visible tags or tag pages. |
 | `enable.toc` | Optional | Nested YAML: `enable:` followed by `  toc: true` | Enables the table of contents, section numbering, and scroll highlighting. Omit for short posts. |
@@ -55,7 +56,19 @@ The build supplies:
 
 - **JSON-LD:** the build automatically adds `BlogPosting` structured data to every article and `WebSite` data to the homepage. It reuses the fields above; do not write a separate JSON block. Changing the frontmatter and rebuilding updates it automatically.
 
-`modified` and social-image fields are not implemented yet. Unknown modification dates are omitted from JSON-LD. Adding invented frontmatter keys will not enable those features.
+Modification dates are supplied only through optional `updated_date`; omit it when the last substantive update is unknown. No date is inferred from build time, filesystem timestamps, or publication dates. Social-image fields are not implemented yet.
+
+## Recording a substantive update
+
+Add or advance `updated_date` when you meaningfully change the article: corrected explanations, new sections, or updated recommendations. Use an actual calendar date in exactly `YYYY-MM-DD` format:
+
+```yaml
+updated_date: 2026-07-12
+```
+
+Do not advance it just for a rebuild, layout/style change, or language/alt-text annotations. Invalid dates, timestamps, and dates earlier than publication fail the build with the post path and field name. Same-day publication/update is allowed. If omitted or null, SEO modification fields remain absent; the visible publication date and post ordering do not change.
+
+Atom requires full timestamps, so an explicit update uses the feed\'s existing date-only convention: noon in the configured timezone (`+08:00`). Without `updated_date`, entry `updated` continues to equal `published`. Entry IDs remain unchanged.
 
 ## Inline language changes
 

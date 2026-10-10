@@ -15,7 +15,7 @@ Required tools: `bb` (Babashka), `pandoc`, `htmlq` (used for RSS content extract
 - `bb gen-template` — regenerate `templates/*.html` from the Hiccup sources only
 - `npx wrangler pages deploy _site` — deploy
 
-`bb test` runs `test/site_test.clj` for JSON-LD fields, defaults, safe Pandoc rendering, and built inline Japanese annotations; run `bb build` first to regenerate templates. There is no linter task (clj-kondo config exists for editor use).
+`bb test` runs `test/site_test.clj` and `test/updated_date_test.clj` for JSON-LD fields, defaults, safe Pandoc rendering, built inline Japanese annotations, and modification date parsing/outputs; run `bb build` first to regenerate templates. There is no linter task (clj-kondo config exists for editor use).
 
 ## Architecture
 
@@ -34,6 +34,7 @@ The build pipeline (`src/main.clj`, entry point `build-v2`) is a sequence of `pr
 ### Posts
 
 - Filename convention `posts/YYYY-MM-DD-slug.md` — the date is parsed **from the filename**, not the frontmatter (`src/compiler/pandoc.clj`)
+- Optional `updated_date: YYYY-MM-DD` records a substantive update; strict parsing in `src/compiler/pandoc.clj` rejects invalid dates/timestamps and dates before publication. Quoted/unquoted dates are supported; omitted/null means unknown. Used by sitemap `lastmod`, JSON-LD `dateModified`, OG `article:modified_time`, and Atom entry `updated` (existing noon/timezone convention). It does not change the visible publication date or post ordering.
 - YAML frontmatter: `title`, `summary`, `tags`; add `enable:\n  toc: true` to get a table of contents (switches to `templates/post-toc.html` with `--toc --number-sections --toc-depth=3`)
 - Pandoc input format is `markdown+east_asian_line_breaks+footnotes-implicit_figures` with MathJax enabled
 - Lua filters in `lua/` run on every post: `image_relative_url.lua`, `external_links.lua`, `sidenotes.lua`

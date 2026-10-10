@@ -13,6 +13,9 @@ $endif$
 $if(published-date)$
 <meta content="$published-date$" property="article:published_time" />
 $endif$
+$if(modified-date)$
+<meta content="$modified-date$" property="article:modified_time" />
+$endif$
 <meta content="summary" name="twitter:card" /><meta content="$page-title$" name="twitter:title" /><meta content="$page-description$" name="twitter:description" />
 $if(json-ld)$
 <script type="application/ld+json">$json-ld$</script>

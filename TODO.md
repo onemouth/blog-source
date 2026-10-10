@@ -219,14 +219,18 @@ Validation passed: `bb build`; `bb test` (4 tests, 39 assertions); all 18 pages 
 
 ## P3 — Reliable modification dates
 
-- [ ] Add an optional `modified` frontmatter field with an ISO 8601 date for substantive article updates.
-- [ ] Parse and validate it in `src/compiler/pandoc.clj`; reject invalid dates or dates before publication.
-- [ ] Use explicit modification metadata for sitemap `<lastmod>`; omit it when unknown.
-- [ ] Reuse it for JSON-LD `dateModified` and Open Graph `article:modified_time`.
-- [ ] Do not infer modification dates from build timestamps or filesystem modification times.
-- [ ] Document when authors should update `modified` (meaningful content changes, not every rebuild or cosmetic edit).
+- [x] Add an optional `updated_date: YYYY-MM-DD` frontmatter field for substantive article updates (user-selected name; date only).
+- [x] Parse and validate it in `src/compiler/pandoc.clj`; reject invalid calendar dates, timestamps, and dates before publication. Support quoted/unquoted dates, allow same-day updates, and treat omitted/null values as unknown.
+- [x] Use explicit modification metadata for sitemap `<lastmod>`; omit it when unknown.
+- [x] Reuse it for JSON-LD `dateModified` and Open Graph `article:modified_time`.
+- [x] Reuse it for Atom entry `updated`, preserving existing date-only noon/timezone convention and stable entry IDs. Unknown updates retain the existing publication-date fallback.
+- [x] Do not infer modification dates from build timestamps or filesystem modification times.
+- [x] Document when authors should update `updated_date` (meaningful content changes, not every rebuild or cosmetic edit).
+- [x] Leave visible publication dates and post sorting unchanged; do not backfill guessed dates into existing posts.
 
-Relevant files: `posts/*.md`, `src/compiler/pandoc.clj`, `src/main.clj`, sitemap and SEO renderers.
+Relevant files: `src/compiler/pandoc.clj`, `src/main.clj`, `src/site.clj`, sitemap and SEO renderers, `test/updated_date_test.clj`, `docs/authoring.md`.
+
+Validation passed: `bb build`; `bb test` (8 tests, 122 assertions). A temporary article verified the complete build propagates `updated_date` consistently to sitemap, JSON-LD, Open Graph, and Atom while preserving publication dates and entry IDs. Invalid/normalized YAML dates (including unquoted February 30), timestamps, and before-publication updates are rejected. The fixture was removed and the final build restored all 18 real pages with no invented modification dates. No existing post metadata was changed. Not committed or deployed yet.
 
 ## Build and verification
 

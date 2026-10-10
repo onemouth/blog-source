@@ -28,6 +28,8 @@
     [:meta {:property "og:locale" :content "$og-locale$"}]
     "\n$endif$\n$if(published-date)$\n"
     [:meta {:property "article:published_time" :content "$published-date$"}]
+    "\n$endif$\n$if(modified-date)$\n"
+    [:meta {:property "article:modified_time" :content "$modified-date$"}]
     "\n$endif$\n"
     [:meta {:name "twitter:card" :content "summary"}]
     [:meta {:name "twitter:title" :content "$page-title$"}]

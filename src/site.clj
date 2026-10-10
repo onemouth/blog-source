@@ -30,6 +30,8 @@
         article? (assoc "headline" (:page-title page)
                         "mainEntityOfPage" {"@type" "WebPage" "@id" url}
                         "datePublished" (:published-date page))
+        (and article? (:modified-date page))
+        (assoc "dateModified" (:modified-date page))
         (not article?) (assoc "name" (:site-title page))))))
 
 (defn json-ld [data]
@@ -37,7 +39,7 @@
   ;; Escape '<' as JSON Unicode so embedded </script> cannot close the element.
   (string/replace (json/generate-string data) "<" "\\u003c"))
 
-(defn page-meta [{:keys [title summary url lang date-obj author]} type]
+(defn page-meta [{:keys [title summary url lang date-obj updated-date-obj author]} type]
   (let [lang (or lang (:default-lang config))
         page (cond-> {:page-title title
                       :site-title (:title config)
@@ -46,7 +48,9 @@
                       :page-type type
                       :page-lang lang}
                (get og-locales lang) (assoc :og-locale (get og-locales lang))
-               date-obj (assoc :published-date (str date-obj)))
+               date-obj (assoc :published-date (str date-obj))
+               (and (= type "article") updated-date-obj)
+               (assoc :modified-date (str updated-date-obj)))
         data (structured-data page author)]
     (cond-> page
       data (assoc :json-ld (json-ld data)))))
