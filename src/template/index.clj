@@ -4,7 +4,7 @@
 
 (defn template []
   [:div
-   [:img {:src "/images/student.png" :style "float: right; margin: 10px; width: auto;"}]
+   [:img {:src "/images/student.png" :alt "" :style "float: right; margin: 10px; width: auto;"}]
    [:h1 {:class "index-header"} "About Me"]
    [:p "I am LT. Welcome to my blog!"]
    [:p "Contact me by email: lt at ltt.pw"]

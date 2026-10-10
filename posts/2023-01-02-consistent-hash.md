@@ -43,10 +43,10 @@ Akamai 公司在1997年的時候，發表了: [Consistent Hashing and Random Tre
 
 #### 概念
 Ring-based的想法首先是把Hash function 的output想成一個環，然後每個server負責這個環的一部分(守備範圍)，如圖所示：
-![](../images/ring.png)
-![](../images/ring_2.png)
+![將雜湊空間首尾相接，形成一個 hash ring](../images/ring.png)
+![四台伺服器分布在 hash ring 上，各自負責環上的一段雜湊範圍](../images/ring_2.png)
 假如我們需要多一台server的話，因為不想要影響太多原有的守備範圍，可能會想把這個新server插在某兩個server的中間，但假如這個做的話，會很明顯的看出server loading不一致的問題。
-![](../images/ring_3.png)
+![在 Server 0 與 Server 1 之間加入 Server 5，分割原有範圍並造成負載不均](../images/ring_3.png)
 _server5 和 server1 的 loading是其他server的一半_
 
 接下來，我們引進virtual node 的概念來解決這個問題，想像每個server各自對應到n個環上的virtual node，這些virtual node平均的分佈在環上，當我們新增刪除server的時候，就是把一大串對應的virtual node新增刪除而已，因為virtual node是平均分佈的，所以對loading影響不大，也不會讓每個server的守備範圍有大幅變動。

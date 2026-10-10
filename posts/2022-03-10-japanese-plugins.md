@@ -21,7 +21,7 @@ enable:
 
 [Yomichan](https://foosoft.net/projects/yomichan/)是一個可以幫助我們在看日文網頁的時候，查詢單字的擴充套件，只要選取網頁上的字，再按下Shift鍵，就可以顯示這個日文單字的意思，十分方便。
 
-![](/images/yomichan.png)
+![Yomichan 在日文網頁上顯示「価格」的讀音、音調與英文釋義](/images/yomichan.png)
 
 在安裝完Yomichan之後，是沒有任何字典的，我們必須先手動下載字典檔後，再做一個匯入的動作。[字典檔](https://foosoft.net/projects/yomichan/#dictionaries)可以在官網找到。
 
@@ -35,7 +35,7 @@ JMDict是一個免費的日英字典，幾乎絕大部分的字都可以找到�
 
 這些字典下載下來之後，是一個zip檔，不需要解壓縮，直接到Yomichan的管理頁面匯入就可以使用了。
 
-![](/images/yomichan2.png)
+![Yomichan 設定頁面中，管理已安裝與啟用字典的選項](/images/yomichan2.png)
 
 另外除了上述資源外，也可以匯入其它的自製字典檔，有興趣的人可以到這個[網站](https://learnjapanese.moe/)找尋其他資源。
 
@@ -45,7 +45,7 @@ JMDict是一個免費的日英字典，幾乎絕大部分的字都可以找到�
 
 在安裝之後，只要啟動這個擴充套件的`Enable Copy`功能，就可以在原本不能選取的網頁正常選取了！
 
-![](/images/copyText.png)
+![Absolute Enable Right Click & Copy 選單中的 Enable Copy 選項](/images/copyText.png)
 
 ## Google Search - Geolocation & Language Change
 
@@ -53,7 +53,7 @@ JMDict是一個免費的日英字典，幾乎絕大部分的字都可以找到�
 
 還好，終於發現這個擴充功能，可以輕鬆的改變搜尋時候的地理位置和語言設定。
 
-![](/images/location.png)
+![Google 搜尋工具列新增的 Location 按鈕，可切換搜尋地區與語言](/images/location.png)
 
 安裝完後，在Google的搜尋頁面，會多出一個Location的按鈕，只要點下去，就可以選擇要轉換的地區和語言了，是不是很方便！
 

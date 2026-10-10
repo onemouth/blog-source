@@ -184,7 +184,7 @@
                            "-L" "lua/sidenotes.lua"
                            "--mathjax"
                            "-t" "html"
-                           "-f" "markdown+east_asian_line_breaks+footnotes"]
+                           "-f" "markdown+east_asian_line_breaks+footnotes-implicit_figures"]
               :context context})
     (process {:action :create-file
               :file "allposts.yaml"

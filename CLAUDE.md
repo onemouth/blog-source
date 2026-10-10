@@ -15,7 +15,7 @@ Required tools: `bb` (Babashka), `pandoc`, `htmlq` (used for RSS content extract
 - `bb gen-template` — regenerate `templates/*.html` from the Hiccup sources only
 - `npx wrangler pages deploy _site` — deploy
 
-There are no tests or linter tasks (clj-kondo config exists for editor use).
+`bb test` runs `test/site_test.clj` for JSON-LD fields, defaults, and safe Pandoc rendering; run `bb build` first to regenerate templates. There is no linter task (clj-kondo config exists for editor use).
 
 ## Architecture
 
@@ -35,7 +35,7 @@ The build pipeline (`src/main.clj`, entry point `build-v2`) is a sequence of `pr
 
 - Filename convention `posts/YYYY-MM-DD-slug.md` — the date is parsed **from the filename**, not the frontmatter (`src/compiler/pandoc.clj`)
 - YAML frontmatter: `title`, `summary`, `tags`; add `enable:\n  toc: true` to get a table of contents (switches to `templates/post-toc.html` with `--toc --number-sections --toc-depth=3`)
-- Pandoc input format is `markdown+east_asian_line_breaks+footnotes` with MathJax enabled
+- Pandoc input format is `markdown+east_asian_line_breaks+footnotes-implicit_figures` with MathJax enabled
 - Lua filters in `lua/` run on every post: `image_relative_url.lua`, `external_links.lua`, `sidenotes.lua`
 
 ### Styling
@@ -50,4 +50,4 @@ Vanilla, dependency-free scripts live in `js/` (copied verbatim by the `:copy` s
 
 ### RSS/site config
 
-Site title, author, root URL, timezone, default language, and static-page descriptions live in `site/config` (`src/site.clj`). Public URLs are extensionless to match Cloudflare Pages; generated files remain `.html`. SEO template variables are HTML-escaped by `site/template-args` before being passed to Pandoc.
+Site title, author, root URL, timezone, default language, and static-page descriptions live in `site/config` (`src/site.clj`). Public URLs are extensionless to match Cloudflare Pages; generated files remain `.html`. HTML SEO template variables are escaped by `site/template-args` before being passed to Pandoc. JSON-LD is serialized with Cheshire, with `<` Unicode-escaped for safe raw script text; it must not be HTML-entity escaped. Homepage `WebSite` and article `BlogPosting` data are built automatically in `site/page-meta`. Unknown modification dates are omitted. Implicit figures are disabled so Markdown image alt text does not create visible captions.

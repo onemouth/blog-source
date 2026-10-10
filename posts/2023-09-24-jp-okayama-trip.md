@@ -20,14 +20,14 @@ enable:
 
 ## <ruby>隠岐 <rt>おき</rt></ruby>の島ラーメン
 
-<img src="/images/okinoshimaramen.jpeg">
+<img src="/images/okinoshimaramen.jpeg" alt="岡山隠岐の島ラーメン店外的藍色招牌與店面">
 
 [tableog的頁面](https://tabelog.com/okayama/A3301/A330101/33014542/)。
 
 我是點濃厚貝出汁的口味，貝類的湯頭實在太令人驚艷，讓我想起第一次吃到豚骨拉麵的感覺，
 那是有生以來第一次發現湯麵還能有這種湯頭的感動。
 
-<img src="/images/kaidashi.jpeg">
+<img src="/images/kaidashi.jpeg" alt="隠岐の島ラーメン的濃厚貝出汁拉麵，搭配叉燒、蔥與洋蔥">
 
 絕對推薦，到岡山一定要吃。
 
@@ -35,7 +35,7 @@ enable:
 
 很有懷舊(レトロ)氣氛的咖啡店，特色是會給每位客人一壺賽風壺咖啡，量足夠倒兩杯咖啡，可以悠閒的度過一段時光。
 
-<img src="/images/kurashikicafe.jpeg">
+<img src="/images/kurashikicafe.jpeg" alt="倉式珈琲店桌上的賽風壺咖啡與咖啡杯">
 
 我去的店是在岡山Aeon的一樓，而且其實我的飯店就在Aeon旁邊，但我前幾天路過都沒進去，直到最後一天才進去吃早餐，
 非常喜歡，後悔沒有前幾天找時間多來幾趟。 

@@ -5,6 +5,9 @@
  :tasks {:requires ([babashka.cli :as cli])
          :init (def cli-opts (cli/parse-opts *command-line-args* {:coerce {:port :int}}))
 
+         test {:doc "Test SEO metadata and JSON-LD rendering (run bb build first)"
+               :task (load-file "test/site_test.clj")}
+
          gen-template {:doc "generate http templates from hiccup"
                        :requires ([template.core :as template])
                        :task (template/gen)}

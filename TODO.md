@@ -159,33 +159,33 @@ P1-B local validation passed: all 18 pages have exactly one H1 and no skipped he
 
 ### 11. Add meaningful alt text
 
-- [ ] Add descriptive alt text to four images in `posts/2022-03-10-japanese-plugins.md`.
-- [ ] Add descriptive alt text to three diagrams in `posts/2023-01-02-consistent-hash.md`.
-- [ ] Add `alt` attributes to three raw HTML images in `posts/2023-09-24-jp-okayama-trip.md`.
-- [ ] Add suitable alt text to `/images/student.png` in `src/template/index.clj`, or `alt=""` if it is purely decorative.
-- [ ] Describe each image's purpose or information rather than its filename.
-- [ ] Confirm every generated `<img>` has an `alt` attribute.
-- [ ] Preserve the URL-rewriting behavior in `lua/image_relative_url.lua`.
+- [x] Add descriptive alt text to four images in `posts/2022-03-10-japanese-plugins.md`.
+- [x] Add descriptive alt text to three diagrams in `posts/2023-01-02-consistent-hash.md`.
+- [x] Add `alt` attributes to three raw HTML images in `posts/2023-09-24-jp-okayama-trip.md`.
+- [x] Add suitable alt text to `/images/student.png` in `src/template/index.clj`, or `alt=""` if it is purely decorative.
+- [x] Describe each image's purpose or information rather than its filename.
+- [x] Confirm every generated `<img>` has an `alt` attribute.
+- [x] Preserve the URL-rewriting behavior in `lua/image_relative_url.lua`.
 
 ## P2 — Structured data
 
 ### 12. Add homepage `WebSite` JSON-LD
 
-- [ ] Emit one `application/ld+json` block on the homepage.
-- [ ] Include:
+- [x] Emit one `application/ld+json` block on the homepage.
+- [x] Include:
   - `@context`
   - `@type: WebSite`
   - `name`
   - `url`
   - `description`
   - Author or publisher represented as a `Person`
-- [ ] Use the canonical homepage URL.
-- [ ] Do not add a search action because the site has no site search.
+- [x] Use the canonical homepage URL.
+- [x] Do not add a search action because the site has no site search.
 
 ### 13. Add article `BlogPosting` JSON-LD
 
-- [ ] Emit one `application/ld+json` block on every article.
-- [ ] Include:
+- [x] Emit one `application/ld+json` block on every article.
+- [x] Include:
   - `@context`
   - `@type: BlogPosting`
   - `headline`
@@ -194,16 +194,18 @@ P1-B local validation passed: all 18 pages have exactly one H1 and no skipped he
   - `mainEntityOfPage`
   - `author`
   - `datePublished`
-  - `dateModified`
+  - Omit unknown `dateModified` until P3
   - `inLanguage`
-- [ ] Use ISO 8601 dates rather than display dates such as `Jan 02, 2023`.
-- [ ] Fall back to the configured site author when post frontmatter omits `author`.
-- [ ] Initially use the publication date as `dateModified` unless real modification metadata is added.
-- [ ] Only include `image` where a representative image has been deliberately selected.
-- [ ] Generate JSON with a serializer rather than manual string concatenation.
-- [ ] Ensure Pandoc interpolation does not HTML-escape the JSON into invalid content.
+- [x] Use ISO 8601 dates rather than display dates such as `Jan 02, 2023`.
+- [x] Fall back to the configured site author when post frontmatter omits `author`.
+- [x] Omit unknown `dateModified`; do not substitute the publication date. Reliable modification metadata is deferred to P3.
+- [x] Only include `image` where a representative image has been deliberately selected.
+- [x] Generate JSON with a serializer rather than manual string concatenation.
+- [x] Ensure Pandoc interpolation does not HTML-escape the JSON into invalid content.
 
 Relevant files: `src/main.clj`, `src/compiler/pandoc.clj`, `src/template/default.clj`, and optionally a new SEO helper namespace.
+
+P2 local validation passed: `bb build` and `bb test` (3 tests, 28 assertions); all 17 JSON-LD blocks parse and match page metadata, author defaults, canonical URLs, and dates; all 11 page images have appropriate alt attributes. Implicit figures are disabled so alt text does not create visible captions. HTML/script escaping is tested through Pandoc, including embedded `</script>` content. H1, TOC anchors, social metadata, sitemap, and stable Atom IDs passed regression checks. Local Cloudflare preview served all 18 pages. External Schema.org/Google tooling and deployed P2 verification remain pending.
 
 ## P3 — Inline language annotations
 
@@ -235,9 +237,9 @@ P0 local validation completed: `bb build`; 18 sitemap URLs (homepage, archive, 1
 - [ ] Confirm each HTML document has one valid `lang` value.
 - [ ] Confirm each indexable page has exactly one absolute canonical link.
 - [ ] Confirm every page has exactly one H1.
-- [ ] Confirm every image has an `alt` attribute.
+- [x] Confirm every image has an `alt` attribute.
 - [ ] Confirm nested posts advertise `/atom.xml`.
-- [ ] Confirm every JSON-LD block parses as JSON.
+- [x] Confirm every JSON-LD block parses as JSON.
 - [ ] Inspect homepage, archive, one TOC post, and one non-TOC post with `bb serve`.
 - [ ] Validate representative pages with Schema.org or Google Rich Results tooling.
 - [x] After deployment, verify `/robots.txt` and `/sitemap.xml` return their actual content and suitable content types rather than homepage HTML.

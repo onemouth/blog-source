@@ -32,6 +32,9 @@
     [:meta {:name "twitter:card" :content "summary"}]
     [:meta {:name "twitter:title" :content "$page-title$"}]
     [:meta {:name "twitter:description" :content "$page-description$"}]
+    "\n$if(json-ld)$\n"
+    [:script {:type "application/ld+json"} "$json-ld$"]
+    "\n$endif$\n"
     ;atom.xml
     [:link {:href "/atom.xml" :type "application/atom+xml" :rel "alternate" :title "Put some ink into the inkpot"}]
 

@@ -121,6 +121,12 @@ footer {
   /* mb-3 */
 }
 
+/* Keep article images within the text column without enlarging small images. */
+article img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Serif display for post/section headings & masthead — matches the "ink" name */
 article h1,
 article h2,
