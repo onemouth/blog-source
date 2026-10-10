@@ -1,5 +1,6 @@
 ---
 title: iCloud上的酷東西-自訂電子郵件網域
+lang: zh-Hant
 author: LT
 summary: 在「iCloud 郵件」中使用自訂電子郵件網域
 tags: icloud, email

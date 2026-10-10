@@ -1,5 +1,6 @@
 ---
 title: 三個學日文必備的瀏覽器擴充套件
+lang: zh-Hant
 author: LT
 summary: 3 plugins that everyone should know whey studying Japanease
 tags: japanease, firefox, plugins, yomichan

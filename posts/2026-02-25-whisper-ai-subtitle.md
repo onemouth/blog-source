@@ -1,5 +1,6 @@
 ---
 title: 使用 openai-whisper 和 ffmpeg 產生影片字幕
+lang: zh-Hant
 summary: how to use openai-whisper and ffmpeg to generate subtitle for video
 tags: whisper,ffmpeg,srt
 ---

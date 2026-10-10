@@ -50,4 +50,4 @@ Vanilla, dependency-free scripts live in `js/` (copied verbatim by the `:copy` s
 
 ### RSS/site config
 
-Site title, author, root URL, and timezone live in the `rss-config` def in `src/main.clj`.
+Site title, author, root URL, timezone, default language, and static-page descriptions live in `site/config` (`src/site.clj`). Public URLs are extensionless to match Cloudflare Pages; generated files remain `.html`. SEO template variables are HTML-escaped by `site/template-args` before being passed to Pandoc.

@@ -2,8 +2,8 @@
 
 
 
-(defn template [& {:keys [embed title]}]
-  [:html {:lang "en"}
+(defn template [& {:keys [embed]}]
+  [:html {:lang "$page-lang$"}
    [:head
     [:meta {:charset "utf-8"}]
     ; viewport settings for responsive design
@@ -12,10 +12,24 @@
     "\n$if(tags)$\n"
     [:meta {:name "keywords" :content "$tags$"}]
     "\n$endif$\n"
-    "$if(summary)$\n"
-    [:meta {:name "description" :content "$summary$"}]
+    "$if(page-description)$\n"
+    [:meta {:name "description" :content "$page-description$"}]
     "\n$endif$\n"
-    [:title "Put some ink into the inkpot - " (if title title "$title$")]
+    [:title "$site-title$ - $page-title$"]
+    [:link {:rel "canonical" :href "$canonical-url$"}]
+    [:meta {:property "og:site_name" :content "$site-title$"}]
+    [:meta {:property "og:title" :content "$page-title$"}]
+    [:meta {:property "og:description" :content "$page-description$"}]
+    [:meta {:property "og:url" :content "$canonical-url$"}]
+    [:meta {:property "og:type" :content "$page-type$"}]
+    "\n$if(og-locale)$\n"
+    [:meta {:property "og:locale" :content "$og-locale$"}]
+    "\n$endif$\n$if(published-date)$\n"
+    [:meta {:property "article:published_time" :content "$published-date$"}]
+    "\n$endif$\n"
+    [:meta {:name "twitter:card" :content "summary"}]
+    [:meta {:name "twitter:title" :content "$page-title$"}]
+    [:meta {:name "twitter:description" :content "$page-description$"}]
     ;atom.xml
     [:link {:href "/atom.xml" :type "application/atom+xml" :rel "alternate" :title "Put some ink into the inkpot"}]
 
@@ -27,7 +41,7 @@
      [:div.logo
       [:a {:href "/"} "Put some ink into the inkpot"]]
      [:nav
-      [:a {:href "/archive.html"} "Archive"]
+      [:a {:href "/archive"} "Archive"]
       [:a {:href "/atom.xml"} "Atom"]]]
     [:main
      (if embed embed "$body$")]

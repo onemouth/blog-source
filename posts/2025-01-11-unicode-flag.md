@@ -1,5 +1,6 @@
 ---
 title: emoji 裡的旗子符號
+lang: zh-Hant
 summary: Unicode Flag Symbols
 tags: emoji
 enable:

@@ -19,14 +19,16 @@
 (defn- cdata [content]
   (format "<![CDATA[%s]]>" content))
 
-(defn atom-entry [title url published updated summary content]
-  ;(println content)
-  [:entry
-   [:title title]
-   [:link {:href url}]
-   [:id url]
-   [:published published]
-   [:updated updated]
-   (if summary [:summary {:type "text"} summary] "")
-   [:content {:type "html"} (cdata content)]])
+(defn atom-entry
+  ([title url published updated summary content]
+   (atom-entry title url published updated summary content url))
+  ([title url published updated summary content id]
+   [:entry
+    [:title title]
+    [:link {:href url}]
+    [:id id]
+    [:published published]
+    [:updated updated]
+    (if summary [:summary {:type "text"} summary] "")
+    [:content {:type "html"} (cdata content)]]))
 

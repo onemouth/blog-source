@@ -1,5 +1,6 @@
 ---
 title: 又一篇Unicode的入門介紹
+lang: zh-Hant
 summary: Unicode Introduction
 tags: unicode,utf-8,emoji
 enable:

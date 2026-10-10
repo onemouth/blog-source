@@ -1,5 +1,6 @@
 ---
 title: Consistent Hashing (和其他類似演算法)
+lang: zh-Hant
 author: LT
 summary: an overview of consistent hashing
 tags: distributed_system, cache

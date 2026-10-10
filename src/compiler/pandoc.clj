@@ -37,7 +37,7 @@
   (re-find #"\d{4}-\d{2}-\d{2}" path))
 
 (defn- path->url [path]
-  (str "/" (string/replace path "md" "html")))
+  (str "/" (string/replace path #"\.md$" "")))
 
 ;(yaml-header->edn "posts/2022-03-10-japanese-plugins.md")
 

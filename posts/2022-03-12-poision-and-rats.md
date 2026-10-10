@@ -1,5 +1,6 @@
 ---
 title: 10隻老鼠和1000個瓶子，其中一瓶有毒藥
+lang: zh-Hant
 author: LT
 summary: 10 rats and 1000 bottles, 1 bottle has poision
 tags: interview, math

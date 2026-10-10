@@ -1,5 +1,6 @@
 ---
 title: 如何在Hakyll中產生slide shows
+lang: zh-Hant
 author: LT
 summary: how to produce html slides by Hakyll
 tags: hakyll

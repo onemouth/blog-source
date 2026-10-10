@@ -1,5 +1,6 @@
 ---
 title: 設計 Golang 的 error
+lang: zh-Hant
 author: LT
 summary: how to design error in golang
 tags: golang, error_handling

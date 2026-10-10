@@ -1,5 +1,6 @@
 ---
 title: 我所使用的瀏覽器外掛
+lang: zh-Hant
 summary: the browser plugins I use
 tags: browser, plugin
 enable:

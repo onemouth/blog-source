@@ -10,9 +10,8 @@
    [:p "Contact me by email: lt at ltt.pw"]
    [:h2 {:class "index-header"} "Recently Posts"]
    (post-list/template)
-   [:p "And you can find more " [:a {:href "/archive.html"} "here"]]])
+   [:p "And you can find more " [:a {:href "/archive"} "here"]]])
 
 (defn template-s []
   (default/template
-   :title "Home"
    :embed (template)))

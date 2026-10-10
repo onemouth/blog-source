@@ -1,5 +1,6 @@
 ---
 title: 如何在Hakyll中設定Atom/RSS Feed
+lang: zh-Hant
 author: LT
 summary: how to produce an atom/rss feed by Hakyll
 tags: hakyll

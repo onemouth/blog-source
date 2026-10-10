@@ -1,5 +1,6 @@
 ---
 title: Write myself a static site generator
+lang: en
 author: LT
 summary: Write myself a static site generator
 tags: blog,babashka,pandoc

@@ -8,7 +8,8 @@
             [compiler.cp :as cp]
             [compiler.pandoc :as pandoc]
             [template.rss :as rss]
-            [template.sitemap :as sitemap]))
+            [template.sitemap :as sitemap]
+            [site :as site]))
 
 (def ^{:private true} config {})
 
@@ -34,11 +35,7 @@
   (println (str "updated " path))
   path)
 
-(def ^{:private true} rss-config
-  {:title "Put some ink into the inkpot"
-   :author-name "LT Tsai"
-   :timezone "+08:00"
-   :root "https://lt.ichiban.day"})
+;; Shared by HTML metadata, Atom, robots.txt and the sitemap.
 
 (defn- rss-content [html-path]
   (let [content (:out (sh "htmlq" "-f" html-path "main"))]
@@ -66,24 +63,24 @@
 (defn- get-entries [context]
   (for [post (:posts @context)]
     (let  [title (:title post)
-           feed-root (:root rss-config)
-           path (:path post)
-           url (string/join "/" [feed-root (string/replace path ".md" ".html")])
-           timezone (:timezone rss-config)
+           url (site/absolute-url (:url post))
+           timezone (:timezone site/config)
            published (format "%sT12:00:00%s" (:date-obj post) timezone)
            updated published
            summary (:summary post)
            content (-> (rss-content (:dest post))
                        (absolutize-urls url))]
-      (rss/atom-entry title url published updated summary content))))
+      ;; Keep existing Atom IDs stable so URL cleanup does not redeliver posts.
+      (rss/atom-entry title url published updated summary content
+                      (site/absolute-url (str (:url post) ".html"))))))
 
 (defn- build-rss [context]
-  (let [feed-title (:title rss-config)
-        author-name (:author-name rss-config)
-        feed-root (:root rss-config)
+  (let [feed-title (:title site/config)
+        author-name (:author-name site/config)
+        feed-root (:root site/config)
         now-str (t/instant)
         entries (get-entries context)
-        xml-content (-> (rss/atom-template-xml feed-title author-name feed-root now-str entries rss-config)
+        xml-content (-> (rss/atom-template-xml feed-title author-name feed-root now-str entries site/config)
                         (str))]
     (-> "atom.xml"
         (output-file identity)
@@ -110,13 +107,14 @@
         (cp/copy-content content)
         (prn-updated-msg))))
 
-(defmethod process [:pandoc-embed false true] [{:keys [file title template-file meta-file]}]
+(defmethod process [:pandoc-embed false true] [{:keys [file title template-file meta-file page-meta]}]
   (let [dest (string/join "/" [(output-dir) file])
-        cmd  ["pandoc"
-              "-M" (str "title=" title)
-              (str "--metadata-file=" meta-file)
-              (str "--template=" template-file)
-              "-o" dest]]
+        cmd  (concat ["pandoc"
+                      "-M" (str "title=" title)
+                      (str "--metadata-file=" meta-file)
+                      (str "--template=" template-file)
+                      "-o" dest]
+                     (site/template-args page-meta))]
     (println (string/join " " cmd))
     (apply sh {:in ""} cmd)
     dest))
@@ -125,13 +123,14 @@
   (swap! context assoc-in [:posts idx :dest] dest))
 
 (defn- run-pandoc-post
-  [dest template-file toc-enabled-template-file toc-args basic-args {:keys [path date enable]}]
+  [dest template-file toc-enabled-template-file toc-args basic-args {:keys [path date enable] :as meta}]
   (io/make-parents dest)
   (let [toc-enable (:toc enable)
         template (if toc-enable toc-enabled-template-file template-file)
         base-cmd (concat
                   ["pandoc"]
                   basic-args
+                  (site/template-args (site/page-meta meta "article"))
                   [path
                    "-o" (str dest)
                    "-M" (str "date=" date)
@@ -200,20 +199,28 @@
               :template-file "templates/archive.html"
               :file "archive.html"
               :meta-file (string/join "/" [(cache-dir) "allposts.yaml"])
-              :title "Archive"})
+              :title "Archive"
+              :page-meta (site/page-meta {:title "Archive"
+                                          :summary (:archive-description site/config)
+                                          :url "/archive"
+                                          :lang "en"} "website")})
     (process {:action :pandoc-embed
               :template-file "templates/index.html"
               :file "index.html"
               :meta-file (string/join "/" [(cache-dir) "recentposts.yaml"])
-              :title "Home"})
+              :title "Home"
+              :page-meta (site/page-meta {:title "LT's blog"
+                                          :summary (:home-description site/config)
+                                          :url "/"
+                                          :lang "en"} "website")})
     (process {:action :create-file
               :file "robots.txt"
               :content (str "User-agent: *\nAllow: /\nSitemap: "
-                            (:root rss-config) "/sitemap.xml\n")
+                            (:root site/config) "/sitemap.xml\n")
               :route identity})
     (process {:action :create-file
               :file "sitemap.xml"
-              :content (sitemap/sitemap-xml (:root rss-config) (:posts @context))
+              :content (sitemap/sitemap-xml (:root site/config) (:posts @context))
               :route identity})
     (build-rss context)))
 

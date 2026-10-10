@@ -46,60 +46,63 @@ Relevant files: `src/main.clj`, new `src/template/sitemap.clj`.
 
 ### 4. Establish shared site and page metadata
 
-- [ ] Generalize the current `rss-config` in `src/main.clj` into site-wide configuration containing:
+- [x] Use shared `site/config` in `src/site.clj` for:
   - Site name
   - Root URL
   - Default author
   - Default language
   - Homepage description
-- [ ] Continue passing the relevant configuration to Atom generation.
-- [ ] Pass these values to every Pandoc page build:
+- [x] Continue passing the relevant configuration to Atom generation.
+- [x] Pass these values to every Pandoc page build:
   - Absolute page URL
   - Page description
   - Page type (`website` or `article`)
   - Page language
-  - ISO publication/modification dates where applicable
-- [ ] Keep the human-readable post date separate from the ISO date used by metadata.
+  - ISO publication dates; unknown modification dates deferred to P3
+- [x] Keep the human-readable post date separate from the ISO date used by metadata.
 
-Relevant files: `src/main.clj`, `src/compiler/pandoc.clj`.
+Relevant files: `src/site.clj`, `src/main.clj`, `src/compiler/pandoc.clj`.
 
 ### 5. Add absolute canonical URLs
 
-- [ ] Add exactly one `<link rel="canonical">` to the common `<head>`.
-- [ ] Use these canonical targets:
+Cloudflare Pages redirects `.html` URLs to extensionless URLs. Canonical, sitemap, Atom links, navigation, and post lists now use extensionless public URLs; generated files remain `.html`. Existing Atom entry IDs are preserved to avoid duplicate posts in feed readers.
+
+
+- [x] Add exactly one `<link rel="canonical">` to the common `<head>`.
+- [x] Use these canonical targets:
   - Homepage: `https://lt.ichiban.day/`
-  - Archive: `https://lt.ichiban.day/archive.html`
-  - Posts: their absolute `/posts/*.html` URLs
-- [ ] Ensure canonical URLs are absolute and do not redirect.
+  - Archive: `https://lt.ichiban.day/archive`
+  - Posts: their absolute extensionless `/posts/*` URLs
+- [x] Ensure canonical URLs are absolute and do not redirect.
 
 Relevant files: `src/template/default.clj`, `src/main.clj`.
 
 ### 6. Add Open Graph metadata
 
-- [ ] Add common properties:
+- [x] Add common properties:
   - `og:site_name`
   - `og:title`
   - `og:description`
   - `og:url`
   - `og:type`
   - `og:locale`
-- [ ] Use `website` for homepage/archive and `article` for posts.
-- [ ] Add article-specific properties:
+- [x] Use `website` for homepage/archive and `article` for posts.
+- [x] Add article-specific properties:
   - `article:published_time`
-  - `article:modified_time`
-  - Optionally `article:author`
-  - Optionally repeated `article:tag`
-- [ ] Use absolute URLs.
-- [ ] Do not add `og:image` until a suitable, stable social image exists.
+  - Omit `article:modified_time` until reliable modification dates exist (P3)
+  - Optional `article:author` deferred until an author profile URL is selected
+  - Optional repeated `article:tag` deferred
+- [x] Use absolute URLs.
+- [x] Do not add `og:image` until a suitable, stable social image exists.
 
 Relevant files: `src/template/default.clj`, `src/main.clj`.
 
 ### 7. Add Twitter Card metadata
 
-- [ ] Add `twitter:card` with `summary`.
-- [ ] Add `twitter:title` and `twitter:description`.
-- [ ] Add image/account properties only when real corresponding assets/accounts are selected.
-- [ ] Keep Twitter values consistent with Open Graph values.
+- [x] Add `twitter:card` with `summary`.
+- [x] Add `twitter:title` and `twitter:description`.
+- [x] Add image/account properties only when real corresponding assets/accounts are selected.
+- [x] Keep Twitter values consistent with Open Graph values.
 
 Relevant file: `src/template/default.clj`.
 
@@ -107,15 +110,17 @@ Relevant file: `src/template/default.clj`.
 
 ### 8. Make document language page-specific
 
-- [ ] Replace the hard-coded `lang="en"` in `src/template/default.clj` with page metadata.
-- [ ] Support a `lang` frontmatter value for posts.
-- [ ] Document a fallback language, likely `zh-Hant` for this predominantly Traditional Chinese blog.
-- [ ] Explicitly mark genuinely English posts as `en`; `posts/2023-03-20-new-blog-system.md` is an obvious candidate.
-- [ ] Decide the homepage language based on its final visible copy; it is currently mostly English.
-- [ ] Map HTML language values to suitable OG locales, such as `zh_TW` and `en_US`.
-- [ ] Use inline `lang` attributes for substantial Japanese or other-language passages where useful.
+- [x] Replace the hard-coded `lang="en"` in `src/template/default.clj` with page metadata.
+- [x] Support a `lang` frontmatter value for posts.
+- [x] Document a fallback language, likely `zh-Hant` for this predominantly Traditional Chinese blog.
+- [x] Explicitly mark genuinely English posts as `en`; `posts/2023-03-20-new-blog-system.md` is an obvious candidate.
+- [x] Decide the homepage language based on its final visible copy; it is currently mostly English.
+- [x] Map HTML language values to suitable OG locales, such as `zh_TW` and `en_US`.
+- [ ] Optional follow-up: review substantial Japanese passages for inline `lang` attributes.
 
 Relevant files: `src/template/default.clj`, `src/main.clj`, all `posts/*.md`.
+
+P1-A validation: `bb build` passed; all 18 pages passed metadata, language, and URL consistency checks; HTML escaping tested with quotes, ampersands, and angle brackets; sitemap/Atom XML and stable Atom IDs verified. Wrangler local preview passed with compatibility date `2026-07-01`; all 18 selected canonical targets return HTTP 200 directly on production. Production verification passed for all 18 pages: canonical/social metadata, descriptions, language, publication dates, Atom discovery, and clean links; all selected URLs return HTTP 200 without redirects. Robots, sitemap, and Atom checks also passed. Headings are unchanged for P1-B.
 
 ### 9. Add a descriptive homepage H1
 

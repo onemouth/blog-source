@@ -1,5 +1,6 @@
 ---
 title: "[筆記] Go：Nil Map"
+lang: zh-Hant
 author: LT
 summary: the bahavior of a nil map in golang
 tags: golang

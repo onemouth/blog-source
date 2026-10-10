@@ -1,5 +1,6 @@
 ---
 title: 山陰山陽旅行最喜歡的三家店
+lang: zh-Hant
 author: LT
 summary: best 3 stores when I traveled in Japan's Sanin Sanyo
 tags: japan,ramen,okayama,kurashiki,cafe

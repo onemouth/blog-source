@@ -4,7 +4,7 @@
 
 (defn sitemap-xml [root posts]
   (let [root (string/replace root #"/+$" "")
-        paths (concat ["/" "/archive.html"] (map :url posts))]
+        paths (concat ["/" "/archive"] (map :url posts))]
     (str "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
          (html {:mode :xml}
                [:urlset {:xmlns "http://www.sitemaps.org/schemas/sitemap/0.9"}
