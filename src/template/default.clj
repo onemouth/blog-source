@@ -6,6 +6,8 @@
   [:html {:lang "$page-lang$"}
    [:head
     [:meta {:charset "utf-8"}]
+    [:link {:rel "icon" :type "image/png" :sizes "32x32" :href "/images/favicon-32.png"}]
+    [:link {:rel "icon" :type "image/png" :sizes "16x16" :href "/images/favicon-16.png"}]
     ; viewport settings for responsive design
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
     ; SEO related setting
