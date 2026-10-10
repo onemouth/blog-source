@@ -57,6 +57,20 @@ The build supplies:
 
 `modified` and social-image fields are not implemented yet. Unknown modification dates are omitted from JSON-LD. Adding invented frontmatter keys will not enable those features.
 
+## Inline language changes
+
+Keep frontmatter `lang` as the article's primary language. Mark Japanese names or phrases inside Chinese text with Pandoc bracketed spans:
+
+```markdown
+很有懷舊([レトロ]{lang=ja})氣氛。
+
+## [倉式珈琲店]{lang=ja}
+
+[<ruby>隠岐 <rt>おき</rt></ruby>の島ラーメン]{lang=ja}
+```
+
+These render as `<span lang="ja">…</span>`, helping screen readers select Japanese pronunciation without changing the text. Heading annotations are also copied into the TOC. Annotate actual Japanese text, not entire mixed-language paragraphs, Chinese place names, or borrowed words indiscriminately. Keep image alt text as plain text; it cannot contain inline language markup.
+
 ## Before publishing
 
 - [ ] Choose the filename date deliberately. Every `posts/*.md` is published by the build, including future-dated files; there is no draft/scheduling filter.

@@ -66,6 +66,19 @@
     (is (not (.contains html "<script>alert('x')</script>")))
     (is (.contains (:json-ld page) "\\u003c"))))
 
+(deftest inline-japanese-language
+  (let [html (slurp "_site/posts/2023-09-24-jp-okayama-trip.html")
+        japanese-spans (re-seq #"(?s)<span\s+lang=\"ja\">(.*?)</span>" html)]
+    (is (re-find #"<html lang=\"zh-Hant\"" html))
+    ;; Five source phrases, plus the three copied into the TOC.
+    (is (= 8 (count japanese-spans)))
+    (is (re-find #"(?s)<span\s+lang=\"ja\"><ruby>隠岐\s*<rt>おき</rt></ruby>の島ラーメン</span>" html))
+    (is (re-find #"<span\s+lang=\"ja\">レトロ</span>" html))
+    (is (re-find #"<span\s+lang=\"ja\">濃厚貝出汁</span>" html))
+    (doseq [id ["有鄰庵" "隠岐-おきの島ラーメン" "倉式珈琲店"]]
+      (is (.contains html (str "id=\"" id "\"")))
+      (is (.contains html (str "href=\"#" id "\""))))))
+
 (let [{:keys [fail error]} (run-tests 'site-test)]
   (when (pos? (+ fail error))
     (System/exit 1)))

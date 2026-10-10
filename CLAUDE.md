@@ -15,7 +15,7 @@ Required tools: `bb` (Babashka), `pandoc`, `htmlq` (used for RSS content extract
 - `bb gen-template` — regenerate `templates/*.html` from the Hiccup sources only
 - `npx wrangler pages deploy _site` — deploy
 
-`bb test` runs `test/site_test.clj` for JSON-LD fields, defaults, and safe Pandoc rendering; run `bb build` first to regenerate templates. There is no linter task (clj-kondo config exists for editor use).
+`bb test` runs `test/site_test.clj` for JSON-LD fields, defaults, safe Pandoc rendering, and built inline Japanese annotations; run `bb build` first to regenerate templates. There is no linter task (clj-kondo config exists for editor use).
 
 ## Architecture
 

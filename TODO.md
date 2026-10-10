@@ -209,9 +209,13 @@ P2 local validation passed: `bb build` and `bb test` (3 tests, 28 assertions); a
 
 ## P3 — Inline language annotations
 
-- [ ] Review substantial Japanese passages in otherwise Chinese articles.
-- [ ] Add inline `lang="ja"` attributes where useful for screen-reader pronunciation.
-- [ ] Preserve each page's primary document language and existing content.
+- [x] Review substantial Japanese passages in otherwise Chinese articles.
+- [x] Add inline `lang="ja"` attributes where useful for screen-reader pronunciation.
+- [x] Preserve each page's primary document language and existing content.
+
+Review found short Japanese names and phrases rather than long passages. Added five Japanese spans in `posts/2023-09-24-jp-okayama-trip.md`: three restaurant headings, the menu flavor 濃厚貝出汁, and レトロ. Kept Chinese narration, Chinese place names, and mixed-language image descriptions in the page's primary language. Pandoc also preserves annotations in the TOC and Atom content; ruby pronunciation remains intact.
+
+Validation passed: `bb build`; `bb test` (4 tests, 39 assertions); all 18 pages retain their document language, text, heading IDs/numbering, links, images, and SEO metadata. Sitemap/robots remain unchanged; Atom annotations, text, dates, and stable IDs are verified. Authoring syntax is documented in `docs/authoring.md`. No commit or deployment yet.
 
 ## P3 — Reliable modification dates
 
