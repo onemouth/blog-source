@@ -14,7 +14,7 @@ emoji 裡我們有各式各樣的旗子可以用，例如美國國旗🇺🇸，
 
 所以，Unicode提供了[regional indicator symbols](https://en.wikipedia.org/wiki/Regional_indicator_symbol)(區域指示符), 和[emoji tag sequence](https://emojipedia.org/emoji-tag-sequence), 這兩個方法來定義country code，至於要怎麼顯示country code, 則可以由各家廠商自行決定。
 
-# 區域指示符
+## 區域指示符
 
 區域指示符總共有26個，範圍是從 `U+1F1E6` 到 `U+1F1FF`，代表的就是英文數字的A到Z。
 然後使用者就可以用這些區域指示符組出[country code](https://en.wikipedia.org/wiki/Country_code)，例如 US, TW 等等。
@@ -63,7 +63,7 @@ emoji 裡我們有各式各樣的旗子可以用，例如美國國旗🇺🇸，
 
 假如拼出來的country code 是無效的，通常會直接顯示字母在畫面上。
 
-# Emoji Tag Sequence
+## Emoji Tag Sequence
 上述的區域指示符用來產生國家(region)的旗幟。後來Unicode又定義了Emoji tag sequence，用來顯示國家內部的地區(subregion)的旗幟。
 
 Emoji tag sequence 是利用Unicode的`U+E0061` 到 `U+E007A`的這個範圍，代表不可見的26個小寫的拉丁字母，這個範圍被稱為Tag Latin Small Letter。
@@ -109,6 +109,6 @@ Emoji tag sequence 是利用Unicode的`U+E0061` 到 `U+E007A`的這個範圍，�
 (show [flag] ustx [cancel])
 
 ```
-# Reference
+## Reference
 1. 关于 Emoji 你不知道的事 , [https://juejin.cn/post/7225074892357173308](https://juejin.cn/post/7225074892357173308)
 2. 45.Kerning Panic·字谈字串（三）🎙😂🤓🤑😌， [https://pan.icu/45](https://pan.icu/45)

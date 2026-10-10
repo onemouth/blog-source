@@ -3,7 +3,7 @@
             [template.post-list :as post-list]))
 
 (defn template []
-  [:div [:h2 {:class "index-header"} "Articles"]
+  [:div [:h1 {:class "index-header"} "Articles"]
    (post-list/template)])
 
 

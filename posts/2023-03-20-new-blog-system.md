@@ -10,7 +10,7 @@ enable:
 
 Originally this blog was generated using [Hakyll](https://jaspervdj.be/hakyll), but after using it for a while, although I liked its concise and simple design, I still found some aspects didn't quite suit my needs. Recently, I happened to discover [Babashka](https://babashka.org), and I thought I could use Babashka and Pandoc CLI to implement the functionalities I used in Hakyll. This blog post mainly introduces my implementation. My implementation repository can be found [here](https://github.com/onemouth/blog-source).
 
-# Hakyll
+## Hakyll
 
 First, I'd like to explain how Hakyll, the tool I used to use, works. Hakyll is a library written in Haskell that provides helper functions for creating static websites. It uses another library called [Pandoc](https://hackage.haskell.org/package/pandoc) to generate HTML files, and you can check out the Hakyll website (https://jaspervdj.be/hakyll/) for more information.
 
@@ -21,7 +21,7 @@ However, there were still two aspects that I found difficult to work with. The f
 The other issue was that, compared to directly using the Pandoc Library, I preferred to use the [Pandoc command-line interface (CLI)](https://pandoc.org/#). Pandoc is already a complex software, with a user manual of about 150 pages, and the functionality provided by the CLI alone is already quite complex. If I were to use the library instead, I would also have to deal with the complexity of Pandoc's internal implementation and the Haskell programming language. So, for me, using only the CLI to convert formats is much simpler.
 
 
-# Babashka 
+## Babashka
 
 In fact, several years ago when I began learning Clojure, I had the idea that a powerful dynamic language like Clojure would be great as a script language, capable of replacing Python or Bash for some quick tasks. However, in practice, because Clojure is a dialect running on the JVM, its startup speed is quite slow, making it not very suitable for writing CLI tools.
 
@@ -31,7 +31,7 @@ My plan is to replace the HTML templates in Hakyll with [Hicuup](https://github.
 
 The whole process was much easier than I expected and very interesting. Currently, I have removed the use of Hakyll completely from the source code. Of course, I haven't fully implemented all of Hakyll's features, but for now it meets my needs. Since I built it myself, I have a better understanding of the entire website building process and have more control over it than before.
 
-# Conclustion
+## Conclustion
 
 If you use a static site generator, you may find yourself creating your own generator. That's what happened to me - I ended up building my own one.
 

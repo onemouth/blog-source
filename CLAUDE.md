@@ -34,7 +34,7 @@ The build pipeline (`src/main.clj`, entry point `build-v2`) is a sequence of `pr
 ### Posts
 
 - Filename convention `posts/YYYY-MM-DD-slug.md` — the date is parsed **from the filename**, not the frontmatter (`src/compiler/pandoc.clj`)
-- YAML frontmatter: `title`, `summary`, `tags`; add `enable:\n  toc: true` to get a table of contents (switches to `templates/post-toc.html` with `--toc --number-sections --toc-depth=2`)
+- YAML frontmatter: `title`, `summary`, `tags`; add `enable:\n  toc: true` to get a table of contents (switches to `templates/post-toc.html` with `--toc --number-sections --toc-depth=3`)
 - Pandoc input format is `markdown+east_asian_line_breaks+footnotes` with MathJax enabled
 - Lua filters in `lua/` run on every post: `image_relative_url.lua`, `external_links.lua`, `sidenotes.lua`
 

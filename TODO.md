@@ -25,8 +25,8 @@ SEO audit implementation checklist for `https://lt.ichiban.day`.
 - [x] Generate the sitemap from the post metadata already collected in the build context.
 - [x] Include absolute URLs for:
   - `https://lt.ichiban.day/`
-  - `https://lt.ichiban.day/archive.html`
-  - Every generated `/posts/*.html` page
+  - `https://lt.ichiban.day/archive`
+  - Every generated post using its extensionless `/posts/*` public URL
 - [x] Omit `<lastmod>` initially: filename dates represent publication, not necessarily the last substantive modification. Track reliable modification dates in P3.
 - [x] XML-escape all generated values.
 - [x] Do not include assets, cache files, or the feed.
@@ -116,24 +116,24 @@ Relevant file: `src/template/default.clj`.
 - [x] Explicitly mark genuinely English posts as `en`; `posts/2023-03-20-new-blog-system.md` is an obvious candidate.
 - [x] Decide the homepage language based on its final visible copy; it is currently mostly English.
 - [x] Map HTML language values to suitable OG locales, such as `zh_TW` and `en_US`.
-- [ ] Optional follow-up: review substantial Japanese passages for inline `lang` attributes.
+- Inline Japanese language annotations are deferred to P3.
 
 Relevant files: `src/template/default.clj`, `src/main.clj`, all `posts/*.md`.
 
-P1-A validation: `bb build` passed; all 18 pages passed metadata, language, and URL consistency checks; HTML escaping tested with quotes, ampersands, and angle brackets; sitemap/Atom XML and stable Atom IDs verified. Wrangler local preview passed with compatibility date `2026-07-01`; all 18 selected canonical targets return HTTP 200 directly on production. Production verification passed for all 18 pages: canonical/social metadata, descriptions, language, publication dates, Atom discovery, and clean links; all selected URLs return HTTP 200 without redirects. Robots, sitemap, and Atom checks also passed. Headings are unchanged for P1-B.
+P1-A validation: `bb build` passed; all 18 pages passed metadata, language, and URL consistency checks; HTML escaping tested with quotes, ampersands, and angle brackets; sitemap/Atom XML and stable Atom IDs verified. Wrangler local preview passed with compatibility date `2026-07-01`; all 18 selected canonical targets return HTTP 200 directly on production. Production verification passed for all 18 pages: canonical/social metadata, descriptions, language, publication dates, Atom discovery, and clean links; all selected URLs return HTTP 200 without redirects. Robots, sitemap, and Atom checks also passed. Heading normalization is tracked in P1-B below.
 
-### 9. Add a descriptive homepage H1
+### 9. Add a homepage H1
 
-- [ ] Add exactly one descriptive H1 in `src/template/index.clj`.
-- [ ] Keep “About Me” and the recent-posts heading as H2.
-- [ ] Correct “Recently Posts” to “Recent Posts”.
-- [ ] Confirm the homepage heading hierarchy is H1 followed by H2 sections.
+- [x] Use “About Me” as the sole homepage H1 in `src/template/index.clj` (user preference).
+- [x] Keep “Recent Posts” as H2.
+- [x] Correct “Recently Posts” to “Recent Posts”.
+- [x] Build and verify the homepage heading hierarchy: H1 “About Me”, then H2 “Recent Posts”.
 
 ### 10. Normalize article heading hierarchy
 
 The article template already renders the article title as H1. Markdown body sections should therefore begin at H2.
 
-- [ ] Change top-level Markdown sections from `#` to `##` and shift child headings consistently in:
+- [x] Change top-level Markdown sections from `#` to `##` and shift child headings consistently in:
   - `posts/2022-03-10-japanese-plugins.md`
   - `posts/2022-09-20-golang-errors.md`
   - `posts/2023-01-02-consistent-hash.md`
@@ -142,12 +142,18 @@ The article template already renders the article title as H1. Markdown body sect
   - `posts/2025-01-04-unicode-intro.md`
   - `posts/2025-01-11-unicode-flag.md`
   - `posts/2026-07-10-browser-plugins.md`
-- [ ] Do not shift posts that already correctly begin at H2.
-- [ ] Revisit `--toc-depth=2`; increase it if H3 sections should remain in the TOC.
-- [ ] Test `--number-sections` with H2-first content and prevent numbering such as `0.1`.
-- [ ] Confirm every generated article has exactly one H1 and no skipped heading levels.
+- [x] Do not shift posts that already correctly begin at H2.
+- [x] Increase TOC depth to 3 so H2 sections and H3 subsections remain listed.
+- [x] Test `--number-sections` with H2-first content and prevent numbering such as `0.1`.
+- [x] Confirm every generated article has exactly one H1 and no skipped heading levels.
 
 Relevant files: listed posts, `src/main.clj`, possibly `src/template/post.clj`.
+
+### Archive heading
+
+- [x] Change archive “Articles” from H2 to H1 in `src/template/archive.clj`.
+
+P1-B local validation passed: all 18 pages have exactly one H1 and no skipped heading levels; heading text, anchor IDs, section numbering, and TOC coverage match the pre-change output. All eight TOC articles passed simulated scroll/resize highlighting checks using the unchanged `js/toc.js`. Metadata, sitemap, and Atom checks passed; local Cloudflare preview served all 18 pages and supporting assets. Cloudflare preview verification passed: all 18 deployed preview pages matched the validated local build. Production deployment was reported complete by the user; a separate production verification remains pending.
 
 ## P2 — Image accessibility
 
@@ -198,6 +204,12 @@ Relevant files: listed posts, `src/main.clj`, possibly `src/template/post.clj`.
 - [ ] Ensure Pandoc interpolation does not HTML-escape the JSON into invalid content.
 
 Relevant files: `src/main.clj`, `src/compiler/pandoc.clj`, `src/template/default.clj`, and optionally a new SEO helper namespace.
+
+## P3 — Inline language annotations
+
+- [ ] Review substantial Japanese passages in otherwise Chinese articles.
+- [ ] Add inline `lang="ja"` attributes where useful for screen-reader pronunciation.
+- [ ] Preserve each page's primary document language and existing content.
 
 ## P3 — Reliable modification dates
 

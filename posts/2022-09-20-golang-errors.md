@@ -15,9 +15,9 @@ enable:
 
 以下來分別看一下兩種error的設計。
 
-#  package 內部產生的 error
+##  package 內部產生的 error
 
-## Sentinel Error
+### Sentinel Error
 
 這是最常見的，也在許多知名的package被廣泛使用。
 
@@ -37,7 +37,7 @@ if errors.Is(err, example.ErrExmaple) {
 
 sentinal error的好處是簡單，定義快速，又一目瞭然。缺點是定義了全域變數，還有在runtime才初始化。但這種形式是如此的常見，我想這些缺點不是大問題才是。
 
-## 定義一個 error type
+### 定義一個 error type
 
 另一種常見的方法是定義一個 error type，這個type 會實作 `Error() string`。
 我們再利用這個 type，定義一些 const error。
@@ -74,12 +74,12 @@ InvalidFormatError 這一類的話，就可以利用 errros.As 來做判斷。
 
 其他好處包括了不用定義全域變數，不用在runtime初始化。缺點則是寫法比較複雜。
 
-# 需要包裝(Wrap)其他error 
+## 需要包裝(Wrap)其他error
 
 在其他情況，我們的error需要包裝其他package的error。最簡單的方法是利用 `fmt.Errorf("%w", err)` 直接包裝。
 但我們也可以利用定義 struct 的方法，讓error的架構變得更清晰。
 
-## 定義一個 struct
+### 定義一個 struct
 
 ```{.go .numberLines}
 type myDBPkgError struct {
@@ -118,7 +118,7 @@ func testErr() error {
 另一個我們可以定義的是`Is(target error) bool` 這個函式，他可以讓 `errors.Is` 使用，表示我們定義的這個error，其實跟另外某個error是相等的。
 
 
-# 結語
+## 結語
 
 在這篇文章中，探討了我在 Go 中常使用的error handling技巧，在1.13之後，Go本身提供的error handling機制，的確是更加成熟了。
 

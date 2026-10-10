@@ -65,4 +65,4 @@ The build supplies:
 - [ ] Run `bb build`.
 - [ ] Preview with `npx wrangler pages dev _site --port 8002 --compatibility-date 2026-07-01` and check the post, links, and optional TOC.
 
-The heading/TOC implementation is still being normalized in P1-B. If you enable a TOC on a new H2-first article, check its section coverage in the preview.
+The TOC includes H2 sections and H3 subsections (`--toc-depth=3`). H4 headings stay in the article body but are not listed in the TOC. Check section coverage and numbering in the preview.

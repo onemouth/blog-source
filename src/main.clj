@@ -177,7 +177,7 @@
               :route #(string/replace %1 ".md" ".html")
               :template-file "templates/post.html"
               :toc-enabled-template-file "templates/post-toc.html"
-              :toc-args ["--toc" "--number-sections" "--toc-depth=2"]
+              :toc-args ["--toc" "--number-sections" "--toc-depth=3"]
               :basic-args ["-s"
                            "-L" "lua/image_relative_url.lua"
                            "-L" "lua/external_links.lua"

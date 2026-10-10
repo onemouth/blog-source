@@ -10,19 +10,19 @@ enable:
 
 _主要從之前在17 Live的內部分享過的投影片整理出內容。_
 
-# 問題1: 平均分配
+## 問題1: 平均分配
 假設我們有巨量的資料要處理，一台機器是處理不來的，所以我們需要很多很多台機器(N台)來處理，那接下來的問題就是，要怎麼把這些資料平均分配給這N台機器來處理？
 
 為了具象化這個情境(但不失一般性)，以下都假設我們使用了N台 cache server (`memcahed`)，這些server的編號從0, 1, 2, … 到 N-1 。然後每筆資料都有其獨一無二的`key`。
 
 所以，我們需要一個好的hash function，這個hash function會把 `key` 平均對應到 0 到 N-1 的正整數。 
 
-## 方法：取餘數法 (mod N)
+### 方法：取餘數法 (mod N)
 `Hash(key) mod N` ，這個結果必為 0 到 N-1 的數，也就決定了要讓哪台server來處理。
 
 這個方法簡單粗暴，缺點是 mod N 的平均分配效果取決於N本身的一些性質(是否為質數等等)，但在實務上應該也是堪用了。
 
-# 問題2: 動態增減機器
+## 問題2: 動態增減機器
 當資料量增加的時候，我們必須增加足夠的機器去處理，當資料量減少的時候，我們當然也希望減少機器以節省成本。在我們cache server的情境中，我們最不想看到的就是當增減機器的時候，產生大量的cache miss，所以我們定義以下的需求：
 
 對一個N台機器的cluster，增減一台機器的時候，只能影響約`1/N+1`的 cache key
@@ -33,15 +33,15 @@ _主要從之前在17 Live的內部分享過的投影片整理出內容。_
 
 也就是說，我們需要一個consistent的 hash function，當N變成N+1的時候，大部分的 key 對應的編號都是不變的，只改變了其中約 1/N 的key的編號。
 
-## Ring-based Consistent Hash
+### Ring-based Consistent Hash
 
-### 歷史
+#### 歷史
 Akamai 公司在1997年的時候，發表了: [Consistent Hashing and Random Trees: Distributed Caching Protocols for Relieving Hot Spots on the World Wide Web](https://www.akamai.com/site/en/documents/research-paper/consistent-hashing-and-random-trees-distributed-caching-protocols-for-relieving-hot-spots-on-the-world-wide-web-technical-publication.pdf)。
 
 到了2007年，Amazon的DynamoDB，在DB partitioning的部分，提到他們使用了consistent hash 的演算法；而在同年，last.fm 的工程師發表了著名的 [Ketama](https://github.com/RJ/ketama) 實現，之後 consistent hash 就被廣泛運用到web backend的各個領域了。 
 
 
-### 概念
+#### 概念
 Ring-based的想法首先是把Hash function 的output想成一個環，然後每個server負責這個環的一部分(守備範圍)，如圖所示：
 ![](../images/ring.png)
 ![](../images/ring_2.png)
@@ -51,7 +51,7 @@ _server5 和 server1 的 loading是其他server的一半_
 
 接下來，我們引進virtual node 的概念來解決這個問題，想像每個server各自對應到n個環上的virtual node，這些virtual node平均的分佈在環上，當我們新增刪除server的時候，就是把一大串對應的virtual node新增刪除而已，因為virtual node是平均分佈的，所以對loading影響不大，也不會讓每個server的守備範圍有大幅變動。
 
-### 實現
+#### 實現
 
 試著理解code的話，可以對整個演算法有更好的掌握。
 
@@ -99,7 +99,7 @@ func (m *Map) Get(key string) string {
 
 以上code來自於[https://github.com/serialx/hashring](https://github.com/serialx/hashring)
 
-## Jump Consistent Hash
+### Jump Consistent Hash
 
 Google在2014年的時候，提出了[Jump Consistent Hash](https://arxiv.org/ftp/arxiv/papers/1406/1406.2294.pdf)，巧妙的利用了[水塘抽樣(Reservoir sampling)](https://en.wikipedia.org/wiki/Reservoir_sampling)的概念，設計出了一個相較於Ring-based，更快，記憶體使用量更少的Consistent Hash。
 
@@ -187,17 +187,17 @@ int32_t JumpConsistentHash(uint64_t key, int32_t num_buckets {
 ```
 
 
-### 缺點
+#### 缺點
 Jump Consistent Hash 有著簡潔的實現，從機率上也得到更好的均勻分布，但在實務上，它還是有著一些缺點：首先，必須保存一個 server name 對 index 的對應，因為在consistent hash中，server一律是用number來表示的。
 
 接下來要從中間移除一個server是不可行的，因為這樣會讓編號中間空出一個，我們對中間的node只能做replace，而新增刪除node只能從尾端(tail)做起。相對來說，Ring-based Consistent Hash 只是去移除對應的 virtual nodes，就彈性了許多。
 
 從這點考慮，Jump Consistent Hash 比較適合node 不會劇烈改變的環境，例如database storage。
 
-# 問題3：hot key (rebalance)
+## 問題3：hot key (rebalance)
 在之前的故事中，我們成功的把key一視同仁的分散到每個機器去處理了，可惜的是，在真實世界中，有些key就是比其他的key熱門，這些hot key的存在，會讓部分cache server的loading遠高於其他server，因此，我們必須做適當的rebalance，再次分散存在hot key的server的loading。
 
-## Etsy case：cache smearing
+### Etsy case：cache smearing
 Etsy 在這篇[How Etsy caches: hashing, Ketama, and cache smearing](https://www.etsy.com/codeascraft/how-etsy-caches)中，解釋了他們如何處理在 memcached cluster 遇到的 hot key 問題。
 
 Etsy使用了consistent hash，將要做http cache的資料分散給不同memcached server去處理，可以想見的是，有些http頁面就是比其他頁面還要熱門許多，所以產生了hot key 問題。
@@ -206,7 +206,7 @@ Etsy使用了consistent hash，將要做http cache的資料分散給不同memcac
 
 在實務上，Etsy使用mctop去監控memcached cluster，並將觀測到的hot key手動加入到一個cache smearing清單裡。
 
-## Redis Cluster: Hash Slots
+### Redis Cluster: Hash Slots
 在Redis Cluster 的架構中，Redis 提出了一種更加彈性的作法(但也需要更多的人為操作)。
 
 首先，Redis利用CRC演算法，劃分出了16384個**slots**，也就是說，每一個cache_key經過CRC演算法後，就可以知道要由哪一個slot負責處理。
@@ -215,7 +215,7 @@ Etsy使用了consistent hash，將要做http cache的資料分散給不同memcac
 也就是說，當我們觀測到hot key問題的時候，是可以藉由手動重新分配slots到不同的機器上來解決的。
 
 
-## Consistent Hashing with Bounded Loads
+### Consistent Hashing with Bounded Loads
 
 對於 hot key 問題，Google 提出了另外一種作法：[Consistent Hashing with Bounded Loads](https://ai.googleblog.com/2017/04/consistent-hashing-with-bounded-loads.html)。
 
@@ -232,7 +232,7 @@ Etsy使用了consistent hash，將要做http cache的資料分散給不同memcac
 
 Vimeo 把這個演算法實作在 HAProxy 上，作為其load balancer機制的其中一個選項。根據Vimeo的[測試](https://medium.com/vimeo-engineering-blog/improving-load-balancing-with-a-new-consistent-hashing-algorithm-9f1bd75709ed)，loading上限設置在125%～200%中，都有不錯的效果。 
 
-# 結語
+## 結語
 
 這篇文章主要介紹了 consitent hash 的概念，以及相關的演算法，如以下：
 
