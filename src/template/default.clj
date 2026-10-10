@@ -17,7 +17,7 @@
     "\n$endif$\n"
     [:title "Put some ink into the inkpot - " (if title title "$title$")]
     ;atom.xml
-    [:link {:href "atom.xml" :type "application/atom+xml" :rel "alternate" :title "Put some ink into the inkpot"}]
+    [:link {:href "/atom.xml" :type "application/atom+xml" :rel "alternate" :title "Put some ink into the inkpot"}]
 
     [:link {:rel "stylesheet" :href "/css/default.css"}]
     [:link {:rel "stylesheet" :href "/css/table.css"}]
@@ -28,7 +28,7 @@
       [:a {:href "/"} "Put some ink into the inkpot"]]
      [:nav
       [:a {:href "/archive.html"} "Archive"]
-      [:a {:href "/atom.xml"} "RSS"]]]
+      [:a {:href "/atom.xml"} "Atom"]]]
     [:main
      (if embed embed "$body$")]
     [:footer

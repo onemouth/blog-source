@@ -7,7 +7,8 @@
             [clojure.string :as string]
             [compiler.cp :as cp]
             [compiler.pandoc :as pandoc]
-            [template.rss :as rss]))
+            [template.rss :as rss]
+            [template.sitemap :as sitemap]))
 
 (def ^{:private true} config {})
 
@@ -205,6 +206,15 @@
               :file "index.html"
               :meta-file (string/join "/" [(cache-dir) "recentposts.yaml"])
               :title "Home"})
+    (process {:action :create-file
+              :file "robots.txt"
+              :content (str "User-agent: *\nAllow: /\nSitemap: "
+                            (:root rss-config) "/sitemap.xml\n")
+              :route identity})
+    (process {:action :create-file
+              :file "sitemap.xml"
+              :content (sitemap/sitemap-xml (:root rss-config) (:posts @context))
+              :route identity})
     (build-rss context)))
 
 
