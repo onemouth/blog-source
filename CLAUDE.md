@@ -11,11 +11,11 @@ Required tools: `bb` (Babashka), `pandoc`, `htmlq` (used for RSS content extract
 ## Commands
 
 - `bb build` — full rebuild: deletes `_site/` and `_cache/`, regenerates Pandoc templates from Hiccup, then runs `main/build-v2`
-- `bb serve` — serve `_site/` at http://localhost:8002 (`--port` to override)
+- `bb serve` — serve `_site/` at http://127.0.0.1:8002 (`--port` to override), including extensionless HTML URLs. Implemented in `src/dev_server.clj`; localhost-only by default, no browser caching or directory listing. Rebuild with `bb build` after edits; no automatic rebuild.
 - `bb gen-template` — regenerate `templates/*.html` from the Hiccup sources only
 - `npx wrangler pages deploy _site` — deploy
 
-`bb test` runs `test/site_test.clj` and `test/updated_date_test.clj` for JSON-LD fields, defaults, safe Pandoc rendering, built inline Japanese annotations, and modification date parsing/outputs; run `bb build` first to regenerate templates. There is no linter task (clj-kondo config exists for editor use).
+`bb test` runs `test/site_test.clj`, `test/updated_date_test.clj`, and `test/dev_server_test.clj` for JSON-LD fields, defaults, safe Pandoc rendering, built inline Japanese annotations, modification date parsing/outputs, and local server routing/security; run `bb build` first to regenerate templates. There is no linter task (clj-kondo config exists for editor use).
 
 ## Architecture
 

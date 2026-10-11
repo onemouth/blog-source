@@ -8,16 +8,15 @@
          test {:doc "Test SEO metadata, dates, and rendering (run bb build first)"
                :task (do
                        (load-file "test/site_test.clj")
-                       (load-file "test/updated_date_test.clj"))}
+                       (load-file "test/updated_date_test.clj")
+                       (load-file "test/dev_server_test.clj"))}
 
          gen-template {:doc "generate http templates from hiccup"
                        :requires ([template.core :as template])
                        :task (template/gen)}
-         serve {:doc "Serve static assets"
-                :requires ([babashka.http-server :as server])
-                :task (server/exec (merge {:port 8002
-                                           :dir "_site"}
-                                          cli-opts))}
+         serve {:doc "Serve the built site with extensionless HTML URLs"
+                :requires ([dev-server :as server])
+                :task (server/exec cli-opts)}
 
          build {:doc "build site"
                 :requires ([main]

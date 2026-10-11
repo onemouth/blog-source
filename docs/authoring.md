@@ -92,6 +92,6 @@ These render as `<span lang="ja">…</span>`, helping screen readers select Japa
 - [ ] Use `##` for body sections and `###` for subsections. The template already creates the article title H1; do not add another `#` heading.
 - [ ] Give informative images meaningful alt text: `![圖片說明](/images/example.png)`. For raw HTML images, set `alt="圖片說明"`. Use `alt=""` only for decoration. Markdown alt text does not create a visible caption; add captions separately if needed.
 - [ ] Run `bb build`.
-- [ ] Preview with `npx wrangler pages dev _site --port 8002 --compatibility-date 2026-07-01` and check the post, links, and optional TOC.
+- [ ] Run `bb serve`, open `http://127.0.0.1:8002/`, and check the post, links, and optional TOC. Extensionless URLs work locally. After further edits, rerun `bb build` and refresh; no automatic rebuild is performed. Wrangler remains optional for checking Cloudflare-specific behavior.
 
 The TOC includes H2 sections and H3 subsections (`--toc-depth=3`). H4 headings stay in the article body but are not listed in the TOC. Check section coverage and numbering in the preview.

@@ -10,7 +10,7 @@
 ## Commmands
 
 - bb build: rebuild site
-- bb serve: run local http server
+- bb serve: serve the built site locally, including extensionless post URLs (`--port` to override 8002)
 - bb test: validate JSON-LD, metadata defaults, inline languages, modification dates, and safe rendering (run `bb build` first)
 
 ## Writing posts
@@ -25,7 +25,8 @@ See [the post drafting and frontmatter reference](docs/authoring.md) for a copya
 - Canonical, Open Graph, and Twitter metadata use the same page URL and description. Optional `updated_date: YYYY-MM-DD` supplies reliable modification dates for sitemap, JSON-LD, Open Graph, and Atom; unknown dates and unselected social images are omitted.
 - JSON-LD is generated automatically: `WebSite` on the homepage, `BlogPosting` on every post. It reuses frontmatter, filename dates, and the site author fallback; no separate JSON authoring is needed.
 - Atom entry links use extensionless URLs, while existing entry IDs stay unchanged to avoid duplicate posts in feed readers.
-- `bb serve` is a basic file server and does not resolve extensionless links. For a production-like preview, use `npx wrangler pages dev _site --port 8002 --compatibility-date 2026-07-01`.
+- Local workflow: run `bb build`, then `bb serve`, and open `http://127.0.0.1:8002/`. Extensionless post/archive links work, `.html` URLs still work, and assets are served normally. After editing a post, rerun `bb build` and refresh; the server does not rebuild or hot-reload automatically.
+- `bb serve` binds to localhost and disables browser caching for preview files. For Cloudflare-specific behavior (redirects, headers, etc.), optionally use `npx wrangler pages dev _site --port 8002 --compatibility-date 2026-07-01` instead.
 
 ## deploy
 
